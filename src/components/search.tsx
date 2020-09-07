@@ -6,7 +6,7 @@ import {Icon} from 'react-native-elements';
 interface SearchMoviesProps {
   movieName: string;
   movieCategory?: string;
-  search: any;
+  search?: ()=>void;
   searchText?: string;
 }
 
@@ -15,7 +15,6 @@ const SearchMovies = (props: SearchMoviesProps) => {
     <View style={styles.container}>
       <Input
         placeholder="Search..."
-        onChangeText={text=>props.search(text)}
         leftIcon={{type: 'font-awesome', name: 'search'}}
       />
     </View>

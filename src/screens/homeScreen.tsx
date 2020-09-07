@@ -2,10 +2,11 @@ import * as React from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import MovieList from '../components/movieList';
 import SearchMovies from '../components/search';
+import MyBottomSheet from '../components/BottomSheet';
 
-
-const Home = () => {
+const Home = ({navigation}: any) => {
   const [text, setText] = React.useState('');
+  const [isVisible, setIsVisible] = React.useState(false);
   const [searchResults, setSearchResults] = React.useState([
     {
       id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -28,23 +29,18 @@ const Home = () => {
       title: 'Third saItem',
     },
   ]);
-  const searchMovies = (val: string) => {
-    setText(val);
-    const filteredList = searchResults.filter((i):any => {
-      return i.title.trim().toUpperCase() == val.trim().toUpperCase()
-    });
-    console.log(filteredList);
-    if(filteredList.length>0){
-      setSearchResults(filteredList);
-    }else{
-      setSearchResults((prev)=>prev);
-    }
+  const toggleBottomSheet = () => {
+    setIsVisible(!isVisible);
   };
-
   return (
     <View style={styles.container}>
-      <SearchMovies movieName="Intersteller" search={searchMovies} />
-      <Text>{text}</Text>
+      <SearchMovies movieName="Intersteller" />
+      <MyBottomSheet
+        isVisible={isVisible}
+        setIsVisible={setIsVisible}
+        toggleBottomSheet={toggleBottomSheet}
+      />
+      <Text style={{textAlign: 'center', fontSize: 30}}>Movies</Text>
       <MovieList searchItems={searchResults} />
     </View>
   );

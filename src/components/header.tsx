@@ -2,11 +2,12 @@ import * as React from 'react';
 import {StatusBar, StyleSheet} from 'react-native';
 import {Header} from 'react-native-elements';
 
-const MyHeader = () => {
+const MyHeader = ({navigation}:any) => {
   return (
     <>
       <StatusBar barStyle="light-content" backgroundColor="transparent" />
       <Header centerComponent={{text: 'Scifi movies', style: {color: '#fff'}}} />
+      
     </>
   );
 };
