@@ -6,7 +6,7 @@ import {Icon} from 'react-native-elements';
 interface SearchMoviesProps {
   movieName: string;
   movieCategory?: string;
-  search?: ()=>void;
+  search?: () => void;
   searchText?: string;
 }
 
@@ -14,6 +14,15 @@ const SearchMovies = (props: SearchMoviesProps) => {
   return (
     <View style={styles.container}>
       <Input
+        inputContainerStyle={{
+          borderWidth: 2,
+          borderColor: 'white',
+          borderRadius: 60,
+          padding: 5,
+          marginVertical: 5,
+          backgroundColor: '#fefefe',
+          elevation: 2,
+        }}
         placeholder="Search..."
         leftIcon={{type: 'font-awesome', name: 'search'}}
       />

@@ -1,10 +1,12 @@
 import * as React from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, useColorScheme} from 'react-native';
 import MovieList from '../components/movieList';
 import SearchMovies from '../components/search';
 import MyBottomSheet from '../components/BottomSheet';
+import {useTheme} from '@react-navigation/native';
 
 const Home = ({navigation}: any) => {
+  const {colors} = useTheme();
   const [text, setText] = React.useState('');
   const [isVisible, setIsVisible] = React.useState(false);
   const [searchResults, setSearchResults] = React.useState([
@@ -40,8 +42,12 @@ const Home = ({navigation}: any) => {
         setIsVisible={setIsVisible}
         toggleBottomSheet={toggleBottomSheet}
       />
-      <Text style={{textAlign: 'center', fontSize: 30}}>Movies</Text>
-      <MovieList searchItems={searchResults} />
+      <MovieList
+        searchItems={searchResults}
+        navigation={navigation}
+        color={colors.background}
+        darkTheme={"light"}
+      />
     </View>
   );
 };

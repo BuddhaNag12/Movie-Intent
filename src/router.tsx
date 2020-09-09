@@ -1,30 +1,59 @@
 import * as React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
-import {NavigationContainer} from '@react-navigation/native';
+import {
+  createStackNavigator,
+  CardStyleInterpolators,
+} from '@react-navigation/stack';
+import {
+  NavigationContainer,
+  DefaultTheme,
+  DarkTheme,
+} from '@react-navigation/native';
+import {AppearanceProvider, useColorScheme} from 'react-native-appearance';
+
+// components
 import Home from '../src/screens/homeScreen';
 import SearchScreen from '../src/screens/searchScreen';
-// components
 import MyHeader from './components/header';
 
 const Stack = createStackNavigator();
+export default function App() {
+  const scheme = useColorScheme();
+  // const scheme = "dark"
 
-function App({navigation}:any) {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{header: () => <MyHeader navigation={navigation} />}}
-        />
-        <Stack.Screen
-          name="SearchScreen"
-          component={SearchScreen}
-          options={{header: () => <MyHeader navigation={navigation} />}}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <AppearanceProvider>
+      <NavigationContainer theme={scheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <Stack.Navigator
+          screenOptions={{
+            gestureEnabled: true,
+            gestureDirection: 'horizontal',
+            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+            header: (props) => (
+              <MyHeader
+                title="Scifi Movies"
+                {...props}
+                darkTheme={scheme === 'dark' ? 'dark' : 'light'}
+              />
+            ),
+          }}
+          headerMode="float">
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen
+            name="SearchScreen"
+            component={SearchScreen}
+            options={{
+              header: (props) => (
+                <MyHeader
+                  title="Search result"
+                  backButton="true"
+                  {...props}
+                  darkTheme={scheme === 'dark' ? 'dark' : 'light'}
+                />
+              ),
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </AppearanceProvider>
   );
 }
-
-export default App;

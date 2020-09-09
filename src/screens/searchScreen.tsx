@@ -1,13 +1,11 @@
 import * as React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import {Text, View, StyleSheet} from 'react-native';
 
 interface SearchScreenProps {
-  route:any;
-  navigation:any;
+  route: any;
 }
 
-const SearchScreen = ({route,navigation}:SearchScreenProps) => {
-
+const SearchScreen = ({route}: SearchScreenProps) => {
   const {title} = route.params;
 
   return (
@@ -20,5 +18,5 @@ const SearchScreen = ({route,navigation}:SearchScreenProps) => {
 export default SearchScreen;
 
 const styles = StyleSheet.create({
-  container: {}
+  container: {},
 });

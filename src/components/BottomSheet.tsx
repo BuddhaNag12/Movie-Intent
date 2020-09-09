@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {BottomSheet, ListItem, Card, Button, Icon} from 'react-native-elements';
-
+// import { Appearance, useColorScheme } from 'react-native-appearance';
 interface BottomSheetProp {
   isVisible: boolean;
   setIsVisible: (isVisible: boolean) => void;
@@ -10,12 +10,22 @@ interface BottomSheetProp {
 }
 
 const MyBottomSheet = (props: BottomSheetProp) => {
+
+  // const toggleDarkMode=()=>{
+  //   const subscription = Appearance.addChangeListener(({ colorScheme }) => {
+  //     colorScheme.
+  //   });
+    
+  //   // Remove the subscription at some point
+  //   subscription.remove();
+  // }
+
   const list: any = [
     {title: 'Upcoming Scifi movies'},
     {title: 'Most rated'},
     {
       title: 'Cancel',
-      containerStyle: {backgroundColor: 'red'},
+      containerStyle: {backgroundColor: 'red', borderRadius: 5},
       titleStyle: {color: 'white'},
       onPress: () => props.setIsVisible(false),
     },
