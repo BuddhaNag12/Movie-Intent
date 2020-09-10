@@ -71,6 +71,11 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>HindVadodara-Bold.ttf</string>
+		<string>HindVadodara-Light.ttf</string>
+		<string>Nunito-Bold.ttf</string>
+		<string>Nunito-Light.ttf</string>
+		<string>HindVadodara-SemiBold.ttf</string>
 	</array>
 </dict>
 </plist>

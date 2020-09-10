@@ -6,25 +6,21 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
-import {ListItem, Avatar, AirbnbRating, colors} from 'react-native-elements';
+import {ListItem, Avatar, AirbnbRating} from 'react-native-elements';
 
 interface movieTitle {
   id?: string;
   title?: string;
-  searchItems: Array<object>;
+  searchItems: Array<Object>;
   navigation: any;
-  color:any;
+  color: any;
   darkTheme: 'dark' | 'light';
+  loading: boolean;
 }
 
 const MovieList = (props: movieTitle) => {
-  const [loading, isLoading] = React.useState(true);
-  const textColor = props.darkTheme == 'dark' ? 'white' : 'grey';
-
-  setTimeout(() => {
-    isLoading(false);
-  }, 3000);
-  if (loading) {
+  const textColor = props.darkTheme == 'dark' ? 'white' : '#574B3E';
+  if (props.loading) {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <ActivityIndicator size="large" color="red" />
@@ -35,7 +31,7 @@ const MovieList = (props: movieTitle) => {
     return (
       <ListItem
         bottomDivider
-        key={item.id}
+        key={item.id.toString()}
         containerStyle={{
           borderRadius: 30,
           marginVertical: 2,
@@ -48,6 +44,7 @@ const MovieList = (props: movieTitle) => {
           onPress={() =>
             props.navigation.navigate('SearchScreen', {
               title: item.title,
+              id: item.id,
             })
           }
           style={{
@@ -65,17 +62,23 @@ const MovieList = (props: movieTitle) => {
               avatarStyle={{borderRadius: 40}}
               containerStyle={{width: 60, height: 60}}
               source={{
-                uri:
-                  'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+                uri: item.poster_path
+                  ? 'https://static.dribbble.com/users/904433/screenshots/3152644/planet_dribbble.png'
+                  : 'https://static.dribbble.com/users/904433/screenshots/3152644/planet_dribbble.png',
               }}
             />
           </View>
           <View style={{flex: 1}}>
             <ListItem.Content>
-              <ListItem.Title style={{paddingBottom: 20,color:textColor}}>
+              <ListItem.Title style={{...styles.title, color: textColor}}>
                 {item.title}
               </ListItem.Title>
-              <ListItem.Subtitle style={{color:textColor}}>{item.title}</ListItem.Subtitle>
+              <ListItem.Subtitle style={{...styles.subtitle, color: textColor}}>
+                {item.title}
+              </ListItem.Subtitle>
+              <ListItem.Subtitle style={{...styles.subtitle, color: textColor}}>
+                {item.release_date}
+              </ListItem.Subtitle>
             </ListItem.Content>
           </View>
           <View style={{flex: 1}}>
@@ -83,9 +86,9 @@ const MovieList = (props: movieTitle) => {
               starStyle={{backgroundColor: '#FBEAFF', borderRadius: 30}}
               isDisabled
               showRating={true}
-              count={3}
-              reviews={['bad', 'average', 'good']}
-              defaultRating={2}
+              count={5}
+              reviews={['Bad', 'Average', 'Good', 'very Good', 'Excellent']}
+              defaultRating={item.vote_count}
               size={15}
             />
           </View>
@@ -96,7 +99,11 @@ const MovieList = (props: movieTitle) => {
 
   return (
     <View style={styles.container}>
-      <FlatList data={props.searchItems} renderItem={renderItem} />
+      <FlatList
+        data={props.searchItems}
+        renderItem={renderItem}
+        keyExtractor={(_, index) => index.toString()}
+      />
     </View>
   );
 };
@@ -114,13 +121,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   title: {
-    fontSize: 32,
-    fontFamily: 'Ionicons',
-    fontWeight: 'normal',
+    fontFamily: 'HindVadodara-SemiBold',
+    fontSize: 15,
   },
   subtitle: {
-    fontSize: 20,
-    fontFamily: 'Ionicons',
-    fontWeight: 'normal',
+    fontFamily: 'HindVadodara-Light',
+    fontSize: 18,
   },
 });

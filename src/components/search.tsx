@@ -1,8 +1,6 @@
 import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
-import {Input} from 'react-native-elements';
-import {Icon} from 'react-native-elements';
-
+import {Input, colors} from 'react-native-elements';
 interface SearchMoviesProps {
   movieName: string;
   movieCategory?: string;
@@ -20,11 +18,16 @@ const SearchMovies = (props: SearchMoviesProps) => {
           borderRadius: 60,
           padding: 5,
           marginVertical: 5,
+          paddingHorizontal: 10,
           backgroundColor: '#fefefe',
           elevation: 2,
         }}
         placeholder="Search..."
-        leftIcon={{type: 'font-awesome', name: 'search'}}
+        leftIcon={{
+          type: 'font-awesome',
+          name: 'search',
+          color: colors.error,
+        }}
       />
     </View>
   );
@@ -33,7 +36,5 @@ const SearchMovies = (props: SearchMoviesProps) => {
 export default SearchMovies;
 
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-  },
+  container: {},
 });

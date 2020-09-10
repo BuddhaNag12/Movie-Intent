@@ -1,6 +1,7 @@
 import * as React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, Dimensions} from 'react-native';
 import {BottomSheet, ListItem, Card, Button, Icon} from 'react-native-elements';
+const {width} = Dimensions.get('screen');
 // import { Appearance, useColorScheme } from 'react-native-appearance';
 interface BottomSheetProp {
   isVisible: boolean;
@@ -10,17 +11,16 @@ interface BottomSheetProp {
 }
 
 const MyBottomSheet = (props: BottomSheetProp) => {
-
   // const toggleDarkMode=()=>{
   //   const subscription = Appearance.addChangeListener(({ colorScheme }) => {
   //     colorScheme.
   //   });
-    
+
   //   // Remove the subscription at some point
   //   subscription.remove();
   // }
 
-  const list: any = [
+  const list: Array<Object> = [
     {title: 'Upcoming Scifi movies'},
     {title: 'Most rated'},
     {
@@ -35,7 +35,6 @@ const MyBottomSheet = (props: BottomSheetProp) => {
       <View
         style={{
           width: 100,
-          alignSelf: 'flex-end',
           paddingHorizontal: 10,
           marginVertical: 5,
         }}>
@@ -44,7 +43,7 @@ const MyBottomSheet = (props: BottomSheetProp) => {
           onPress={props.toggleBottomSheet}
           buttonStyle={{backgroundColor: 'green'}}
           containerStyle={{
-            elevation: 5,
+            elevation: 3,
           }}
           icon={
             <Icon
@@ -87,5 +86,8 @@ const MyBottomSheet = (props: BottomSheetProp) => {
 export default MyBottomSheet;
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    justifyContent:"center",
+    alignItems:"flex-end"
+  },
 });

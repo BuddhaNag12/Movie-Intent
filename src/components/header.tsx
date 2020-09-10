@@ -15,21 +15,19 @@ const MyHeader = (props: HeaderProps) => {
 
   return (
     <>
-      <StatusBar barStyle="light-content" backgroundColor="transparent" />
+      <StatusBar barStyle="dark-content" backgroundColor="#fefefe" />
       <Header
         containerStyle={{
-          elevation: 4,
-          backgroundColor:backgroundColor,
+          backgroundColor: '#fefefe',
           borderBottomColor: 'transparent',
         }}
-        style={{elevation: 4, borderBottomColor: 'transparent'}}
-        centerComponent={{text: props.title, style: {color: '#fff'}}}
+        style={{borderBottomColor: 'transparent'}}
         leftComponent={
           props.backButton ? (
             <Icon
               name="arrow-back"
               type="material-icon"
-              color="white"
+              color="black"
               size={30}
               onPress={() => props.navigation.navigate('Home')}
             />
