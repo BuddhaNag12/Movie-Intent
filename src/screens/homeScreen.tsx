@@ -1,69 +1,118 @@
 import * as React from 'react';
-import {View, StyleSheet, Text, useColorScheme} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  useColorScheme,
+  ActivityIndicator,
+} from 'react-native';
 import MovieList from '../components/movieList';
 import SearchMovies from '../components/search';
 import MyBottomSheet from '../components/BottomSheet';
+import HrCardsProps from '../components/horizontalCard';
 import {useTheme} from '@react-navigation/native';
 import API_TOKEN from '../../envExport';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const Home = ({navigation}: any) => {
   const {colors} = useTheme();
   const [text, setText] = React.useState('');
   const [isVisible, setIsVisible] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
-  const [Movies, setMoviesFetched] = React.useState([
-    // {
-    //   id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    //   title: 'First Item',
-    // },
-    // {
-    //   id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    //   title: 'Second Item',
-    // },
-    // {
-    //   id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    //   title: 'Third Item',
-    // },
-    // {
-    //   id: '58694a0f-3da1-471f-bd96-145571e29d722',
-    //   title: 'Third sItem',
-    // },
-    // {
-    //   id: '58694a0f-3da1-471f-bd96-145571e29d725',
-    //   title: 'Third saItem',
-    // },
-  ]);
+  const [UpcomingMovies, setUpcomingMovies] = React.useState([]);
+  const [popularMovies, setPopularMovies] = React.useState([]);
+  const [isGrid, setGrid] = React.useState(false);
 
   React.useEffect(() => {
     setLoading(true);
     fetch(
-      `https://api.themoviedb.org/3/search/movie?api_key=${API_TOKEN}&query=Scifi&language=en-US`,
+      `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_TOKEN}&language=en-US`,
     )
       .then((data) => data.json())
       .then((res) => {
         setLoading(false);
-        setMoviesFetched(res.results);
+        setUpcomingMovies(res.results);
+      });
+
+    fetch(
+      `https://api.themoviedb.org/3/movie/popular?api_key=${API_TOKEN}&language=en-US`,
+    )
+      .then((data) => data.json())
+      .then((res) => {
+        setLoading(false);
+        setPopularMovies(res.results);
       });
   }, []);
 
   const toggleBottomSheet = () => {
     setIsVisible(!isVisible);
   };
+
+  const searchMovies = () => {
+    setLoading(true);
+    fetch(
+      `https://api.themoviedb.org/3/search/movie?api_key=${API_TOKEN}&query=${text}&language=en-US`,
+    )
+      .then((data) => data.json())
+      .then((res) => {
+        setLoading(false);
+        setUpcomingMovies(res.results);
+      });
+  };
+
+  if (loading) {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size="large" color="red" />
+      </View>
+    );
+  }
   return (
     <View style={styles.container}>
-      <SearchMovies movieName="Intersteller" />
-      <MyBottomSheet
-        isVisible={isVisible}
-        setIsVisible={setIsVisible}
-        toggleBottomSheet={toggleBottomSheet}
-      />
+      <ScrollView>
+        <SearchMovies
+          movieName="Intersteller"
+          search={searchMovies}
+          setText={setText}
+          text={text}
+        />
+        <MyBottomSheet
+          isVisible={isVisible}
+          setIsVisible={setIsVisible}
+          toggleBottomSheet={toggleBottomSheet}
+        />
+
+        <Text
+          style={{
+            fontFamily: 'HindVadodara-Bold',
+            fontSize: 25,
+            paddingHorizontal: 10,
+          }}>
+          Upcoming Movies
+        </Text>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          <HrCardsProps Movies={UpcomingMovies} navigation={navigation} />
+        </ScrollView>
+        <Text
+          style={{
+            fontFamily: 'HindVadodara-Bold',
+            fontSize: 25,
+            paddingHorizontal: 10,
+          }}>
+          Popular Movies
+        </Text>
+        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+          <HrCardsProps Movies={popularMovies} navigation={navigation} />
+        </ScrollView>
+      </ScrollView>
+      {/* 
       <MovieList
-        searchItems={Movies}
+        searchItems={UpcomingMovies}
         navigation={navigation}
-        color={colors.background}
+        color={'#FCF8FF'}
         darkTheme={'light'}
         loading={loading}
-      />
+      /> */}
     </View>
   );
 };

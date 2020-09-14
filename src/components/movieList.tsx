@@ -63,7 +63,7 @@ const MovieList = (props: movieTitle) => {
               containerStyle={{width: 60, height: 60}}
               source={{
                 uri: item.poster_path
-                  ? 'https://static.dribbble.com/users/904433/screenshots/3152644/planet_dribbble.png'
+                  ? 'http://image.tmdb.org/t/p/w185/'+item.poster_path
                   : 'https://static.dribbble.com/users/904433/screenshots/3152644/planet_dribbble.png',
               }}
             />

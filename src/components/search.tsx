@@ -5,9 +5,9 @@ interface SearchMoviesProps {
   movieName: string;
   movieCategory?: string;
   search?: () => void;
-  searchText?: string;
+  setText: any;
+  text: string;
 }
-
 const SearchMovies = (props: SearchMoviesProps) => {
   return (
     <View style={styles.container}>
@@ -23,6 +23,12 @@ const SearchMovies = (props: SearchMoviesProps) => {
           elevation: 2,
         }}
         placeholder="Search..."
+        onChangeText={(text: string) => props.setText(text)}
+        enablesReturnKeyAutomatically={true}
+        returnKeyType="search"
+        returnKeyLabel="search"
+        onSubmitEditing={props.search}
+        value={props.text}
         leftIcon={{
           type: 'font-awesome',
           name: 'search',
