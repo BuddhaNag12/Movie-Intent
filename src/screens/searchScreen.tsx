@@ -1,82 +1,65 @@
 import * as React from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  Image,
-  Dimensions,
-  ActivityIndicator,
-  ScrollView,
-} from 'react-native';
+import {Text, View, StyleSheet} from 'react-native';
+import SearchMovies from '../components/search';
 import API_TOKEN from '../../envExport';
-import MovieDetails from '../components/MovieDetailsList';
-const {width, height} = Dimensions.get('screen');
+import MovieList from '../components/movieList';
 
 interface SearchScreenProps {
-  route: any;
+  navigation: any;
 }
 
-const SearchScreen = ({route}: SearchScreenProps) => {
+const SearchScreen = (props: SearchScreenProps) => {
+  const [searchResults, setSearchResults] = React.useState([]);
+  const [error, setError] = React.useState('');
+  const [searchText, setText] = React.useState('');
   const [loading, setLoading] = React.useState(false);
-  const [data, setMoviesFetched] = React.useState({
-    movieBanner: '',
-    poster_path: '',
-    title: '',
-    overview: '',
-    popularity: 0,
-    status: '',
-  });
-
-  const {title, id} = route.params;
-  const [buttonHeight, setHeight] = React.useState(60);
-  const toggleShowMore = () => {
-    buttonHeight === 60 ? setHeight(160) : setHeight(60);
-  };
-  const api = `https://api.themoviedb.org/3/movie/${id}?api_key=${API_TOKEN}&language=en-US`;
-  React.useEffect(() => {
+  const searchMovies = () => {
+    setError('');
     setLoading(true);
-    fetch(api)
+    fetch(
+      `https://api.themoviedb.org/3/search/movie?api_key=${API_TOKEN}&query=${searchText}&language=en-US`,
+    )
       .then((data) => data.json())
       .then((res) => {
-        setLoading(false);
-        setMoviesFetched(res);        
+        if (res) {
+          setLoading(false);
+          setSearchResults(res.results);
+        } else {
+          setLoading(false);
+          setError('Enter some Text...');
+        }
+      })
+      .catch((err) => {
+        setError(err);
       });
-  }, []);
-
-  if (loading) {
-    return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <ActivityIndicator size="large" color="red" />
-      </View>
-    );
-  }
+    
+  };
 
   return (
     <View style={styles.container}>
-      <ScrollView>
-        <View
-          style={{
-            height: height / 2,
-            paddingVertical:20,
-          }}>
-          <Image
-            style={styles.image}
-            resizeMode="contain"
-            source={{
-              uri: data.poster_path
-                ? 'http://image.tmdb.org/t/p/w780/' + data.poster_path
-                : 'https://static.dribbble.com/users/3281732/screenshots/12688476/media/cf19d222859aab75ed995365338d4c32.jpg',
-            }}
-          />
+      <SearchMovies
+        search={searchMovies}
+        setText={setText}
+        autofocus={true}
+        disabled={false}
+      />
+      {searchText == '' || error ? (
+        <View style={{justifyContent: 'center', alignItems: 'center'}}>
+          <Text style={{fontFamily: 'HindVadodara-SemiBold', fontSize: 20}}>
+            Opps no result found
+          </Text>
+          <Text style={{fontFamily: 'HindVadodara-Light', fontSize: 16}}>
+            Try Searching with movie name {error}
+          </Text>
         </View>
-
-        <MovieDetails
-          title={data.title}
-          overView={data.overview}
-          status={data.status}
-          popularity={data.popularity}
+      ) : (
+        <MovieList
+          searchItems={searchResults}
+          navigation={props.navigation}
+          loading={loading}
+          theme="light"
         />
-      </ScrollView>
+      )}
     </View>
   );
 };
@@ -86,9 +69,5 @@ export default SearchScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  image: {
-    height: height / 2 - 20,
-    width: width,
   },
 });

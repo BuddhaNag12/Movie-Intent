@@ -2,11 +2,14 @@ import * as React from 'react';
 import {View, StyleSheet} from 'react-native';
 import {Input, colors} from 'react-native-elements';
 interface SearchMoviesProps {
-  movieName: string;
+  movieName?: string;
   movieCategory?: string;
   search?: () => void;
-  setText: any;
-  text: string;
+  setText?: any;
+  text?: string;
+  ToggleSearchScreen?: () => void;
+  disabled: any;
+  autofocus:any;
 }
 const SearchMovies = (props: SearchMoviesProps) => {
   return (
@@ -22,9 +25,12 @@ const SearchMovies = (props: SearchMoviesProps) => {
           backgroundColor: '#fefefe',
           elevation: 2,
         }}
+        disabled={props.disabled}
+        onTouchStart={props.ToggleSearchScreen}
         placeholder="Search..."
         onChangeText={(text: string) => props.setText(text)}
         enablesReturnKeyAutomatically={true}
+        autoFocus={props.autofocus}
         returnKeyType="search"
         returnKeyLabel="search"
         onSubmitEditing={props.search}

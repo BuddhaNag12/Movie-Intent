@@ -10,6 +10,8 @@ target 'scifi' do
 
   pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
+  pod 'lottie-react-native', :path => '../node_modules/lottie-react-native'
+
   target 'scifiTests' do
     inherit! :complete
     # Pods for testing

@@ -4,11 +4,13 @@ import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {Card, Badge, Rating, Divider} from 'react-native-elements';
 const {width, height} = Dimensions.get('screen');
 
+type mode = 'dark' | 'light';
 interface MovieDetailsProps {
   title: string;
   overView: string;
   status: string;
   popularity: number;
+  theme?: mode;
 }
 
 const MovieDetails = (props: MovieDetailsProps) => {
@@ -19,7 +21,7 @@ const MovieDetails = (props: MovieDetailsProps) => {
       }}>
       <Card
         containerStyle={{
-          backgroundColor: '#fefefe',
+          backgroundColor: props.theme == 'dark' ? '#303030' : '#fefefe',
           elevation: 3,
           borderWidth: 0,
           width: width,
@@ -29,7 +31,13 @@ const MovieDetails = (props: MovieDetailsProps) => {
         }}>
         <View style={{alignItems: 'flex-start', padding: 5}}>
           <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-            <Text style={styles.MovieTitle}>{props.title}</Text>
+            <Text
+              style={{
+                ...styles.MovieTitle,
+                color: props.theme == 'dark' ? 'white' : 'black',
+              }}>
+              {props.title}
+            </Text>
             <Badge
               status="warning"
               badgeStyle={{
@@ -37,7 +45,12 @@ const MovieDetails = (props: MovieDetailsProps) => {
                 marginVertical: 12,
                 marginHorizontal: 10,
               }}
-              value={<Text style={{color: 'white'}}>Top 10</Text>}
+              value={
+                <Text
+                  style={{color: props.theme == 'dark' ? 'white' : '#fefefe'}}>
+                  Top 10
+                </Text>
+              }
             />
           </View>
           <View style={{flexDirection: 'row'}}>
@@ -51,7 +64,7 @@ const MovieDetails = (props: MovieDetailsProps) => {
             <Badge
               status={props.status == 'Released' ? 'success' : 'warning'}
               badgeStyle={{
-                width: 50,
+                width: '100%',
                 marginVertical: 12,
                 marginHorizontal: 10,
               }}
@@ -59,16 +72,29 @@ const MovieDetails = (props: MovieDetailsProps) => {
             />
           </View>
 
-          <Text style={{fontFamily: 'HindVadodara-SemiBold', fontSize: 20}}>
+          <Text
+            style={{
+              fontFamily: 'HindVadodara-SemiBold',
+              fontSize: 20,
+              color: props.theme == 'dark' ? 'white' : 'black',
+            }}>
             Movie Plot
           </Text>
           <Divider
-            style={{backgroundColor: 'blue', borderWidth: 1, width: 100}}
+            style={{
+              backgroundColor: props.theme == 'dark' ? 'blue' : 'black',
+              borderWidth: 1,
+              width: 100,
+            }}
           />
           <TouchableOpacity>
             <Text
-              style={{fontFamily: 'HindVadodara-Bold', fontSize: 18}}></Text>
-            <Text style={styles.Subtitle}>{props.overView}</Text>
+              style={{
+                ...styles.Subtitle,
+                color: props.theme == 'dark' ? 'white' : 'black',
+              }}>
+              {props.overView}
+            </Text>
           </TouchableOpacity>
         </View>
       </Card>

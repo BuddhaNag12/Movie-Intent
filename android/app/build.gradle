@@ -96,7 +96,7 @@ def enableSeparateBuildPerCPUArchitecture = true
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
  */
-def enableProguardInReleaseBuilds = true
+def enableProguardInReleaseBuilds = false
 
 /**
  * The preferred build flavor of JavaScriptCore.
@@ -121,6 +121,9 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 def enableHermes = project.ext.react.get("enableHermes", false);
 
 android {
+      dexOptions {
+        javaMaxHeapSize "8g"
+    } 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     compileOptions {
@@ -129,6 +132,7 @@ android {
     }
 
     defaultConfig {
+        multiDexEnabled true
         applicationId "com.scifi"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
@@ -181,6 +185,7 @@ android {
 }
 
 dependencies {
+    implementation project(':lottie-react-native')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules

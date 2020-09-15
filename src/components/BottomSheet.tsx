@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {StyleSheet, View, Dimensions} from 'react-native';
 import {BottomSheet, ListItem, Card, Button, Icon} from 'react-native-elements';
-const {width} = Dimensions.get('screen');
 // import { Appearance, useColorScheme } from 'react-native-appearance';
 interface BottomSheetProp {
   isVisible: boolean;

@@ -13,13 +13,13 @@ interface movieTitle {
   title?: string;
   searchItems: Array<Object>;
   navigation: any;
-  color: any;
-  darkTheme: 'dark' | 'light';
+  color?: any ;
+  theme: 'dark' | 'light';
   loading: boolean;
 }
 
 const MovieList = (props: movieTitle) => {
-  const textColor = props.darkTheme == 'dark' ? 'white' : '#574B3E';
+  const textColor = props.theme == 'dark' ? 'white' : '#574B3E';
   if (props.loading) {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -42,8 +42,7 @@ const MovieList = (props: movieTitle) => {
         }}>
         <TouchableOpacity
           onPress={() =>
-            props.navigation.navigate('SearchScreen', {
-              title: item.title,
+            props.navigation.navigate('DetailScreen', {
               id: item.id,
             })
           }
