@@ -1,77 +1,57 @@
 import * as React from 'react';
-import {View, StyleSheet, Text, useColorScheme, Dimensions} from 'react-native';
+import {View, StyleSheet, Text, Dimensions, StatusBar} from 'react-native';
+import {Appearance} from 'react-native-appearance';
 import MyBottomSheet from '../components/BottomSheet';
 import HrCardsProps from '../components/horizontalCard';
 import API_TOKEN from '../../envExport';
 import {ScrollView} from 'react-native-gesture-handler';
 import LottieView from 'lottie-react-native';
+
 const {width} = Dimensions.get('screen');
 
 const Home = ({navigation}: any) => {
-  const scheme = useColorScheme();
-
-  type theme = 'black' | 'white';
-  let theme: theme;
-  //  const scheme = "dark"
-
-  if (scheme == 'dark') {
-    theme = 'white';
-  } else if (scheme == 'light') {
-    theme = 'black';
-  } else {
-    theme = 'black';
-  }
-
   const [isVisible, setIsVisible] = React.useState(false);
   const [error, setError] = React.useState('');
   const [loading, setLoading] = React.useState(false);
   const [UpcomingMovies, setUpcomingMovies] = React.useState([]);
   const [popularMovies, setPopularMovies] = React.useState([]);
+  const scheme = Appearance.getColorScheme();
 
   React.useEffect(() => {
-    getUpcomingMovies();
-    getPopularMovies();
-
-    // return unsubscribe;
-  }, [navigation]);
-
-  const getUpcomingMovies = () => {
     setLoading(true);
-
-    fetch(
-      `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_TOKEN}&language=en-US`,
-    )
-      .then((data) => data.json())
-      .then((res) => {
+    getUpcomingMovies()
+      .then(({popularMovies, upcomingMovies}) => {
+        setUpcomingMovies(upcomingMovies.results);
+        setPopularMovies(popularMovies.results);        
         setLoading(false);
-        setUpcomingMovies(res.results);
       })
-      .catch((err) => {
-        setError(err);
+      .catch((e) => {
+        setError(e);
       });
-  };
+  }, []);
 
-  const getPopularMovies = () => {
-    fetch(
-      `https://api.themoviedb.org/3/movie/popular?api_key=${API_TOKEN}&language=en-US`,
-    )
-      .then((data) => data.json())
-      .then((res) => {
-        setLoading(false);
-        setPopularMovies(res.results);
-      })
-      .catch((err) => {
-        setError(err);
-      });
+  const getUpcomingMovies = async () => {
+    const [upcomingRes, popularRes] = await Promise.all([
+      fetch(
+        `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_TOKEN}&language=en-US`,
+      ),
+      fetch(
+        `https://api.themoviedb.org/3/movie/popular?api_key=${API_TOKEN}&language=en-US`,
+      ),
+    ]);
+
+    const popularMovies = await popularRes.json();
+    const upcomingMovies = await upcomingRes.json();
+    return {
+      popularMovies,
+      upcomingMovies,
+    };
   };
 
   const toggleBottomSheet = () => {
     setIsVisible(!isVisible);
   };
 
-  const toggleSearch = () => {
-    navigation.navigate('Search');
-  };
   if (loading) {
     return (
       <LottieView
@@ -93,10 +73,15 @@ const Home = ({navigation}: any) => {
   }
   return (
     <View style={styles.container}>
-      <MyBottomSheet
+      {/* <MyBottomSheet
         isVisible={isVisible}
         setIsVisible={setIsVisible}
         toggleBottomSheet={toggleBottomSheet}
+      /> */}
+      <StatusBar
+        barStyle={scheme == 'dark' ? 'light-content' : 'dark-content'}
+        translucent={true}
+        backgroundColor="transparent"
       />
       <ScrollView>
         <Text
@@ -104,7 +89,7 @@ const Home = ({navigation}: any) => {
             fontFamily: 'HindVadodara-Bold',
             fontSize: 25,
             paddingHorizontal: 10,
-            color: theme == 'black' ? 'white' : 'black',
+            color: scheme === 'dark' ? 'white' : 'black',
           }}>
           Upcoming Movies
         </Text>
@@ -113,7 +98,7 @@ const Home = ({navigation}: any) => {
           showsHorizontalScrollIndicator={false}
           fadingEdgeLength={30}
           bounces={true}
-          decelerationRate={0.5}
+          decelerationRate="fast"
           snapToInterval={width - 150}
           snapToAlignment={'center'}
           contentContainerStyle={{
@@ -123,7 +108,7 @@ const Home = ({navigation}: any) => {
             Movies={UpcomingMovies}
             navigation={navigation}
             cardSize="large"
-            theme={theme == 'black' ? 'dark' : 'light'}
+            theme={scheme === 'dark' ? 'dark' : 'light'}
           />
         </ScrollView>
         <Text
@@ -131,7 +116,7 @@ const Home = ({navigation}: any) => {
             fontFamily: 'HindVadodara-Bold',
             fontSize: 25,
             paddingHorizontal: 10,
-            color: theme == 'black' ? 'white' : 'black',
+            color: scheme === 'dark' ? 'white' : 'black',
           }}>
           Popular Movies
         </Text>
@@ -146,8 +131,7 @@ const Home = ({navigation}: any) => {
           <HrCardsProps
             Movies={popularMovies}
             navigation={navigation}
-            // theme={scheme == 'dark' ? 'dark' : 'light'}
-            theme={theme == 'black' ? 'dark' : 'light'}
+            theme={scheme === 'dark' ? 'dark' : 'light'}
           />
         </ScrollView>
       </ScrollView>

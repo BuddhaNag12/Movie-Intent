@@ -3,12 +3,13 @@ import {Text, View, StyleSheet} from 'react-native';
 import SearchMovies from '../components/search';
 import API_TOKEN from '../../envExport';
 import MovieList from '../components/movieList';
-
+import {useColorScheme} from 'react-native-appearance';
 interface SearchScreenProps {
   navigation: any;
 }
 
 const SearchScreen = (props: SearchScreenProps) => {
+  const scheme = useColorScheme();
   const [searchResults, setSearchResults] = React.useState([]);
   const [error, setError] = React.useState('');
   const [searchText, setText] = React.useState('');
@@ -41,7 +42,6 @@ const SearchScreen = (props: SearchScreenProps) => {
         search={searchMovies}
         setText={setText}
         autofocus={true}
-        disabled={false}
       />
       {searchText == '' || error ? (
         <View style={{justifyContent: 'center', alignItems: 'center'}}>
@@ -55,9 +55,10 @@ const SearchScreen = (props: SearchScreenProps) => {
       ) : (
         <MovieList
           searchItems={searchResults}
+
           navigation={props.navigation}
           loading={loading}
-          theme="light"
+          theme={scheme=="dark" ? 'dark' :'light'}
         />
       )}
     </View>

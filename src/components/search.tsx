@@ -8,7 +8,7 @@ interface SearchMoviesProps {
   setText?: any;
   text?: string;
   ToggleSearchScreen?: () => void;
-  disabled: any;
+  disabled?: boolean;
   autofocus:any;
 }
 const SearchMovies = (props: SearchMoviesProps) => {
@@ -19,7 +19,7 @@ const SearchMovies = (props: SearchMoviesProps) => {
           borderWidth: 2,
           borderColor: 'white',
           borderRadius: 60,
-          padding: 5,
+          paddingBottom: 5,
           marginVertical: 5,
           paddingHorizontal: 10,
           backgroundColor: '#fefefe',
@@ -27,7 +27,7 @@ const SearchMovies = (props: SearchMoviesProps) => {
         }}
         disabled={props.disabled}
         onTouchStart={props.ToggleSearchScreen}
-        placeholder="Search..."
+        placeholder="Search for movies ..."
         onChangeText={(text: string) => props.setText(text)}
         enablesReturnKeyAutomatically={true}
         autoFocus={props.autofocus}

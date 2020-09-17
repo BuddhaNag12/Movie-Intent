@@ -5,16 +5,17 @@ import {
   FlatList,
   TouchableOpacity,
   ActivityIndicator,
+  Image,
 } from 'react-native';
-import {ListItem, Avatar, AirbnbRating} from 'react-native-elements';
-
+import {ListItem, AirbnbRating} from 'react-native-elements';
+import {mode} from '../types/types'
 interface movieTitle {
   id?: string;
   title?: string;
   searchItems: Array<Object>;
   navigation: any;
-  color?: any ;
-  theme: 'dark' | 'light';
+  color?: any;
+  theme: mode
   loading: boolean;
 }
 
@@ -38,7 +39,7 @@ const MovieList = (props: movieTitle) => {
           marginHorizontal: 5,
           borderBottomColor: 'transparent',
           elevation: 1,
-          backgroundColor: props.color,
+          backgroundColor: props.theme == 'dark' ? '#303030' : 'white',
         }}>
         <TouchableOpacity
           onPress={() =>
@@ -57,12 +58,12 @@ const MovieList = (props: movieTitle) => {
               paddingHorizontal: 10,
               flex: 1,
             }}>
-            <Avatar
-              avatarStyle={{borderRadius: 40}}
-              containerStyle={{width: 60, height: 60}}
+            <Image
+              style={{width: 80, height: 80, borderRadius: 30}}
+              resizeMode="cover"
               source={{
                 uri: item.poster_path
-                  ? 'http://image.tmdb.org/t/p/w185/'+item.poster_path
+                  ? 'http://image.tmdb.org/t/p/w185/' + item.poster_path
                   : 'https://static.dribbble.com/users/904433/screenshots/3152644/planet_dribbble.png',
               }}
             />

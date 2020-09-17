@@ -1,46 +1,23 @@
 import * as React from 'react';
-import {
-  View,
-  StyleSheet,
-  Image,
-  Dimensions,
-  ActivityIndicator,
-  ScrollView,
-  useColorScheme,
-} from 'react-native';
+import {View, StyleSheet, ActivityIndicator, ScrollView} from 'react-native';
+import {useColorScheme} from 'react-native-appearance';
+import LottieView from 'lottie-react-native';
 import API_TOKEN from '../../envExport';
 import MovieDetails from '../components/MovieDetailsList';
-const {width, height} = Dimensions.get('screen');
-
 interface DetailsScreenProps {
-  route: any;
+  route: {
+    params: any;
+  };
 }
 
-const DetailsScreen = ({route}: DetailsScreenProps) => {
+const DetailsScreen = ({route: {params}}: DetailsScreenProps) => {
   const scheme = useColorScheme();
-  
-  type theme = 'black' | 'white';
-  let theme: theme;
-  if (scheme == 'dark') {
-    theme = 'white';
-  } else if (scheme == 'light') {
-    theme = 'black';
-  } else {
-    theme = 'black';
-  }
 
-  const {id} = route.params;
+  const {id} = params;
   const api = `https://api.themoviedb.org/3/movie/${id}?api_key=${API_TOKEN}&language=en-US`;
 
   const [loading, setLoading] = React.useState(false);
-  const [data, setMoviesFetched] = React.useState({
-    movieBanner: '',
-    poster_path: '',
-    title: '',
-    overview: '',
-    popularity: 0,
-    status: '',
-  });
+  const [MovieData, setMoviesFetched] = React.useState();
 
   React.useEffect(() => {
     setLoading(true);
@@ -48,6 +25,7 @@ const DetailsScreen = ({route}: DetailsScreenProps) => {
       .then((data) => data.json())
       .then((res) => {
         setLoading(false);
+        // data.push(res)
         setMoviesFetched(res);
       });
   }, []);
@@ -55,39 +33,38 @@ const DetailsScreen = ({route}: DetailsScreenProps) => {
   if (loading) {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <ActivityIndicator size="large" color="red" />
+        <LottieView
+          source={require('../../assets/loading3.json')}
+          colorFilters={[
+            {
+              keypath: 'button',
+              color: '#F00000',
+            },
+            {
+              keypath: 'Sending Loader',
+              color: '#F00000',
+            },
+          ]}
+          autoPlay
+          loop
+        />
       </View>
     );
   }
 
   return (
-    <View style={styles.container}>
-      <ScrollView>
-        <View
-          style={{
-            height: height / 2,
-            paddingVertical: 20,
-          }}>
-          <Image
-            style={styles.image}
-            resizeMode="cover"
-            source={{
-              uri: data.poster_path
-                ? 'http://image.tmdb.org/t/p/w780/' + data.poster_path
-                : 'https://static.dribbble.com/users/3281732/screenshots/12688476/media/cf19d222859aab75ed995365338d4c32.jpg',
-            }}
+    <ScrollView>
+      <View style={styles.container}>
+        {MovieData ? (
+          <MovieDetails
+            data={MovieData}
+            theme={scheme == 'dark' ? 'dark' : 'light'}
           />
-        </View>
-
-        <MovieDetails
-          title={data.title}
-          overView={data.overview}
-          status={data.status}
-          popularity={data.popularity}
-          theme={theme == 'black' ? 'dark' : 'light'}
-        />
-      </ScrollView>
-    </View>
+        ) : (
+          <></>
+        )}
+      </View>
+    </ScrollView>
   );
 };
 
@@ -96,9 +73,5 @@ export default DetailsScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  image: {
-    height: height,
-    width: width,
   },
 });

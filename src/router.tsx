@@ -8,18 +8,19 @@ import {
   DefaultTheme,
   DarkTheme,
 } from '@react-navigation/native';
-import {AppearanceProvider, useColorScheme,Appearance} from 'react-native-appearance';
+
+import {AppearanceProvider, useColorScheme} from 'react-native-appearance';
 
 // components
+import SearchButton from './components/searchButton';
+
 import Home from '../src/screens/homeScreen';
 import DetailsScreen from './screens/detailsScreen';
 import SearchScreen from './screens/SearchScreen';
-import MyHeader from './components/header';
 
 const Stack = createStackNavigator();
 export default function App() {
   const scheme = useColorScheme();
-  //  const scheme = "dark"
   return (
     <AppearanceProvider>
       <NavigationContainer theme={scheme == 'dark' ? DarkTheme : DefaultTheme}>
@@ -29,54 +30,39 @@ export default function App() {
             gestureEnabled: true,
             gestureDirection: 'horizontal',
             cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
-            header: (props) => (
-              <MyHeader
-                title="Scifi Movies"
-                {...props}
-                theme={scheme == 'dark' ? 'dark' : 'light'}
-              />
-            ),
+            headerStyle: {
+              elevation: 0,
+              backgroundColor: 'transparent',
+            },
+            headerTitle: 'Movie Intent',
+            headerTitleStyle: {
+              justifyContent: 'center',
+              alignItems: 'center',
+              fontFamily: 'HindVadodara-Bold',
+              fontSize: 20,
+            },
           }}>
           <Stack.Screen
             name="Home"
             component={Home}
             options={{
-              header: (props) => (
-                <MyHeader
-                  searchButton="true"
-                  title="Movie Intent"
-                  {...props}
-                  theme={scheme == 'dark' ? 'dark' : 'light'}
-                />
-              ),
+              headerRight: () => {
+                return (
+                  <SearchButton color={scheme == 'dark' ? 'dark' : 'light'} />
+                );
+              },
             }}
           />
           <Stack.Screen
             name="DetailScreen"
             component={DetailsScreen}
             options={{
-              header: (props) => (
-                <MyHeader
-                  backButton="true"
-                  {...props}
-                  theme={scheme == 'dark' ? 'dark' : 'light'}
-                />
-              ),
+              headerTransparent: true,
+              headerTitle: '',
+              headerTintColor: '#FF5159',
             }}
           />
-          <Stack.Screen
-            name="Search"
-            component={SearchScreen}
-            options={{
-              header: (props) => (
-                <MyHeader
-                  backButton="true"
-                  {...props}
-                  theme={scheme === 'dark' ? 'dark' : 'light'}
-                />
-              ),
-            }}
-          />
+          <Stack.Screen name="Search" component={SearchScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </AppearanceProvider>
