@@ -11,9 +11,9 @@
 
 > Todo 
 
-[x] Updated fetching popular movies and upcoming movies
-[ ] Add filteration
-[ ] Improve design and animation
+-[x] Updated fetching popular movies and upcoming movies
+-[ ] Add filteration
+-[ ] Improve design and animation
 
 [1]: More to go
 
