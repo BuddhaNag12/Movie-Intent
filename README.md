@@ -11,10 +11,13 @@
 
 > Todo 
 
--[x] Updated fetching popular movies and upcoming movies
--[ ] Add filteration
--[ ] Improve design and animation
+## Work in progress
+This apps is under development. Expected alpha version soon.
 
-[1]: More to go
+- [x] Updated fetching popular movies and upcoming movies
+- [ ] Add filteration
+- [ ] Improve design and animation
+
+*More Comming Soon
 
 
