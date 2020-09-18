@@ -9,11 +9,11 @@
 
 
 
-> ##Todo
--[x] Updated fetching popular movies and upcoming movies
--[ ] Add filteration
--[ ] Improve design and animation
+> Todo
+[x] Updated fetching popular movies and upcoming movies
+[ ] Add filteration
+[ ] Improve design and animation
 
-[^1]: More to go
+[1]: More to go
 
 
