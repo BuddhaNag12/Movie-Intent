@@ -29,6 +29,7 @@ build/
 local.properties
 *.iml
 .env
+yarn.lock
 # node.js
 #
 node_modules/
