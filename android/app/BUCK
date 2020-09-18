@@ -35,12 +35,12 @@ android_library(
 
 android_build_config(
     name = "build_config",
-    package = "com.scifi",
+    package = "com.movie_intent",
 )
 
 android_resource(
     name = "res",
-    package = "com.scifi",
+    package = "com.movie_intent",
     res = "src/main/res",
 )
 

@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
-	<string>scifi</string>
+	<string>Movie Intent</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -55,6 +55,11 @@
 	<false/>
 	<key>UIAppFonts</key>
 	<array>
+		<string>HindVadodara-Bold.ttf</string>
+		<string>HindVadodara-Light.ttf</string>
+		<string>HindVadodara-SemiBold.ttf</string>
+		<string>Nunito-Bold.ttf</string>
+		<string>Nunito-Light.ttf</string>
 		<string>AntDesign.ttf</string>
 		<string>Entypo.ttf</string>
 		<string>EvilIcons.ttf</string>
@@ -71,11 +76,6 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
-		<string>HindVadodara-Bold.ttf</string>
-		<string>HindVadodara-Light.ttf</string>
-		<string>Nunito-Bold.ttf</string>
-		<string>Nunito-Light.ttf</string>
-		<string>HindVadodara-SemiBold.ttf</string>
 	</array>
 </dict>
 </plist>

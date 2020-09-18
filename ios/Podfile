@@ -3,18 +3,18 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '10.0'
 
-target 'scifi' do
+target 'Movie Intent' do
   config = use_native_modules!
 
   use_react_native!(:path => config["reactNativePath"])
 
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
-
-  pod 'lottie-react-native', :path => '../node_modules/lottie-react-native'
-
-  target 'scifiTests' do
+  target 'Movie IntentTests' do
     inherit! :complete
     # Pods for testing
+    pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
+    pod 'lottie-react-native', :path => '../node_modules/lottie-react-native'
+
   end
 
   # Enables Flipper.
@@ -27,10 +27,10 @@ target 'scifi' do
   end
 end
 
-target 'scifi-tvOS' do
-  # Pods for scifi-tvOS
+target 'Movie Intent-tvOS' do
+  # Pods for Movie Intent-tvOS
 
-  target 'scifi-tvOSTests' do
+  target 'Movie Intent-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end

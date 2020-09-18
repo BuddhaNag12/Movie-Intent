@@ -96,7 +96,7 @@ def enableSeparateBuildPerCPUArchitecture = true
 /**
  * Run Proguard to shrink the Java bytecode in release builds.
  */
-def enableProguardInReleaseBuilds = false
+def enableProguardInReleaseBuilds = true
 
 /**
  * The preferred build flavor of JavaScriptCore.
@@ -121,9 +121,10 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 def enableHermes = project.ext.react.get("enableHermes", false);
 
 android {
-      dexOptions {
-        javaMaxHeapSize "4g"
-    } 
+    dexOptions {
+            javaMaxHeapSize "4g"
+        } 
+
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     compileOptions {
@@ -132,8 +133,7 @@ android {
     }
 
     defaultConfig {
-        multiDexEnabled true
-        applicationId "com.scifi"
+        applicationId "com.movie_intent"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
@@ -185,8 +185,6 @@ android {
 }
 
 dependencies {
-    implementation 'com.facebook.fresco:fresco:2.3.0'
-    implementation project(':lottie-react-native')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules

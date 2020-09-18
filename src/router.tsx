@@ -16,7 +16,7 @@ import SearchButton from './components/searchButton';
 
 import Home from '../src/screens/homeScreen';
 import DetailsScreen from './screens/detailsScreen';
-import SearchScreen from './screens/SearchScreen';
+import SearchScreen from './screens/searchScreen';
 
 const Stack = createStackNavigator();
 export default function App() {
