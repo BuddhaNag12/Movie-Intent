@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, StyleSheet, ActivityIndicator, ScrollView} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import {useColorScheme} from 'react-native-appearance';
 import LottieView from 'lottie-react-native';
 import API_TOKEN from '../../envExport';
@@ -8,9 +8,10 @@ interface DetailsScreenProps {
   route: {
     params: any;
   };
+  navigation: any;
 }
 
-const DetailsScreen = ({route: {params}}: DetailsScreenProps) => {
+const DetailsScreen = ({navigation, route: {params}}: DetailsScreenProps) => {
   const scheme = useColorScheme();
 
   const {id} = params;
@@ -35,16 +36,16 @@ const DetailsScreen = ({route: {params}}: DetailsScreenProps) => {
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <LottieView
           source={require('../../assets/loading3.json')}
-          colorFilters={[
-            {
-              keypath: 'button',
-              color: '#F00000',
-            },
-            {
-              keypath: 'Sending Loader',
-              color: '#F00000',
-            },
-          ]}
+          // colorFilters={[
+          //   {
+          //     keypath: 'button',
+          //     color: '#F00000',
+          //   },
+          //   {
+          //     keypath: 'Sending Loader',
+          //     color: '#F00000',
+          //   },
+          // ]}
           autoPlay
           loop
         />
@@ -57,6 +58,7 @@ const DetailsScreen = ({route: {params}}: DetailsScreenProps) => {
       <View style={styles.container}>
         {MovieData ? (
           <MovieDetails
+            navigation={navigation}
             data={MovieData}
             theme={scheme == 'dark' ? 'dark' : 'light'}
           />

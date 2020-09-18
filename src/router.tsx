@@ -25,6 +25,7 @@ export default function App() {
     <AppearanceProvider>
       <NavigationContainer theme={scheme == 'dark' ? DarkTheme : DefaultTheme}>
         <Stack.Navigator
+        initialRouteName="Home"
           headerMode="screen"
           screenOptions={{
             gestureEnabled: true,
@@ -48,7 +49,7 @@ export default function App() {
             options={{
               headerRight: () => {
                 return (
-                  <SearchButton color={scheme == 'dark' ? 'dark' : 'light'} />
+                  <SearchButton theme={scheme == 'dark' ? 'dark' : 'light'} />
                 );
               },
             }}
