@@ -8,10 +8,10 @@ const {width, height} = Dimensions.get('screen');
 interface MovieDetailsProps {
   theme?: mode;
   data: any;
+  navigation:any;
 }
 //theme,popularity,status,overView,title
-const MovieDetails = ({theme, data}: MovieDetailsProps) => {
-  
+const MovieDetails = ({theme, data,navigation}: MovieDetailsProps) => {
   return (
     <View
       style={{
@@ -26,7 +26,7 @@ const MovieDetails = ({theme, data}: MovieDetailsProps) => {
           resizeMode="cover"
           source={{
             uri: data.poster_path
-              ? 'http://image.tmdb.org/t/p/w780/' + data.poster_path
+              ? `https://image.tmdb.org/t/p/original/${data.poster_path}`
               : 'https://static.dribbble.com/users/3281732/screenshots/12688476/media/cf19d222859aab75ed995365338d4c32.jpg',
           }}
         />
@@ -83,6 +83,9 @@ const MovieDetails = ({theme, data}: MovieDetailsProps) => {
               ? data.genres.map(({id, name}: any) => {
                   return (
                     <TouchableOpacity
+                    onPress={()=>navigation.navigate('Search',{
+                      genre:name
+                    })}
                       key={id}
                       style={{
                         backgroundColor: id % 2 == 0 ? '#009D77' : '#FF5159',
@@ -162,7 +165,7 @@ const MovieDetails = ({theme, data}: MovieDetailsProps) => {
               fontSize: 20,
               color: theme == 'dark' ? 'white' : 'black',
             }}>
-            {data.tagline || 'No tagline found...'}
+            {data.tagline || 'No tagline found '}
           </Text>
 
           <Text
@@ -186,7 +189,7 @@ const MovieDetails = ({theme, data}: MovieDetailsProps) => {
                 ...styles.Subtitle,
                 color: theme == 'dark' ? 'white' : 'black',
               }}>
-              {data.overView || 'No plot found :('}
+              {data.overview || 'No plot found'}
             </Text>
           </TouchableOpacity>
         </View>

@@ -1,13 +1,30 @@
 import * as React from 'react';
-import {View, StyleSheet, Text, Dimensions, StatusBar} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  StatusBar,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import {Appearance} from 'react-native-appearance';
 import MyBottomSheet from '../components/BottomSheet';
 import HrCardsProps from '../components/horizontalCard';
 import API_TOKEN from '../../envExport';
-import {ScrollView} from 'react-native-gesture-handler';
 import LottieView from 'lottie-react-native';
 
-const {width} = Dimensions.get('screen');
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 30,
+    zIndex: 1000,
+  },
+});
 
 const Home = ({navigation}: any) => {
   const [isVisible, setIsVisible] = React.useState(false);
@@ -22,7 +39,7 @@ const Home = ({navigation}: any) => {
     getUpcomingMovies()
       .then(({popularMovies, upcomingMovies}) => {
         setUpcomingMovies(upcomingMovies.results);
-        setPopularMovies(popularMovies.results);        
+        setPopularMovies(popularMovies.results);
         setLoading(false);
       })
       .catch((e) => {
@@ -38,6 +55,7 @@ const Home = ({navigation}: any) => {
       fetch(
         `https://api.themoviedb.org/3/movie/popular?api_key=${API_TOKEN}&language=en-US`,
       ),
+      // fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${API_TOKEN}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1&with_genres=878`)
     ]);
 
     const popularMovies = await popularRes.json();
@@ -73,11 +91,11 @@ const Home = ({navigation}: any) => {
   }
   return (
     <View style={styles.container}>
-      {/* <MyBottomSheet
+      <MyBottomSheet
         isVisible={isVisible}
         setIsVisible={setIsVisible}
         toggleBottomSheet={toggleBottomSheet}
-      /> */}
+      />
       <StatusBar
         barStyle={scheme == 'dark' ? 'light-content' : 'dark-content'}
         translucent={true}
@@ -98,9 +116,6 @@ const Home = ({navigation}: any) => {
           showsHorizontalScrollIndicator={false}
           fadingEdgeLength={30}
           bounces={true}
-          decelerationRate="fast"
-          snapToInterval={width - 150}
-          snapToAlignment={'center'}
           contentContainerStyle={{
             paddingVertical: 10,
           }}>
@@ -140,9 +155,3 @@ const Home = ({navigation}: any) => {
 };
 
 export default Home;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});

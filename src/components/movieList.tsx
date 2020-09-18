@@ -8,14 +8,14 @@ import {
   Image,
 } from 'react-native';
 import {ListItem, AirbnbRating} from 'react-native-elements';
-import {mode} from '../types/types'
+import {mode} from '../types/types';
 interface movieTitle {
   id?: string;
   title?: string;
   searchItems: Array<Object>;
   navigation: any;
   color?: any;
-  theme: mode
+  theme: mode;
   loading: boolean;
 }
 
@@ -39,7 +39,7 @@ const MovieList = (props: movieTitle) => {
           marginHorizontal: 5,
           borderBottomColor: 'transparent',
           elevation: 1,
-          backgroundColor: props.theme == 'dark' ? '#303030' : 'white',
+          backgroundColor: props.theme == 'dark' ? '#303030' : 'f2f2f2',
         }}>
         <TouchableOpacity
           onPress={() =>
@@ -63,7 +63,7 @@ const MovieList = (props: movieTitle) => {
               resizeMode="cover"
               source={{
                 uri: item.poster_path
-                  ? 'http://image.tmdb.org/t/p/w185/' + item.poster_path
+                  ? 'https://image.tmdb.org/t/p/w185/' + item.poster_path
                   : 'https://static.dribbble.com/users/904433/screenshots/3152644/planet_dribbble.png',
               }}
             />

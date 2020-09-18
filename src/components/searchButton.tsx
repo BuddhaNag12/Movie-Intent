@@ -9,7 +9,7 @@ interface SearchButtonProps {
   theme:mode
 }
 
-const SearchButton = ({theme}: SearchButtonProps) => {
+const SearchButton = ({theme}: SearchButtonProps) => {  
   const navigation = useNavigation();
   return (
     <Icon

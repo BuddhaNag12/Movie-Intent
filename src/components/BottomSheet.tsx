@@ -25,7 +25,7 @@ const MyBottomSheet = (props: BottomSheetProp) => {
     {
       title: 'Cancel',
       containerStyle: {backgroundColor: 'red', borderRadius: 5},
-      titleStyle: {color: 'white'},
+      titleStyle: {color: 'white', fontFamily: 'Nunito-Light'},
       onPress: () => props.setIsVisible(false),
     },
   ];
@@ -39,15 +39,16 @@ const MyBottomSheet = (props: BottomSheetProp) => {
         }}>
         <Button
           title="filter"
+          titleStyle={{fontFamily: 'Nunito-Light'}}
           onPress={props.toggleBottomSheet}
           buttonStyle={{backgroundColor: 'green'}}
           containerStyle={{
-            elevation: 3,
+            elevation: 2,
           }}
           icon={
             <Icon
               name="filter-outline"
-              type="ionicon"
+              type="material-community"
               size={20}
               color="white"
               style={{paddingHorizontal: 5}}
@@ -86,7 +87,7 @@ export default MyBottomSheet;
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent:"center",
-    alignItems:"flex-end"
+    justifyContent: 'center',
+    alignItems: 'flex-end',
   },
 });

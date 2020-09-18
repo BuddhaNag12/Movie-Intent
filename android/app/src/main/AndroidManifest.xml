@@ -2,9 +2,17 @@
   package="com.scifi">
 
     <uses-permission android:name="android.permission.INTERNET" />
-
+      <supports-screens 
+        android:resizeable="true"
+        android:smallScreens="true"
+        android:normalScreens="true"
+        android:largeScreens="true"
+        android:anyDensity="true"
+        />
     <application
+     android:largeHeap="true"
       android:name=".MainApplication"
+      android:hardwareAccelerated="true"
       android:label="@string/app_name"
       android:icon="@mipmap/ic_launcher"
       android:roundIcon="@mipmap/ic_launcher_round"
