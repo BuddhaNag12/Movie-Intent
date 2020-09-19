@@ -1,12 +1,14 @@
 import * as React from 'react';
 import {Text, View, StyleSheet, Image} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {size,mode} from '../types/types';
-interface HrCardsProps<t> {
-  Movies: Array<t>;
+import {size, mode, colorsType} from '../types/types';
+
+interface HrCardsProps<T> {
+  Movies: Array<T>;
   navigation: any;
   cardSize?: size;
   theme?: mode;
+  colors: colorsType;
 }
 
 const HrCards = ({
@@ -14,6 +16,7 @@ const HrCards = ({
   navigation,
   cardSize,
   theme,
+  colors,
 }: HrCardsProps<string>) => {
   return (
     <View style={styles.container}>
@@ -30,7 +33,6 @@ const HrCards = ({
             style={{
               width: cardSize == 'large' ? 250 : 200,
               height: cardSize == 'large' ? 200 : 200,
-
               alignItems: 'center',
               elevation: 2,
               backgroundColor: theme == 'dark' ? '#303030' : '#F2F2F2',
@@ -50,7 +52,6 @@ const HrCards = ({
                   ? 'https://image.tmdb.org/t/p/w500/' + items.poster_path
                   : 'https://static.dribbble.com/users/904433/screenshots/3152644/planet_dribbble.png',
               }}
-              
             />
 
             <View style={{position: 'absolute', top: 10, right: 30}}>
@@ -60,6 +61,7 @@ const HrCards = ({
                   fontSize: 15,
                   textAlign: 'center',
                   color: theme == 'dark' ? 'white' : '#F2F2F2',
+                  // color:colors.text
                 }}>
                 {items.vote_average}
               </Text>
@@ -71,7 +73,8 @@ const HrCards = ({
                   fontFamily: 'HindVadodara-Bold',
                   fontSize: 15,
                   textAlign: 'center',
-                  color: theme == 'dark' ? 'white' : 'black',
+                  // color: theme == 'dark' ? 'white' : 'black',
+                  color: colors.text,
                   marginVertical: 5,
                 }}>
                 {items.title}
@@ -81,7 +84,8 @@ const HrCards = ({
                   fontFamily: 'HindVadodara-Light',
                   fontSize: 15,
                   textAlign: 'center',
-                  color: theme == 'dark' ? 'white' : 'black',
+                  color: colors.text,
+                  // color: theme == 'dark' ? 'white' : 'black',
                 }}>
                 Release Date
               </Text>
@@ -91,7 +95,8 @@ const HrCards = ({
                   fontSize: 15,
                   textAlign: 'center',
                   marginVertical: 2,
-                  color: theme == 'dark' ? 'white' : 'black',
+                  color: colors.text,
+                  // color: theme == 'dark' ? 'white' : 'black',
                 }}>
                 {items.release_date}
               </Text>

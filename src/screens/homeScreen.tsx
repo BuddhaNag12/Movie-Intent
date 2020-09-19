@@ -1,22 +1,16 @@
 import * as React from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  StatusBar,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-} from 'react-native';
+import {View, StyleSheet, Text, ScrollView} from 'react-native';
 import {Appearance} from 'react-native-appearance';
 import MyBottomSheet from '../components/BottomSheet';
 import HrCardsProps from '../components/horizontalCard';
 import API_TOKEN from '../../envExport';
 import LottieView from 'lottie-react-native';
+import {useTheme} from '@react-navigation/native';
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'white',
   },
   image: {
     width: '100%',
@@ -27,6 +21,8 @@ const styles = StyleSheet.create({
 });
 
 const Home = ({navigation}: any) => {
+  const {colors} = useTheme();
+
   const [isVisible, setIsVisible] = React.useState(false);
   const [error, setError] = React.useState('');
   const [loading, setLoading] = React.useState(false);
@@ -96,11 +92,11 @@ const Home = ({navigation}: any) => {
         setIsVisible={setIsVisible}
         toggleBottomSheet={toggleBottomSheet}
       />
-      <StatusBar
+      {/* <StatusBar
         barStyle={scheme == 'dark' ? 'light-content' : 'dark-content'}
         translucent={true}
         backgroundColor="transparent"
-      />
+      /> */}
       <ScrollView>
         <Text
           style={{
@@ -120,6 +116,7 @@ const Home = ({navigation}: any) => {
             paddingVertical: 10,
           }}>
           <HrCardsProps
+            colors={colors}
             Movies={UpcomingMovies}
             navigation={navigation}
             cardSize="large"
@@ -144,6 +141,7 @@ const Home = ({navigation}: any) => {
             paddingVertical: 10,
           }}>
           <HrCardsProps
+            colors={colors}
             Movies={popularMovies}
             navigation={navigation}
             theme={scheme === 'dark' ? 'dark' : 'light'}

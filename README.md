@@ -8,7 +8,6 @@
 3. View movie details
 
 
-
 > Todo 
 
 ## Work in progress
@@ -17,6 +16,13 @@ This apps is under development. Expected alpha version soon.
 - [x] Updated fetching popular movies and upcoming movies
 - [ ] Add filteration
 - [ ] Improve design and animation
+
+### Logo Credits
+> @JoyBoi
+
+### Api 
+> The movie database *TMDB*	[TMDB](https://developers.themoviedb.org) 
+
 
 *More Comming Soon
 
