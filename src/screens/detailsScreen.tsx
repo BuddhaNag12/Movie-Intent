@@ -1,9 +1,10 @@
 import * as React from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
+import {View, StyleSheet, ScrollView, StatusBar} from 'react-native';
 import {useColorScheme} from 'react-native-appearance';
 import LottieView from 'lottie-react-native';
 import API_TOKEN from '../../envExport';
 import MovieDetails from '../components/MovieDetailsList';
+import {datatype} from '../types/types';
 interface DetailsScreenProps {
   route: {
     params: any;
@@ -18,7 +19,7 @@ const DetailsScreen = ({navigation, route: {params}}: DetailsScreenProps) => {
   const api = `https://api.themoviedb.org/3/movie/${id}?api_key=${API_TOKEN}&language=en-US`;
 
   const [loading, setLoading] = React.useState(false);
-  const [MovieData, setMoviesFetched] = React.useState();
+  const [MovieData, setMoviesFetched] = React.useState<datatype>();
 
   React.useEffect(() => {
     setLoading(true);
@@ -54,19 +55,21 @@ const DetailsScreen = ({navigation, route: {params}}: DetailsScreenProps) => {
   }
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        {MovieData ? (
-          <MovieDetails
-            navigation={navigation}
-            data={MovieData}
-            theme={scheme == 'dark' ? 'dark' : 'light'}
-          />
-        ) : (
-          <></>
-        )}
-      </View>
-    </ScrollView>
+    <>
+      <ScrollView>
+        <View style={styles.container}>
+          {MovieData ? (
+            <MovieDetails
+              navigation={navigation}
+              data={MovieData}
+              theme={scheme == 'dark' ? 'dark' : 'light'}
+            />
+          ) : (
+            <></>
+          )}
+        </View>
+      </ScrollView>
+    </>
   );
 };
 

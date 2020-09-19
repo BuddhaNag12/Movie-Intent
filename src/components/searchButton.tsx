@@ -4,12 +4,11 @@ import {Icon} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
 import {mode} from '../types/types';
 
-
 interface SearchButtonProps {
-  theme:mode
+  theme: mode;
 }
 
-const SearchButton = ({theme}: SearchButtonProps) => {  
+const SearchButton = ({theme}: SearchButtonProps) => {
   const navigation = useNavigation();
   return (
     <Icon

@@ -2,16 +2,16 @@ import * as React from 'react';
 import {Text, View, StyleSheet, Dimensions, Image} from 'react-native';
 import {Card, Badge, Divider} from 'react-native-elements';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {mode} from '../types/types';
+import {mode, datatype} from '../types/types';
 const {width, height} = Dimensions.get('screen');
 
 interface MovieDetailsProps {
   theme?: mode;
-  data: any;
-  navigation:any;
+  data: datatype;
+  navigation: any;
 }
 //theme,popularity,status,overView,title
-const MovieDetails = ({theme, data,navigation}: MovieDetailsProps) => {
+const MovieDetails = ({theme, data, navigation}: MovieDetailsProps) => {
   return (
     <View
       style={{
@@ -19,7 +19,7 @@ const MovieDetails = ({theme, data,navigation}: MovieDetailsProps) => {
       }}>
       <View
         style={{
-          height: height / 2,
+          height: height / 2 + 40,
         }}>
         <Image
           style={styles.image}
@@ -34,12 +34,10 @@ const MovieDetails = ({theme, data,navigation}: MovieDetailsProps) => {
       <Card
         containerStyle={{
           backgroundColor: theme == 'dark' ? '#303030' : '#FAF7FF',
-          elevation: 3,
-          borderWidth: 0,
           width: width,
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
-          minHeight: height / 2,
+          minHeight: height / 2 + 40,
         }}>
         <View
           style={{
@@ -49,7 +47,6 @@ const MovieDetails = ({theme, data,navigation}: MovieDetailsProps) => {
             style={{
               flexDirection: 'row',
               flexWrap: 'wrap',
-              marginTop: 20,
             }}>
             <Text
               style={{
@@ -83,9 +80,11 @@ const MovieDetails = ({theme, data,navigation}: MovieDetailsProps) => {
               ? data.genres.map(({id, name}: any) => {
                   return (
                     <TouchableOpacity
-                    onPress={()=>navigation.navigate('Search',{
-                      genre:name
-                    })}
+                      onPress={() =>
+                        navigation.navigate('Search', {
+                          genre: name,
+                        })
+                      }
                       key={id}
                       style={{
                         backgroundColor: id % 2 == 0 ? '#009D77' : '#FF5159',

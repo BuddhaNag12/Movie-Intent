@@ -12,11 +12,10 @@ import {
 import {AppearanceProvider, useColorScheme} from 'react-native-appearance';
 
 // components
-import SearchButton from './components/searchButton';
-
 import Home from '../src/screens/homeScreen';
 import DetailsScreen from './screens/detailsScreen';
 import SearchScreen from './screens/searchScreen';
+import MyHeader from './components/header';
 
 const Stack = createStackNavigator();
 export default function App() {
@@ -25,7 +24,7 @@ export default function App() {
     <AppearanceProvider>
       <NavigationContainer theme={scheme == 'dark' ? DarkTheme : DefaultTheme}>
         <Stack.Navigator
-        initialRouteName="Home"
+          initialRouteName="Home"
           headerMode="screen"
           screenOptions={{
             gestureEnabled: true,
@@ -35,7 +34,6 @@ export default function App() {
               elevation: 0,
               backgroundColor: 'transparent',
             },
-            headerTitle: 'Movie Intent',
             headerTitleStyle: {
               justifyContent: 'center',
               alignItems: 'center',
@@ -47,11 +45,13 @@ export default function App() {
             name="Home"
             component={Home}
             options={{
-              headerRight: () => {
-                return (
-                  <SearchButton theme={scheme == 'dark' ? 'dark' : 'light'} />
-                );
-              },
+              header: (props) => (
+                <MyHeader
+                  {...props}
+                  isDetailsScreen={false}
+                  theme={scheme == 'dark' ? 'dark' : 'light'}
+                />
+              ),
             }}
           />
           <Stack.Screen
