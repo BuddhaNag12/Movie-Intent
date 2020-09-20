@@ -20,7 +20,7 @@
 This apps is under development. Expected alpha version soon.
 
 - [x] Updated fetching popular movies and upcoming movies
-- [ ] Add filteration
+- [x] Add filteration
 - [ ] Improve design and animation
 
 ### Logo Credits
