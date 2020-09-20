@@ -7,21 +7,33 @@ interface BottomSheetProp {
   setIsVisible: (isVisible: boolean) => void;
   readonly modal?: any;
   toggleBottomSheet: () => void;
+  filterSearch: (number: number) => void;
+  setDefault: (isDefault: boolean) => void;
 }
 
 const MyBottomSheet = (props: BottomSheetProp) => {
-  // const toggleDarkMode=()=>{
-  //   const subscription = Appearance.addChangeListener(({ colorScheme }) => {
-  //     colorScheme.
-  //   });
-
-  //   // Remove the subscription at some point
-  //   subscription.remove();
-  // }
-
   const list: Array<Object> = [
-    {title: 'Upcoming Scifi movies'},
-    {title: 'Most rated'},
+    {
+      title: 'Scifi movies',
+      containerStyle: {backgroundColor: 'white', borderRadius: 5},
+      style: {borderRadius: 5},
+      titleStyle: {color: 'black', fontFamily: 'Nunito-Light'},
+      onPress: () => props.filterSearch(878),
+    },
+    {
+      title: 'Romantic Movies',
+      containerStyle: {backgroundColor: 'white', borderRadius: 5},
+      style: {borderRadius: 5},
+      titleStyle: {color: 'black', fontFamily: 'Nunito-Light'},
+      onPress: () => props.filterSearch(10749),
+    },
+    {
+      title: 'Default Results',
+      containerStyle: {backgroundColor: 'white', borderRadius: 5},
+      style: {borderRadius: 5},
+      titleStyle: {color: 'black', fontFamily: 'Nunito-Light'},
+      onPress: () => props.setDefault(true),
+    },
     {
       title: 'Cancel',
       containerStyle: {backgroundColor: 'red', borderRadius: 5},
@@ -62,7 +74,9 @@ const MyBottomSheet = (props: BottomSheetProp) => {
               width: '100%',
               alignSelf: 'center',
             }}>
-            <Card.Title>Filter Movies</Card.Title>
+            <Card.Title style={{fontFamily: 'Nunito-Bold'}}>
+              Filter Movies
+            </Card.Title>
             <Card.Divider />
             {list.map((l: any, i: number) => (
               <ListItem

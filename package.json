@@ -16,6 +16,7 @@
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/native": "^5.7.3",
     "@react-navigation/stack": "^5.9.0",
+    "@types/react-native-snap-carousel": "^3.8.2",
     "lottie-react-native": "^3.5.0",
     "react": "16.13.1",
     "react-native": "0.63",
@@ -27,6 +28,7 @@
     "react-native-reanimated": "^1.13.0",
     "react-native-safe-area-context": "^3.1.7",
     "react-native-screens": "^2.10.1",
+    "react-native-snap-carousel": "^3.9.1",
     "react-native-vector-icons": "^7.0.0"
   },
   "devDependencies": {
