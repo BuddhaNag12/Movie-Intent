@@ -43,6 +43,7 @@ const HrCards = ({
               style={{
                 width: '100%',
                 height: '60%',
+                // ...StyleSheet.absoluteFillObject,
                 borderTopRightRadius: 30,
                 borderTopLeftRadius: 30,
               }}

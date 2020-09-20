@@ -38,6 +38,16 @@ const MyHeader = ({theme, isDetailsScreen}: HeaderProps) => {
               />
             </View>
           }
+          centerComponent={
+            <Text
+              style={{
+                fontFamily: 'Nunito-Bold',
+                fontSize: 20,
+                fontStyle: 'normal',
+              }}>
+              Movie Intent
+            </Text>
+          }
           rightComponent={
             <SearchButton theme={theme == 'dark' ? 'dark' : 'light'} />
           }

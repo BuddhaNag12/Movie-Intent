@@ -36,17 +36,7 @@ const DetailsScreen = ({navigation, route: {params}}: DetailsScreenProps) => {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <LottieView
-          source={require('../../assets/loading3.json')}
-          // colorFilters={[
-          //   {
-          //     keypath: 'button',
-          //     color: '#F00000',
-          //   },
-          //   {
-          //     keypath: 'Sending Loader',
-          //     color: '#F00000',
-          //   },
-          // ]}
+          source={require('../../assets/loading.json')}
           autoPlay
           loop
         />

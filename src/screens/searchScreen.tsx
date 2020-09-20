@@ -104,6 +104,8 @@ const SearchScreen = (props: SearchScreenProps) => {
             padding: 10,
           }}>
           {genres.map((i: any, index: number) => {
+            // console.log(genres);
+
             return (
               <TouchableOpacity
                 key={index}
