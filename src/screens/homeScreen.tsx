@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, StyleSheet, Text, ScrollView} from 'react-native';
+import {View, StyleSheet, Text, ScrollView, RefreshControl} from 'react-native';
 import {Appearance} from 'react-native-appearance';
 import MyBottomSheet from '../components/BottomSheet';
 import HrCardsProps from '../components/horizontalCard';
@@ -116,14 +116,16 @@ const Home = ({navigation}: any) => {
   }
   return (
     <View style={styles.container}>
-      <MyBottomSheet
-        isVisible={isVisible}
-        setIsVisible={setIsVisible}
-        toggleBottomSheet={toggleBottomSheet}
-        filterSearch={filterSearch}
-        setDefault={setDefault}
-      />
-      <ScrollView>
+      <ScrollView >
+        <MyBottomSheet
+          isVisible={isVisible}
+          setIsVisible={setIsVisible}
+          toggleBottomSheet={toggleBottomSheet}
+          filterSearch={filterSearch}
+          setDefault={setDefault}
+          theme={scheme=='dark' ? 'dark' : 'light'}
+          colors={colors}
+        />
         <Text
           style={{
             fontFamily: 'HindVadodara-Bold',
