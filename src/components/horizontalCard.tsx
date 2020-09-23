@@ -49,9 +49,9 @@ const HrCards = ({
               }}
               resizeMode="cover"
               source={{
-                uri: items.poster_path
-                  ? 'https://image.tmdb.org/t/p/w500/' + items.poster_path
-                  : 'https://static.dribbble.com/users/904433/screenshots/3152644/planet_dribbble.png',
+                uri: items.backdrop_path
+                  ? 'https://image.tmdb.org/t/p/w500/' + items.backdrop_path
+                  : 'https://image.tmdb.org/t/p/w500/' + items.poster_path,
               }}
             />
 

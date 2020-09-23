@@ -11,6 +11,8 @@ export type colorsType = {
   };
 
  export type datatype={
+    id:number;
+    backdrop_path:string;
     poster_path:string;
     title:string;
     tagline:string;

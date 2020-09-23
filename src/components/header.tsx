@@ -24,7 +24,7 @@ const MyHeader = ({color, theme, isDetailsScreen}: HeaderProps) => {
           barStyle={theme == 'dark' ? 'light-content' : 'dark-content'}
           containerStyle={{
             backgroundColor: theme == 'dark' ? 'black' : 'white',
-            borderBottomColor: color.border,
+            borderBottomColor: theme == 'dark' ? 'black' : 'white',
           }}
           leftComponent={
             <View

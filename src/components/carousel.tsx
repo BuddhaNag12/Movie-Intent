@@ -85,12 +85,12 @@ class HeroCarousel extends React.PureComponent<HeroCarouselProp<string>> {
           decelerationRate="fast"
           autoplay={true}
           activeAnimationType="decay"
-          autoplayInterval={4000}
-          initialScrollIndex={0}
+          autoplayInterval={3000}
           enableSnap={true}
+          enableMomentum={true}
           loop={true}
-          layout={'default'}
-          layoutCardOffset={15}
+          loopClonesPerSide={5}
+          layoutCardOffset={10}
           data={this.props.CarouselData}
           renderItem={this._renderItem}
           sliderWidth={width - 50}

@@ -1,8 +1,16 @@
 import * as React from 'react';
-import {Text, View, StyleSheet, Dimensions, Image} from 'react-native';
-import {Card, Badge, Divider} from 'react-native-elements';
+import {
+  Text,
+  View,
+  StyleSheet,
+  Dimensions,
+  ActivityIndicator,
+} from 'react-native';
+import {Card, Badge, Divider, Image} from 'react-native-elements';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import API_TOKEN from '../../envExport';
 import {mode, datatype, colorsType} from '../types/types';
+import HeroCarouselDetails from './DetailCarousel';
 const {width, height} = Dimensions.get('screen');
 
 interface MovieDetailsProps {
@@ -13,6 +21,20 @@ interface MovieDetailsProps {
 }
 //theme,popularity,status,overView,title
 const MovieDetails = ({colors, theme, data, navigation}: MovieDetailsProps) => {
+  const api = `https://api.themoviedb.org/3/movie/${data.id}/images?api_key=${API_TOKEN}`;
+  const [movieImages, setMovieImages] = React.useState([]);
+  const imageHeight=height / 2 + 40;
+  React.useEffect(() => {
+    fetch(api)
+      .then((res) => res.json())
+      .then((data) => {
+        setMovieImages(data.backdrops);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  }, []);
+
   return (
     <View
       style={{
@@ -20,24 +42,41 @@ const MovieDetails = ({colors, theme, data, navigation}: MovieDetailsProps) => {
       }}>
       <View
         style={{
-          height: height / 2 + 40,
+          height:imageHeight ,
         }}>
-        <Image
-          style={styles.image}
-          resizeMode="cover"
-          source={{
-            uri: data.poster_path
-              ? `https://image.tmdb.org/t/p/original/${data.poster_path}`
-              : 'https://static.dribbble.com/users/3281732/screenshots/12688476/media/cf19d222859aab75ed995365338d4c32.jpg',
-          }}
-        />
+        {movieImages.length > 0 ? (
+          <HeroCarouselDetails CarouselData={movieImages} height={imageHeight} colors={colors} />
+        ) : (
+          <Image
+            style={{...styles.image}}
+            transition={true}
+            PlaceholderContent={
+              <View
+                style={{
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginVertical: 30,
+                  paddingVertical: 30,
+                }}>
+                <ActivityIndicator size="large" color="red" />
+              </View>
+            }
+            resizeMode="cover"
+            source={{
+              uri: data.poster_path
+                ? `https://image.tmdb.org/t/p/original/${data.poster_path}`
+                : `https://image.tmdb.org/t/p/original/${data.backdrop_path}`,
+            }}
+          />
+        )}
       </View>
       <Card
         containerStyle={{
-          backgroundColor: theme == 'dark' ? '#303030' : '#FAF7FF',
+          backgroundColor: theme == 'dark' ? '#303030' : colors.card,
           width: width,
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
+          borderWidth:0,
           minHeight: height / 2 + 40,
         }}>
         <View
@@ -159,7 +198,6 @@ const MovieDetails = ({colors, theme, data, navigation}: MovieDetailsProps) => {
               width: 65,
             }}
           />
-
           <Text
             style={{
               fontFamily: 'HindVadodara-Light',
