@@ -1,8 +1,8 @@
 {
-  "name": "Movie_Intent",
-  "version": "0.0.1",
-  "private": true,
-  "scripts": {
+    "name": "Movie_Intent",
+    "version": "0.0.1",
+    "private": true,
+    "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
@@ -11,8 +11,8 @@
     "build-android": "cd ./android && gradlew assembleRelease",
     "bundle-android": "cd ./android && gradlew clean && gradlew bundleRelease",
     "clean-android": "cd android && gradlew clean"
-  },
-  "dependencies": {
+    },
+    "dependencies": {
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/native": "^5.7.3",
     "@react-navigation/stack": "^5.9.0",
@@ -29,8 +29,8 @@
     "react-native-screens": "^2.10.1",
     "react-native-snap-carousel": "^3.9.1",
     "react-native-vector-icons": "^7.0.0"
-  },
-  "devDependencies": {
+    },
+    "devDependencies": {
     "@babel/core": "^7.8.4",
     "@babel/runtime": "^7.8.4",
     "@react-native-community/eslint-config": "^1.1.0",
@@ -44,8 +44,8 @@
     "metro-react-native-babel-preset": "^0.59.0",
     "react-test-renderer": "16.13.1",
     "typescript": "^4.0.2"
-  },
-  "jest": {
+    },
+    "jest": {
     "preset": "react-native"
-  }
-}
+    }
+    }

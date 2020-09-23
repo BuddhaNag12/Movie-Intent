@@ -5,6 +5,7 @@ import LottieView from 'lottie-react-native';
 import API_TOKEN from '../../envExport';
 import MovieDetails from '../components/MovieDetailsList';
 import {datatype} from '../types/types';
+import { useTheme } from '@react-navigation/native';
 interface DetailsScreenProps {
   route: {
     params: any;
@@ -14,7 +15,7 @@ interface DetailsScreenProps {
 
 const DetailsScreen = ({navigation, route: {params}}: DetailsScreenProps) => {
   const scheme = useColorScheme();
-
+  const {colors} = useTheme();
   const {id} = params;
   const api = `https://api.themoviedb.org/3/movie/${id}?api_key=${API_TOKEN}&language=en-US`;
 
@@ -51,6 +52,7 @@ const DetailsScreen = ({navigation, route: {params}}: DetailsScreenProps) => {
           {MovieData ? (
             <MovieDetails
               navigation={navigation}
+              colors={colors}
               data={MovieData}
               theme={scheme == 'dark' ? 'dark' : 'light'}
             />

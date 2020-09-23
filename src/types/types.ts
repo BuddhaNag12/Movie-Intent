@@ -2,12 +2,12 @@ export type mode = 'dark' | 'light';
 export type size = 'large' | 'medium' | 'small';
 
 export type colorsType = {
-    text: string;
-    card: string;
-    border: string;
-    background: string;
-    primary: string;
-    notification: string;
+  primary: string;
+  background: string;
+  card: string;
+  text: string;
+  border: string;
+  notification: string;
   };
 
  export type datatype={

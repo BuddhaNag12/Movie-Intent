@@ -1,17 +1,18 @@
 import * as React from 'react';
 import {Text, View, StyleSheet, StatusBar, Image} from 'react-native';
 import {Header} from 'react-native-elements';
-import {mode} from '../types/types';
+import {colorsType, mode} from '../types/types';
 import SearchButton from './searchButton';
 
 interface HeaderProps {
   theme: mode;
   isDetailsScreen: boolean;
+  color: colorsType;
 }
 
-const MyHeader = ({theme, isDetailsScreen}: HeaderProps) => {
+const MyHeader = ({color, theme, isDetailsScreen}: HeaderProps) => {
   return (
-    <View style={{backgroundColor: 'black'}}>
+    <View style={{backgroundColor: color.background}}>
       <StatusBar
         barStyle={theme == 'dark' ? 'light-content' : 'dark-content'}
         translucent={isDetailsScreen == true ? true : false}
@@ -20,10 +21,10 @@ const MyHeader = ({theme, isDetailsScreen}: HeaderProps) => {
       />
       {!isDetailsScreen ? (
         <Header
-          barStyle={theme == 'dark' ? 'dark-content' : 'dark-content'}
+          barStyle={theme == 'dark' ? 'light-content' : 'dark-content'}
           containerStyle={{
             backgroundColor: theme == 'dark' ? 'black' : 'white',
-            borderBottomColor: 'white',
+            borderBottomColor: color.border,
           }}
           leftComponent={
             <View
@@ -44,6 +45,7 @@ const MyHeader = ({theme, isDetailsScreen}: HeaderProps) => {
                 fontFamily: 'Nunito-Bold',
                 fontSize: 20,
                 fontStyle: 'normal',
+                color: theme == 'dark' ? 'whitesmoke' : 'black',
               }}>
               Movie Intent
             </Text>

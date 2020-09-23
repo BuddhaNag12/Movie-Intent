@@ -1,6 +1,5 @@
 import * as React from 'react';
-import {Text, View, StyleSheet, Image} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {size, mode, colorsType} from '../types/types';
 
 interface HrCardsProps<T> {
@@ -22,6 +21,7 @@ const HrCards = ({
     <View style={styles.container}>
       {Movies.map((items: any, index: number) => (
         <TouchableOpacity
+         
           style={{borderRadius: 30, paddingHorizontal: 10, paddingVertical: 10}}
           key={index}
           onPress={() =>
@@ -36,7 +36,7 @@ const HrCards = ({
               alignItems: 'center',
               elevation: 2,
               backgroundColor: theme == 'dark' ? '#303030' : '#F2F2F2',
-              borderBottomColor: theme == 'dark' ? '#F2F2F2' : undefined,
+              borderBottomColor: theme == 'dark' ? '#F2F2F2' : '#303030',
               borderRadius: 30,
             }}>
             <Image

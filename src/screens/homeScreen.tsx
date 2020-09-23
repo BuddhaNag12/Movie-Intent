@@ -11,7 +11,6 @@ import HeroCarousel from '../components/carousel';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
   },
   image: {
     width: '100%',
@@ -115,7 +114,7 @@ const Home = ({navigation}: any) => {
     );
   }
   return (
-    <View style={styles.container}>
+    <View style={{...styles.container,backgroundColor:scheme=='dark'?colors.background:'white'}}>
       <ScrollView >
         <MyBottomSheet
           isVisible={isVisible}

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {BottomSheet, ListItem, Card, Button, Icon} from 'react-native-elements';
-import {mode,colorsType} from '../types/types';
+import {mode, colorsType} from '../types/types';
 
 interface BottomSheetProp {
   isVisible: boolean;
@@ -10,37 +10,50 @@ interface BottomSheetProp {
   toggleBottomSheet: () => void;
   filterSearch: (number: number) => void;
   setDefault: (isDefault: boolean) => void;
-  theme:mode;
-  colors:colorsType;
+  theme: mode;
+  colors: colorsType;
 }
 
 const MyBottomSheet = (props: BottomSheetProp) => {
   const list: Array<Object> = [
     {
       title: 'Scifi movies',
-      containerStyle: {backgroundColor:props.theme=='dark' ? 'grey' :'white',},
-      style: {borderRadius: 5},
+      containerStyle: {
+        ...styles.containerStyle,
+        backgroundColor: props.theme == 'dark' ? 'grey' : 'white',
+      },
+      style: {...styles.buttonStyle},
       titleStyle: {color: props.colors.text, fontFamily: 'Nunito-Light'},
       onPress: () => props.filterSearch(878),
     },
     {
       title: 'Romantic Movies',
-      containerStyle: {backgroundColor:props.theme=='dark' ? 'grey' :'white' ,},
-      style: {borderRadius: 5},
+      containerStyle: {
+        ...styles.containerStyle,
+        backgroundColor: props.theme == 'dark' ? 'grey' : 'white',
+      },
+      style: {...styles.buttonStyle},
       titleStyle: {color: props.colors.text, fontFamily: 'Nunito-Light'},
       onPress: () => props.filterSearch(10749),
     },
     {
       title: 'Default Results',
-      containerStyle: {backgroundColor:props.theme=='dark' ? 'grey' :'white' ,},
-      style: {borderRadius: 5},
+      containerStyle: {
+        ...styles.containerStyle,
+        backgroundColor: props.theme == 'dark' ? 'grey' : 'white',
+      },
+      style: {...styles.buttonStyle},
       titleStyle: {color: props.colors.text, fontFamily: 'Nunito-Light'},
       onPress: () => props.setDefault(true),
     },
     {
       title: 'Cancel',
-      style: {borderRadius: 5},
-      containerStyle: {backgroundColor: 'red', borderRadius: 5},
+      style: {...styles.buttonStyle},
+      containerStyle: {
+        ...styles.containerStyle,
+        backgroundColor: 'red',
+        borderRadius: 5,
+      },
       titleStyle: {color: 'white', fontFamily: 'Nunito-Light'},
       onPress: () => props.setIsVisible(false),
     },
@@ -77,9 +90,10 @@ const MyBottomSheet = (props: BottomSheetProp) => {
             containerStyle={{
               width: '100%',
               alignSelf: 'center',
-              backgroundColor: props.theme=='dark'? 'black' : 'white',
+              backgroundColor: props.theme == 'dark' ? 'black' : 'white',
             }}>
-            <Card.Title style={{fontFamily: 'Nunito-Bold',color:props.colors.text}}>
+            <Card.Title
+              style={{fontFamily: 'Nunito-Bold', color: props.colors.text}}>
               Filter Movies
             </Card.Title>
             <Card.Divider />
@@ -109,5 +123,9 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'flex-end',
+  },
+  containerStyle: {},
+  buttonStyle: {
+    borderRadius: 5,
   },
 });

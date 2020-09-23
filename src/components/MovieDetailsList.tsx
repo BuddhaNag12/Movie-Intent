@@ -2,16 +2,17 @@ import * as React from 'react';
 import {Text, View, StyleSheet, Dimensions, Image} from 'react-native';
 import {Card, Badge, Divider} from 'react-native-elements';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {mode, datatype} from '../types/types';
+import {mode, datatype, colorsType} from '../types/types';
 const {width, height} = Dimensions.get('screen');
 
 interface MovieDetailsProps {
   theme?: mode;
   data: datatype;
   navigation: any;
+  colors: colorsType;
 }
 //theme,popularity,status,overView,title
-const MovieDetails = ({theme, data, navigation}: MovieDetailsProps) => {
+const MovieDetails = ({colors, theme, data, navigation}: MovieDetailsProps) => {
   return (
     <View
       style={{
@@ -155,9 +156,10 @@ const MovieDetails = ({theme, data, navigation}: MovieDetailsProps) => {
             style={{
               backgroundColor: theme == 'dark' ? 'white' : 'black',
               borderWidth: 0.5,
-              width: 50,
+              width: 65,
             }}
           />
+
           <Text
             style={{
               fontFamily: 'HindVadodara-Light',

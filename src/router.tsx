@@ -6,7 +6,7 @@ import {
 import {
   NavigationContainer,
   DefaultTheme,
-  DarkTheme,
+  DarkTheme, useTheme
 } from '@react-navigation/native';
 
 import {AppearanceProvider, useColorScheme} from 'react-native-appearance';
@@ -20,6 +20,7 @@ import MyHeader from './components/header';
 const Stack = createStackNavigator();
 export default function App() {
   const scheme = useColorScheme();
+  const {colors} = useTheme();
   return (
     <AppearanceProvider>
       <NavigationContainer theme={scheme == 'dark' ? DarkTheme : DefaultTheme}>
@@ -49,6 +50,7 @@ export default function App() {
                 <MyHeader
                   {...props}
                   isDetailsScreen={false}
+                  color={colors}
                   theme={scheme == 'dark' ? 'dark' : 'light'}
                 />
               ),
