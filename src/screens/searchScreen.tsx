@@ -5,11 +5,10 @@ import API_TOKEN from '../../envExport';
 import MovieList from '../components/movieList';
 import {useColorScheme} from 'react-native-appearance';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-type genres = 'action' | 'scifi' | 'adventure' | 'romantic';
+import {SharedElement} from 'react-navigation-shared-element';
 
 interface SearchScreenProps {
   navigation: any;
-  genres?: genres;
   route: any;
 }
 
@@ -95,7 +94,6 @@ const SearchScreen = (props: SearchScreenProps) => {
           }}>
           Genres
         </Text>
-        {/* <Button onPress={() => setPageNumber(2)} title="2" /> */}
         <ScrollView
           horizontal={true}
           showsHorizontalScrollIndicator={false}
@@ -104,8 +102,6 @@ const SearchScreen = (props: SearchScreenProps) => {
             padding: 10,
           }}>
           {genres.map((i: any, index: number) => {
-            // console.log(genres);
-
             return (
               <TouchableOpacity
                 key={index}
@@ -120,37 +116,27 @@ const SearchScreen = (props: SearchScreenProps) => {
                   marginHorizontal: 5,
                 }}
                 onPress={() => fetchByGenres(i.id)}>
-                <Text
-                  style={{
-                    color: scheme == 'dark' ? '#fefefe' : '#fefefe',
-                    fontFamily: 'Nunito-Light',
-                    fontSize: 18,
-                  }}>
-                  {i.name}
-                </Text>
+                <SharedElement id={`item.${i.id}.text`}>
+                  <Text
+                    style={{
+                      color: scheme == 'dark' ? '#fefefe' : '#fefefe',
+                      fontFamily: 'Nunito-Light',
+                      fontSize: 18,
+                    }}>
+                    {i.name}
+                  </Text>
+                </SharedElement>
               </TouchableOpacity>
             );
           })}
         </ScrollView>
       </View>
-
-      {/* {searchText == '' || error ? (
-        <View style={{justifyContent: 'center', alignItems: 'center'}}>
-          <Text style={{fontFamily: 'HindVadodara-SemiBold', fontSize: 20}}>
-            Opps no result found
-          </Text>
-          <Text style={{fontFamily: 'HindVadodara-Light', fontSize: 16}}>
-            Try Searching with movie name {error}
-          </Text>
-        </View>
-      ) : ( */}
       <MovieList
         searchItems={searchResults}
         navigation={props.navigation}
         loading={loading}
         theme={scheme == 'dark' ? 'dark' : 'light'}
       />
-      {/* )} */}
     </View>
   );
 };

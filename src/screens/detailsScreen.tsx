@@ -5,7 +5,9 @@ import LottieView from 'lottie-react-native';
 import API_TOKEN from '../../envExport';
 import MovieDetails from '../components/MovieDetailsList';
 import {datatype} from '../types/types';
-import { useTheme } from '@react-navigation/native';
+import {useTheme} from '@react-navigation/native';
+import LinearGradient from 'react-native-linear-gradient';
+import {SharedElement} from 'react-navigation-shared-element';
 interface DetailsScreenProps {
   route: {
     params: any;
@@ -28,7 +30,6 @@ const DetailsScreen = ({navigation, route: {params}}: DetailsScreenProps) => {
       .then((data) => data.json())
       .then((res) => {
         setLoading(false);
-        // data.push(res)
         setMoviesFetched(res);
       });
   }, []);
@@ -48,9 +49,18 @@ const DetailsScreen = ({navigation, route: {params}}: DetailsScreenProps) => {
   return (
     <>
       <ScrollView>
-        <View style={styles.container}>
+        <LinearGradient
+          start={{x: 1, y: 1}}
+          end={{x: 1, y: 0}}
+          colors={
+            scheme == 'dark'
+              ? ['#53515E', '#10545E', '#872350']
+              : ['#53515E', '#F85555', '#BAFCDC']
+          }
+          style={styles.container}>
           {MovieData ? (
             <MovieDetails
+              transitionId={id}
               navigation={navigation}
               colors={colors}
               data={MovieData}
@@ -59,12 +69,21 @@ const DetailsScreen = ({navigation, route: {params}}: DetailsScreenProps) => {
           ) : (
             <></>
           )}
-        </View>
+        </LinearGradient>
       </ScrollView>
     </>
   );
 };
 
+DetailsScreen.sharedElementsConfig = (route: any) => {
+  const {id} = route.params;
+  return [
+    {
+      id: `item.${id}.text`,
+      animation: 'fade',
+    },
+  ];
+};
 export default DetailsScreen;
 
 const styles = StyleSheet.create({

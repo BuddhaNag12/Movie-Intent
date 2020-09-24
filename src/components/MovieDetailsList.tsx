@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import {Card, Badge, Divider, Image} from 'react-native-elements';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {SharedElement} from 'react-navigation-shared-element';
 import API_TOKEN from '../../envExport';
 import {mode, datatype, colorsType} from '../types/types';
 import HeroCarouselDetails from './DetailCarousel';
@@ -18,12 +19,20 @@ interface MovieDetailsProps {
   data: datatype;
   navigation: any;
   colors: colorsType;
+  transitionId: number;
 }
 //theme,popularity,status,overView,title
-const MovieDetails = ({colors, theme, data, navigation}: MovieDetailsProps) => {
+const MovieDetails = ({
+  colors,
+  theme,
+  data,
+  navigation,
+  transitionId,
+}: MovieDetailsProps) => {
   const api = `https://api.themoviedb.org/3/movie/${data.id}/images?api_key=${API_TOKEN}`;
   const [movieImages, setMovieImages] = React.useState([]);
-  const imageHeight=height / 2 + 40;
+  const imageHeight = height / 2 + 40;
+
   React.useEffect(() => {
     fetch(api)
       .then((res) => res.json())
@@ -42,10 +51,14 @@ const MovieDetails = ({colors, theme, data, navigation}: MovieDetailsProps) => {
       }}>
       <View
         style={{
-          height:imageHeight ,
+          height: imageHeight,
         }}>
         {movieImages.length > 0 ? (
-          <HeroCarouselDetails CarouselData={movieImages} height={imageHeight} colors={colors} />
+          <HeroCarouselDetails
+            CarouselData={movieImages}
+            height={imageHeight}
+            colors={colors}
+          />
         ) : (
           <Image
             style={{...styles.image}}
@@ -72,11 +85,11 @@ const MovieDetails = ({colors, theme, data, navigation}: MovieDetailsProps) => {
       </View>
       <Card
         containerStyle={{
-          backgroundColor: theme == 'dark' ? '#303030' : colors.card,
+          backgroundColor: theme == 'dark' ? '#303030' : '#FCF8FF',
           width: width,
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
-          borderWidth:0,
+          borderWidth: 0,
           minHeight: height / 2 + 40,
         }}>
         <View
@@ -88,13 +101,19 @@ const MovieDetails = ({colors, theme, data, navigation}: MovieDetailsProps) => {
               flexDirection: 'row',
               flexWrap: 'wrap',
             }}>
-            <Text
+            <SharedElement
+              id={`item.${transitionId}.text`}
               style={{
                 ...styles.MovieTitle,
-                color: theme == 'dark' ? 'white' : 'black',
               }}>
-              {data.title}
-            </Text>
+              <Text
+                style={{
+                  ...styles.MovieTitle,
+                  color: theme == 'dark' ? 'white' : 'black',
+                }}>
+                {data.title}
+              </Text>
+            </SharedElement>
             <Badge
               status="warning"
               badgeStyle={{

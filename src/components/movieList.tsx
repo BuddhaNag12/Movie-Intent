@@ -38,8 +38,8 @@ const MovieList = (props: movieTitle) => {
           marginVertical: 2,
           marginHorizontal: 5,
           borderBottomColor: 'transparent',
-          elevation: 1,
-          backgroundColor: props.theme == 'dark' ? '#303030' : 'f2f2f2',
+          elevation: 2,
+          backgroundColor: props.theme == 'dark' ? '#303030' : '#FCF8FF',
         }}>
         <TouchableOpacity
           onPress={() =>
@@ -57,10 +57,11 @@ const MovieList = (props: movieTitle) => {
               justifyContent: 'center',
               paddingHorizontal: 10,
               flex: 1,
+              width:80,height:80
             }}>
             <Image
-              style={{width: 80, height: 80, borderRadius: 30}}
-              resizeMode="cover"
+              style={{width: 80, height: 80,borderRadius:24,...StyleSheet.absoluteFillObject}}
+              resizeMode='contain'
               source={{
                 uri: item.poster_path
                   ? 'https://image.tmdb.org/t/p/w185/' + item.poster_path

@@ -23,3 +23,8 @@ export type colorsType = {
     vote_average:number;
   }
 
+  export type RootStackParamList = {
+    Home: undefined;
+    DetailScreen: { id: number };
+    Search:undefined;
+  };

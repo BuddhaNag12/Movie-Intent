@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, StyleSheet, Text, ScrollView, RefreshControl} from 'react-native';
+import {View, StyleSheet, Text, ScrollView} from 'react-native';
 import {Appearance} from 'react-native-appearance';
 import MyBottomSheet from '../components/BottomSheet';
 import HrCardsProps from '../components/horizontalCard';
@@ -97,32 +97,27 @@ const Home = ({navigation}: any) => {
   if (loading) {
     return (
       <LottieView
-        source={require('../../assets/loading3.json')}
-        colorFilters={[
-          {
-            keypath: 'button',
-            color: '#F00000',
-          },
-          {
-            keypath: 'Sending Loader',
-            color: '#F00000',
-          },
-        ]}
+        source={require('../../assets/loading2.json')}
         autoPlay
         loop
       />
     );
   }
+
   return (
-    <View style={{...styles.container,backgroundColor:scheme=='dark'?colors.background:'white'}}>
-      <ScrollView >
+    <View
+      style={{
+        ...styles.container,
+        backgroundColor: scheme == 'dark' ? colors.background : 'white',
+      }}>
+      <ScrollView>
         <MyBottomSheet
           isVisible={isVisible}
           setIsVisible={setIsVisible}
           toggleBottomSheet={toggleBottomSheet}
           filterSearch={filterSearch}
           setDefault={setDefault}
-          theme={scheme=='dark' ? 'dark' : 'light'}
+          theme={scheme == 'dark' ? 'dark' : 'light'}
           colors={colors}
         />
         <Text

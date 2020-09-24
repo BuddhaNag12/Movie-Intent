@@ -6,9 +6,10 @@ import {
 import {
   NavigationContainer,
   DefaultTheme,
-  DarkTheme, useTheme
+  DarkTheme,
+  useTheme,
 } from '@react-navigation/native';
-
+import {createSharedElementStackNavigator} from 'react-navigation-shared-element';
 import {AppearanceProvider, useColorScheme} from 'react-native-appearance';
 
 // components
@@ -16,8 +17,9 @@ import Home from '../src/screens/homeScreen';
 import DetailsScreen from './screens/detailsScreen';
 import SearchScreen from './screens/searchScreen';
 import MyHeader from './components/header';
+import {RootStackParamList} from './types/types';
 
-const Stack = createStackNavigator();
+const Stack = createSharedElementStackNavigator<RootStackParamList>();
 export default function App() {
   const scheme = useColorScheme();
   const {colors} = useTheme();
@@ -62,7 +64,7 @@ export default function App() {
             options={{
               headerTransparent: true,
               headerTitle: '',
-              headerTintColor: '#FF5159',
+              headerTintColor: 'white',
             }}
           />
           <Stack.Screen name="Search" component={SearchScreen} />
