@@ -9,7 +9,6 @@ import {
   DarkTheme,
   useTheme,
 } from '@react-navigation/native';
-import {createSharedElementStackNavigator} from 'react-navigation-shared-element';
 import {AppearanceProvider, useColorScheme} from 'react-native-appearance';
 
 // components
@@ -19,7 +18,7 @@ import SearchScreen from './screens/searchScreen';
 import MyHeader from './components/header';
 import {RootStackParamList} from './types/types';
 
-const Stack = createSharedElementStackNavigator<RootStackParamList>();
+const Stack = createStackNavigator<RootStackParamList>();
 export default function App() {
   const scheme = useColorScheme();
   const {colors} = useTheme();

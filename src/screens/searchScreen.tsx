@@ -5,7 +5,6 @@ import API_TOKEN from '../../envExport';
 import MovieList from '../components/movieList';
 import {useColorScheme} from 'react-native-appearance';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {SharedElement} from 'react-navigation-shared-element';
 
 interface SearchScreenProps {
   navigation: any;
@@ -116,7 +115,6 @@ const SearchScreen = (props: SearchScreenProps) => {
                   marginHorizontal: 5,
                 }}
                 onPress={() => fetchByGenres(i.id)}>
-                <SharedElement id={`item.${i.id}.text`}>
                   <Text
                     style={{
                       color: scheme == 'dark' ? '#fefefe' : '#fefefe',
@@ -125,7 +123,6 @@ const SearchScreen = (props: SearchScreenProps) => {
                     }}>
                     {i.name}
                   </Text>
-                </SharedElement>
               </TouchableOpacity>
             );
           })}

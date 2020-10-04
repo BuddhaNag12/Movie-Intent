@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import {Card, Badge, Divider, Image} from 'react-native-elements';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {SharedElement} from 'react-navigation-shared-element';
 import API_TOKEN from '../../envExport';
 import {mode, datatype, colorsType} from '../types/types';
 import HeroCarouselDetails from './DetailCarousel';
@@ -101,11 +100,6 @@ const MovieDetails = ({
               flexDirection: 'row',
               flexWrap: 'wrap',
             }}>
-            <SharedElement
-              id={`item.${transitionId}.text`}
-              style={{
-                ...styles.MovieTitle,
-              }}>
               <Text
                 style={{
                   ...styles.MovieTitle,
@@ -113,7 +107,6 @@ const MovieDetails = ({
                 }}>
                 {data.title}
               </Text>
-            </SharedElement>
             <Badge
               status="warning"
               badgeStyle={{

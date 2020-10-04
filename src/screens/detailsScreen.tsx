@@ -7,7 +7,6 @@ import MovieDetails from '../components/MovieDetailsList';
 import {datatype} from '../types/types';
 import {useTheme} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
-import {SharedElement} from 'react-navigation-shared-element';
 interface DetailsScreenProps {
   route: {
     params: any;

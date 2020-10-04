@@ -7,7 +7,7 @@ export type colorsType = {
   card: string;
   text: string;
   border: string;
-  notification: string;
+  // notification: string;
   };
 
  export type datatype={

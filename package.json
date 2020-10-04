@@ -14,8 +14,8 @@
     },
     "dependencies": {
         "@react-native-community/masked-view": "^0.1.10",
-        "@react-navigation/native": "5.0.9",
-        "@react-navigation/stack": "5.1.1",
+        "@react-navigation/native": "^5.7.5",
+        "@react-navigation/stack": "^5.9.2",
         "@types/react-native-snap-carousel": "^3.8.2",
         "lottie-react-native": "^3.5.0",
         "react": "16.13.1",
@@ -29,10 +29,8 @@
         "react-native-reanimated": "^1.13.0",
         "react-native-safe-area-context": "^3.1.7",
         "react-native-screens": "^2.10.1",
-        "react-native-shared-element": "^0.7.0",
         "react-native-snap-carousel": "^3.9.1",
-        "react-native-vector-icons": "^7.0.0",
-        "react-navigation-shared-element": "^5.0.0-alpha1"
+        "react-native-vector-icons": "^7.0.0"
     },
     "devDependencies": {
         "@babel/core": "^7.8.4",
