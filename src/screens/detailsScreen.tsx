@@ -20,17 +20,25 @@ const DetailsScreen = ({navigation, route: {params}}: DetailsScreenProps) => {
   const {id} = params;
   const api = `https://api.themoviedb.org/3/movie/${id}?api_key=${API_TOKEN}&language=en-US`;
 
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState<boolean>(false);
   const [MovieData, setMoviesFetched] = React.useState<datatype>();
 
   React.useEffect(() => {
     setLoading(true);
+    let isMounted: boolean = true;
+
     fetch(api)
       .then((data) => data.json())
       .then((res) => {
-        setLoading(false);
-        setMoviesFetched(res);
+        if (isMounted) {
+          setLoading(false);
+          setMoviesFetched(res);
+        }
       });
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   if (loading) {
@@ -46,31 +54,29 @@ const DetailsScreen = ({navigation, route: {params}}: DetailsScreenProps) => {
   }
 
   return (
-    <>
-      <ScrollView>
-        <LinearGradient
-          start={{x: 1, y: 1}}
-          end={{x: 1, y: 0}}
-          colors={
-            scheme == 'dark'
-              ? ['#53515E', '#10545E', '#872350']
-              : ['#53515E', '#F85555', '#BAFCDC']
-          }
-          style={styles.container}>
-          {MovieData ? (
-            <MovieDetails
-              transitionId={id}
-              navigation={navigation}
-              colors={colors}
-              data={MovieData}
-              theme={scheme == 'dark' ? 'dark' : 'light'}
-            />
-          ) : (
-            <></>
-          )}
-        </LinearGradient>
-      </ScrollView>
-    </>
+    <ScrollView>
+      <LinearGradient
+        start={{x: 1, y: 1}}
+        end={{x: 1, y: 0}}
+        colors={
+          scheme == 'dark'
+            ? ['#53515E', '#10545E', '#872350']
+            : ['#53515E', '#F85555', '#BAFCDC']
+        }
+        style={styles.container}>
+        {MovieData && !loading ? (
+          <MovieDetails
+            transitionId={id}
+            navigation={navigation}
+            colors={colors}
+            data={MovieData}
+            theme={scheme == 'dark' ? 'dark' : 'light'}
+          />
+        ) : (
+          <></>
+        )}
+      </LinearGradient>
+    </ScrollView>
   );
 };
 

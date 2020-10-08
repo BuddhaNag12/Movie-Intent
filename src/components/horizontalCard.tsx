@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {size, mode, colorsType} from '../types/types';
-import * as Animatable from 'react-native-animatable';
 interface HrCardsProps<T> {
   Movies: Array<T>;
   navigation: any;
@@ -20,12 +19,15 @@ const HrCards = ({
   return (
     <View style={styles.container}>
       {Movies.map((items: any, index: number) => (
-        <Animatable.View animation="fadeIn" duration={800} delay={1000} key={index}>
+        <View
+          key={index}
+          style={{
+            marginHorizontal: 5,
+            width: cardSize == 'large' ? 130 : 110,
+          }}>
           <TouchableOpacity
             style={{
               borderRadius: 30,
-              paddingHorizontal: 10,
-              paddingVertical: 10,
             }}
             key={index}
             onPress={() =>
@@ -33,31 +35,27 @@ const HrCards = ({
                 id: items.id,
               })
             }>
-            <Animatable.View
+            <View
               style={{
-                width: cardSize == 'large' ? 250 : 200,
-                height: cardSize == 'large' ? 200 : 200,
+                width: cardSize == 'large' ? 130 : 110,
+                height: cardSize == 'large' ? 180 : 160,
                 alignItems: 'center',
-                elevation: 2,
-                backgroundColor: theme == 'dark' ? '#303030' : '#F2F2F2',
-                borderBottomColor: theme == 'dark' ? '#F2F2F2' : '#303030',
-                borderRadius: 30,
+                elevation: 3,
+                borderRadius: 5,
               }}>
               <Image
                 style={{
                   width: '100%',
-                  height: '60%',
-                  borderTopRightRadius: 30,
-                  borderTopLeftRadius: 30,
+                  ...StyleSheet.absoluteFillObject,
+                  borderRadius: 5,
                 }}
                 resizeMode="cover"
                 source={{
                   uri: items.backdrop_path
-                    ? 'https://image.tmdb.org/t/p/w500/' + items.backdrop_path
-                    : 'https://image.tmdb.org/t/p/w500/' + items.poster_path,
+                    ? items.backdrop_path
+                    : items.poster_path,
                 }}
               />
-
               <View style={{position: 'absolute', top: 10, right: 30}}>
                 <Text
                   style={{
@@ -70,44 +68,44 @@ const HrCards = ({
                   {items.vote_average}
                 </Text>
               </View>
-
-              <View>
-                <Text
-                  style={{
-                    fontFamily: 'HindVadodara-Bold',
-                    fontSize: 15,
-                    textAlign: 'center',
-                    // color: theme == 'dark' ? 'white' : 'black',
-                    color: colors.text,
-                    marginVertical: 5,
-                  }}>
-                  {items.title}
-                </Text>
-                <Text
-                  style={{
-                    fontFamily: 'HindVadodara-Light',
-                    fontSize: 15,
-                    textAlign: 'center',
-                    color: colors.text,
-                    // color: theme == 'dark' ? 'white' : 'black',
-                  }}>
-                  Release Date
-                </Text>
-                <Text
-                  style={{
-                    fontFamily: 'HindVadodara-Light',
-                    fontSize: 15,
-                    textAlign: 'center',
-                    marginVertical: 2,
-                    color: colors.text,
-                    // color: theme == 'dark' ? 'white' : 'black',
-                  }}>
-                  {items.release_date}
-                </Text>
-              </View>
-            </Animatable.View>
+            </View>
+            <View>
+              <Text
+                numberOfLines={2}
+                allowFontScaling={true}
+                textBreakStrategy="highQuality"
+                style={{
+                  fontFamily: 'HindVadodara-Bold',
+                  fontSize: 15,
+                  textAlign: 'left',
+                  color: colors.text,
+                  marginVertical: 5,
+                }}>
+                {items.title}
+              </Text>
+              <Text
+                style={{
+                  fontFamily: 'HindVadodara-Light',
+                  fontSize: 12,
+                  textAlign: 'left',
+                  color: colors.text,
+                }}>
+                Release Date
+              </Text>
+              <Text
+                style={{
+                  fontFamily: 'HindVadodara-Light',
+                  fontSize: 12,
+                  textAlign: 'left',
+                  marginVertical: 2,
+                  color: colors.text,
+                  // color: theme == 'dark' ? 'white' : 'black',
+                }}>
+                {items.release_date}
+              </Text>
+            </View>
           </TouchableOpacity>
-        </Animatable.View>
+        </View>
       ))}
     </View>
   );

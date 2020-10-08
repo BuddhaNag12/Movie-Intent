@@ -17,12 +17,13 @@ const styles = StyleSheet.create({
     flex: 1,
     marginBottom: Platform.select({ios: 0, android: 1}),
     backgroundColor: 'white',
-    borderRadius: 8,
+    borderRadius: 16,
   },
   itemTitle: {
     fontFamily: 'Nunito-Bold',
     color: 'black',
-    fontSize: 20,
+    fontSize: 18,
+    paddingHorizontal: 5,
   },
 });
 
@@ -40,32 +41,32 @@ class HeroCarousel extends React.PureComponent<HeroCarouselProp<string>> {
         }>
         <View
           style={{
-            height: 250,
-            width: 250,
+            height: 180,
+            width: 260,
           }}>
           <ParallaxImage
             containerStyle={styles.imageContainer}
-            parallaxFactor={0.4}
+            parallaxFactor={0.6}
             {...parallaxProps}
             source={{
-              uri: item.backdrop_path
-                ? 'https://image.tmdb.org/t/p/w780/' + item.backdrop_path
-                : 'https://image.tmdb.org/t/p/w500/' + item.poster_path,
+              uri: item.backdrop_path ? item.backdrop_path : item.poster_path,
             }}
             style={styles.image}
           />
           <View
             style={{
               position: 'absolute',
-              top: 160,
-              left: 4,
-              right: 10,
-              backgroundColor: 'rgba(255,255,255,0.8)',
-              borderRadius: 8,
-              padding: 8,
-              paddingRight: 10,
+              top: 130,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: 'rgba(255,255,255,0.6)',
+              borderBottomLeftRadius: 16,
+              borderBottomRightRadius: 16,
             }}>
-            <Text style={styles.itemTitle}>{item.title}</Text>
+            <Text numberOfLines={2} style={styles.itemTitle}>
+              {item.title}
+            </Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -80,6 +81,7 @@ class HeroCarousel extends React.PureComponent<HeroCarouselProp<string>> {
           justifyContent: 'center',
           alignItems: 'center',
           paddingVertical: 10,
+          marginVertical: 10,
         }}>
         <Carousel
           decelerationRate="fast"
@@ -87,7 +89,6 @@ class HeroCarousel extends React.PureComponent<HeroCarouselProp<string>> {
           activeAnimationType="decay"
           autoplayInterval={3000}
           enableSnap={true}
-          enableMomentum={true}
           loop={true}
           loopClonesPerSide={5}
           layoutCardOffset={10}

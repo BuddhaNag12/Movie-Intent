@@ -5,6 +5,7 @@ import API_TOKEN from '../../envExport';
 import MovieList from '../components/movieList';
 import {useColorScheme} from 'react-native-appearance';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import MyBottomSheet from '../components/BottomSheet';
 
 interface SearchScreenProps {
   navigation: any;
@@ -19,6 +20,7 @@ const SearchScreen = (props: SearchScreenProps) => {
   const [loading, setLoading] = React.useState<boolean>(false);
   const [pageNumber, setPageNumber] = React.useState<Number>(1);
   const scheme = useColorScheme();
+  
   // const {genre} = props.route.params;
 
   React.useEffect(() => {
@@ -63,6 +65,7 @@ const SearchScreen = (props: SearchScreenProps) => {
       })
       .catch((err) => {
         setError(err);
+        setLoading(false)
       });
   };
   const fetchByGenres = (id: number) => {
@@ -79,6 +82,26 @@ const SearchScreen = (props: SearchScreenProps) => {
         setError(err);
       });
   };
+
+  
+  // const filterSearch = (id: number) => {
+  //   setScifi(true);
+  //   fetch(
+  //     `https://api.themoviedb.org/3/discover/movie?api_key=${API_TOKEN}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&with_genres=${id}&page=1`,
+  //   )
+  //     .then((response) => response.json())
+  //     .then((results) => {
+  //       const TopAverage = results.results.filter(
+  //         (item: datatype) => item.popularity >= 0.6,
+  //       );
+  //       setHotNow(TopAverage);
+  //       setIsVisible(false);
+  //     })
+  //     .catch((e) => setError(e));
+  // };
+  // const toggleBottomSheet = () => {
+  //   setIsVisible(!isVisible);
+  // };
   return (
     <View style={styles.container}>
       <SearchMovies search={searchMovies} setText={setText} autofocus={true} />
@@ -115,18 +138,27 @@ const SearchScreen = (props: SearchScreenProps) => {
                   marginHorizontal: 5,
                 }}
                 onPress={() => fetchByGenres(i.id)}>
-                  <Text
-                    style={{
-                      color: scheme == 'dark' ? '#fefefe' : '#fefefe',
-                      fontFamily: 'Nunito-Light',
-                      fontSize: 18,
-                    }}>
-                    {i.name}
-                  </Text>
+                <Text
+                  style={{
+                    color: scheme == 'dark' ? '#fefefe' : '#fefefe',
+                    fontFamily: 'Nunito-Light',
+                    fontSize: 18,
+                  }}>
+                  {i.name}
+                </Text>
               </TouchableOpacity>
             );
           })}
         </ScrollView>
+        {/* <MyBottomSheet
+          isVisible={isVisible}
+          setIsVisible={setIsVisible}
+          toggleBottomSheet={toggleBottomSheet}
+          filterSearch={filterSearch}
+          setDefault={setDefault}
+          theme={scheme == 'dark' ? 'dark' : 'light'}
+          colors={colors}
+        /> */}
       </View>
       <MovieList
         searchItems={searchResults}

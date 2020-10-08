@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {Text, View, StyleSheet, StatusBar, Image} from 'react-native';
-import {Header} from 'react-native-elements';
+import {Header, Icon} from 'react-native-elements';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import LinearGradient from 'react-native-linear-gradient';
 import {colorsType, mode} from '../types/types';
 import SearchButton from './searchButton';
 
@@ -11,6 +13,8 @@ interface HeaderProps {
 }
 
 const MyHeader = ({color, theme, isDetailsScreen}: HeaderProps) => {
+  const logoHeight = StatusBar.currentHeight ? StatusBar.currentHeight : 15;
+
   return (
     <View style={{backgroundColor: color.background}}>
       <StatusBar
@@ -27,28 +31,49 @@ const MyHeader = ({color, theme, isDetailsScreen}: HeaderProps) => {
             borderBottomColor: theme == 'dark' ? 'black' : 'white',
           }}
           leftComponent={
-            <View
+            <TouchableOpacity
               style={{
                 paddingVertical: 2,
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <Image
-                source={require('../../assets/logo2.png')}
-                style={styles.logo}
+              <Icon
+                name="menu"
+                size={25}
+                type="material"
+                color={theme == 'dark' ? 'whitesmoke' : 'black'}
               />
-            </View>
+            </TouchableOpacity>
           }
           centerComponent={
-            <Text
+            <LinearGradient
+              start={{x: 1, y: 0}}
+              end={{x: 0, y: 1}}
+              colors={['#F7E06E', '#FFDD33', '#F7EC6E']}
               style={{
-                fontFamily: 'Nunito-Bold',
-                fontSize: 20,
-                fontStyle: 'normal',
-                color: theme == 'dark' ? 'whitesmoke' : 'black',
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'center',
+                marginTop: logoHeight / 2,
+                marginBottom: logoHeight / 2,
+                borderRadius: 5,
               }}>
-              Movie Intent
-            </Text>
+              <Image
+                source={require('../../assets/logo2.png')}
+                style={{width: 25, height: 27, marginHorizontal: 2}}
+              />
+              <Text
+                style={{
+                  fontFamily: 'Nunito-Bold',
+                  fontSize: 20,
+                  fontStyle: 'normal',
+                  paddingHorizontal: 5,
+                  paddingVertical: 3,
+                  color: theme == 'dark' ? 'whitesmoke' : 'black',
+                }}>
+                Movie Intent
+              </Text>
+            </LinearGradient>
           }
           rightComponent={
             <SearchButton theme={theme == 'dark' ? 'dark' : 'light'} />

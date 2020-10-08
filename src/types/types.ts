@@ -1,5 +1,5 @@
 export type mode = 'dark' | 'light';
-export type size = 'large' | 'medium' | 'small';
+export type size = 'large' | 'medium' ;
 
 export type colorsType = {
   primary: string;
@@ -21,6 +21,9 @@ export type colorsType = {
     release_date:string;
     genres:[];
     vote_average:number;
+    popularity:number;
+    original_title:string;
+    genre_ids:[]
   }
 
   export type RootStackParamList = {
