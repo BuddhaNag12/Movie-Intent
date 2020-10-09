@@ -2,6 +2,7 @@ import * as React from 'react';
 import {View, Text, StyleSheet, Platform, Dimensions} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Carousel, {ParallaxImage} from 'react-native-snap-carousel';
+import {getBackdropPath, getImagePath} from '../api';
 const {width} = Dimensions.get('window');
 
 interface HeroCarouselProp<T> {
@@ -49,7 +50,9 @@ class HeroCarousel extends React.PureComponent<HeroCarouselProp<string>> {
             parallaxFactor={0.6}
             {...parallaxProps}
             source={{
-              uri: item.backdrop_path ? item.backdrop_path : item.poster_path,
+              uri: item.backdrop_path
+                ? getBackdropPath(item.backdrop_path)
+                : getImagePath(item.poster_path),
             }}
             style={styles.image}
           />

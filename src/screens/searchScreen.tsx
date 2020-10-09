@@ -5,48 +5,23 @@ import API_TOKEN from '../../envExport';
 import MovieList from '../components/movieList';
 import {useColorScheme} from 'react-native-appearance';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {genres} from '../api';
 import MyBottomSheet from '../components/BottomSheet';
+import {RootStackParamList} from '../types/types';
 
 interface SearchScreenProps {
-  navigation: any;
-  route: any;
+  navigation: RootStackParamList;
+  route: RootStackParamList;
 }
 
-const SearchScreen = (props: SearchScreenProps) => {
+const SearchScreen = ({navigation, route}: SearchScreenProps) => {
   const [searchResults, setSearchResults] = React.useState<Array<object>>([]);
-  const [genres, setGenres] = React.useState<Array<object>>([]);
   const [error, setError] = React.useState<string>('');
   const [searchText, setText] = React.useState<string>('');
   const [loading, setLoading] = React.useState<boolean>(false);
   const [pageNumber, setPageNumber] = React.useState<Number>(1);
   const scheme = useColorScheme();
-  
-  // const {genre} = props.route.params;
 
-  React.useEffect(() => {
-    fetchGenre()
-      .then((res) => {
-        setGenres(res.genres);
-      })
-      .catch((e) => {
-        setError(e);
-      });
-  }, []);
-
-  // sort by popularity and paging and filter through react useEffect
-
-  // React.useEffect(() => {
-  //   fetchByGenres();
-  // }, [pageNumber]);
-
-  async function fetchGenre() {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_TOKEN}&language=en-US`,
-    );
-
-    const data = res.json();
-    return data;
-  }
   const searchMovies = () => {
     setError('');
     setLoading(true);
@@ -65,7 +40,7 @@ const SearchScreen = (props: SearchScreenProps) => {
       })
       .catch((err) => {
         setError(err);
-        setLoading(false)
+        setLoading(false);
       });
   };
   const fetchByGenres = (id: number) => {
@@ -83,7 +58,6 @@ const SearchScreen = (props: SearchScreenProps) => {
       });
   };
 
-  
   // const filterSearch = (id: number) => {
   //   setScifi(true);
   //   fetch(
@@ -162,7 +136,7 @@ const SearchScreen = (props: SearchScreenProps) => {
       </View>
       <MovieList
         searchItems={searchResults}
-        navigation={props.navigation}
+        navigation={navigation}
         loading={loading}
         theme={scheme == 'dark' ? 'dark' : 'light'}
       />

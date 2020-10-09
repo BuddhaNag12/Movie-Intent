@@ -1,14 +1,12 @@
 import * as React from 'react';
-import {View, Text, StyleSheet, Platform, Dimensions} from 'react-native';
+import {View, StyleSheet, Dimensions} from 'react-native';
 import Carousel, {Pagination, ParallaxImage} from 'react-native-snap-carousel';
 import {colorsType} from '../types/types';
-import {LinearGradient} from 'react-native-linear-gradient';
 
 const {width, height} = Dimensions.get('window');
 
 interface HeroCarouselProp<T> {
   CarouselData: Array<T>;
-  height: number;
   colors: colorsType;
 }
 const styles = StyleSheet.create({
@@ -18,10 +16,10 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     flex: 1,
-    marginBottom: Platform.select({ios: 0, android: 1}),
-    backgroundColor: 'white',
     borderRadius: 8,
-    elevation:5
+    elevation: 5,
+    paddingVertical: 5,
+    marginVertical: 5,
   },
   itemTitle: {
     fontFamily: 'Nunito-Bold',
@@ -64,23 +62,15 @@ class HeroCarouselDetails extends React.PureComponent<
   }
   _renderItem = ({item}: any, parallaxProps?: any) => {
     return (
-      <View
-        style={{
-          height: this.props.height - 120,
-          marginVertical: 20,
-          width: width - 120,
-    
-        }}>
-        <ParallaxImage
-          containerStyle={styles.imageContainer}
-          parallaxFactor={0.4}
-          {...parallaxProps}
-          source={{
-            uri: 'https://image.tmdb.org/t/p/w780/' + item.file_path,
-          }}
-          style={styles.image}
-        />
-      </View>
+      <ParallaxImage
+        containerStyle={styles.imageContainer}
+        parallaxFactor={0.4}
+        {...parallaxProps}
+        source={{
+          uri: 'https://image.tmdb.org/t/p/w780/' + item.file_path,
+        }}
+        style={styles.image}
+      />
     );
   };
   render() {

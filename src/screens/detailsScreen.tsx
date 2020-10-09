@@ -7,6 +7,7 @@ import MovieDetails from '../components/MovieDetailsList';
 import {datatype} from '../types/types';
 import {useTheme} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
+import {SharedElement} from 'react-navigation-shared-element';
 interface DetailsScreenProps {
   route: {
     params: any;
@@ -66,7 +67,6 @@ const DetailsScreen = ({navigation, route: {params}}: DetailsScreenProps) => {
         style={styles.container}>
         {MovieData && !loading ? (
           <MovieDetails
-            transitionId={id}
             navigation={navigation}
             colors={colors}
             data={MovieData}
@@ -78,17 +78,10 @@ const DetailsScreen = ({navigation, route: {params}}: DetailsScreenProps) => {
       </LinearGradient>
     </ScrollView>
   );
+
+
 };
 
-DetailsScreen.sharedElementsConfig = (route: any) => {
-  const {id} = route.params;
-  return [
-    {
-      id: `item.${id}.text`,
-      animation: 'fade',
-    },
-  ];
-};
 export default DetailsScreen;
 
 const styles = StyleSheet.create({

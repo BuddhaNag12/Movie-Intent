@@ -47,9 +47,9 @@ const MyHeader = ({color, theme, isDetailsScreen}: HeaderProps) => {
           }
           centerComponent={
             <LinearGradient
-              start={{x: 1, y: 0}}
+              start={{x: 0, y: 0}}
               end={{x: 0, y: 1}}
-              colors={['#F7E06E', '#FFDD33', '#F7EC6E']}
+              colors={['#F2FF67', '#FDD92C', '#FFEC21']}
               style={{
                 flex: 1,
                 flexDirection: 'row',
@@ -64,14 +64,14 @@ const MyHeader = ({color, theme, isDetailsScreen}: HeaderProps) => {
               />
               <Text
                 style={{
-                  fontFamily: 'Nunito-Bold',
+                  fontFamily: 'HindVadodara-Bold',
                   fontSize: 20,
                   fontStyle: 'normal',
                   paddingHorizontal: 5,
                   paddingVertical: 3,
                   color: theme == 'dark' ? 'whitesmoke' : 'black',
                 }}>
-                Movie Intent
+                Movie !ntent
               </Text>
             </LinearGradient>
           }

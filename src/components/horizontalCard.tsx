@@ -1,6 +1,9 @@
 import * as React from 'react';
 import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {getBackdropPath, getImagePath} from '../api';
 import {size, mode, colorsType} from '../types/types';
+import * as Animatable from 'react-native-animatable';
+import {SharedElement} from 'react-navigation-shared-element';
 interface HrCardsProps<T> {
   Movies: Array<T>;
   navigation: any;
@@ -19,7 +22,11 @@ const HrCards = ({
   return (
     <View style={styles.container}>
       {Movies.map((items: any, index: number) => (
-        <View
+        <Animatable.View
+          useNativeDriver
+          animation="fadeInRight"
+          duration={400}
+          delay={600 + index * 60}
           key={index}
           style={{
             marginHorizontal: 5,
@@ -35,6 +42,7 @@ const HrCards = ({
                 id: items.id,
               })
             }>
+            {/* <SharedElement id={`item.${items.id}.photo`}> */}
             <View
               style={{
                 width: cardSize == 'large' ? 130 : 110,
@@ -52,10 +60,11 @@ const HrCards = ({
                 resizeMode="cover"
                 source={{
                   uri: items.backdrop_path
-                    ? items.backdrop_path
-                    : items.poster_path,
+                    ? getBackdropPath(items.backdrop_path)
+                    : getImagePath(items.poster_path),
                 }}
               />
+
               <View style={{position: 'absolute', top: 10, right: 30}}>
                 <Text
                   style={{
@@ -69,6 +78,7 @@ const HrCards = ({
                 </Text>
               </View>
             </View>
+            {/* </SharedElement> */}
             <View>
               <Text
                 numberOfLines={2}
@@ -83,6 +93,7 @@ const HrCards = ({
                 }}>
                 {items.title}
               </Text>
+
               <Text
                 style={{
                   fontFamily: 'HindVadodara-Light',
@@ -105,7 +116,7 @@ const HrCards = ({
               </Text>
             </View>
           </TouchableOpacity>
-        </View>
+        </Animatable.View>
       ))}
     </View>
   );

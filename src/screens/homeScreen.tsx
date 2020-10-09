@@ -7,10 +7,9 @@ import {useTheme} from '@react-navigation/native';
 import HeroCarousel from '../components/carousel';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Divider} from 'react-native-elements';
-import {datatype} from '../types/types';
-import {getMovies, getUpcomingMovies} from '../api';
+import {getUpcomingMovies} from '../api';
 import NetInfo from '@react-native-community/netinfo';
-
+import * as Animatable from 'react-native-animatable';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -31,32 +30,29 @@ const Home = ({navigation}: any) => {
   const [popularMovies, setPopularMovies] = React.useState([]);
   const [HotNow, setHotNow] = React.useState([]);
   const [Internet, setInternet] = React.useState(false);
+
+  const HotNowText: string = 'Hot Now';
+  const UpcomingText: string = 'Upcoming Movies';
+  const PopularText: string = 'Popular Movies';
+
   const scheme = Appearance.getColorScheme();
 
   React.useEffect(() => {
     setLoading(true);
     let isMounted: boolean = true;
-    getMovies()
-      .then((movies) => {
-        if (isMounted) {
-          setPopularMovies(movies);
-          const TopAverage = movies.filter(
-            (item: datatype) => item.vote_average >= 7,
-          );
-          setHotNow(TopAverage);
-        }
+    getUpcomingMovies()
+      .then(({popularMovies, upcomingMovies}) => {
+        setUpcomingMovies(upcomingMovies.results);
+        setPopularMovies(popularMovies.results);
+        const TopAverage = popularMovies.results.filter(
+          (item: any) => item.vote_average >= 7,
+        );
+        setHotNow(TopAverage);
+        setLoading(false);
       })
       .catch((e) => {
         setLoading(false);
         setError(e);
-      });
-    getUpcomingMovies()
-      .then((movies) => {
-        setUpcomingMovies(movies);
-        setLoading(false);
-      })
-      .catch((e) => {
-        setLoading(false);
       });
     NetInfo.fetch()
       .then((state) => {
@@ -69,8 +65,8 @@ const Home = ({navigation}: any) => {
         setError(e);
       });
     return () => {
-      setInternet(false)
-      setLoading(false)
+      setInternet(false);
+      setLoading(false);
       isMounted = false;
     };
   }, []);
@@ -93,9 +89,7 @@ const Home = ({navigation}: any) => {
           }}>
           {!Internet ? (
             <View style={{flex: 1, justifyContent: 'center'}}>
-              <Text style={{textAlign: 'center'}}>
-                Internet Not Connected...
-              </Text>
+              <Text style={{textAlign: 'center'}}>Internet Not Connected</Text>
             </View>
           ) : (
             <ScrollView>
@@ -103,131 +97,153 @@ const Home = ({navigation}: any) => {
                 style={{
                   flex: 1,
                   flexDirection: 'row',
+                  paddingHorizontal: 3,
                 }}>
-                <Text
-                  style={{
-                    fontFamily: 'HindVadodara-Bold',
-                    fontSize: 25,
-                    paddingHorizontal: 10,
-                    color: scheme === 'dark' ? 'white' : 'black',
-                  }}>
-                  Hot Movies
-                </Text>
-                <Divider
-                  style={{
-                    height: 2,
-                    backgroundColor: 'red',
-                    width: 150,
-                    marginVertical: 15,
-                  }}
-                />
+                {HotNowText.split('').map((i: string, index: number) => (
+                  <Animatable.Text
+                    key={index}
+                    useNativeDriver
+                    animation="fadeInRight"
+                    duration={500}
+                    delay={300 + index * 50}
+                    style={{
+                      fontFamily: 'HindVadodara-Bold',
+                      fontSize: 25,
+                      letterSpacing: 0,
+                      color: scheme === 'dark' ? 'white' : 'black',
+                    }}>
+                    {i}
+                  </Animatable.Text>
+                ))}
               </View>
               <HeroCarousel CarouselData={HotNow} navigation={navigation} />
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}>
-                <Text
+              <View style={{flex: 1}}>
+                <View
                   style={{
-                    fontFamily: 'HindVadodara-Bold',
-                    fontSize: 25,
-                    paddingHorizontal: 10,
-                    color: scheme === 'dark' ? 'white' : 'black',
+                    flex: 1,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    paddingHorizontal: 3,
                   }}>
-                  Upcoming Movies
-                </Text>
-                <Divider
-                  style={{
-                    height: 2,
-                    backgroundColor: 'red',
-                    width: 150,
-                    marginVertical: 15,
-                  }}
-                />
-                <TouchableOpacity>
-                  <Text
+                  {UpcomingText.split('').map((i: string, index: number) => (
+                    <Animatable.Text
+                      key={index}
+                      useNativeDriver
+                      animation="fadeInRight"
+                      duration={500}
+                      delay={300 + index * 50}
+                      style={{
+                        fontFamily: 'HindVadodara-Bold',
+                        fontSize: 25,
+                        color: scheme === 'dark' ? 'white' : 'black',
+                      }}>
+                      {i}
+                    </Animatable.Text>
+                  ))}
+                  <Divider
                     style={{
-                      fontFamily: 'HindVadodara-Light',
-                      fontSize: 15,
-                      paddingHorizontal: 10,
-                      marginVertical: 6,
-                      color: scheme === 'dark' ? 'white' : 'black',
-                    }}>
-                    View All
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <ScrollView
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-                fadingEdgeLength={30}
-                bounces={true}
-                contentContainerStyle={{
-                  paddingVertical: 10,
-                  paddingRight: 10,
-                }}>
-                <HrCardsProps
-                  colors={colors}
-                  Movies={UpcomingMovies}
-                  navigation={navigation}
-                  cardSize="large"
-                  theme={scheme === 'dark' ? 'dark' : 'light'}
-                />
-              </ScrollView>
-              <View
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                }}>
-                <Text
-                  style={{
-                    fontFamily: 'HindVadodara-Bold',
-                    fontSize: 25,
-                    paddingHorizontal: 10,
-                    color: scheme === 'dark' ? 'white' : 'black',
+                      height: 2,
+                      backgroundColor: 'red',
+                      width: 150,
+                      marginVertical: 15,
+                    }}
+                  />
+                  <TouchableOpacity>
+                    <Text
+                      style={{
+                        fontFamily: 'HindVadodara-Light',
+                        fontSize: 15,
+                        paddingHorizontal: 10,
+                        marginVertical: 6,
+                        color: scheme === 'dark' ? 'white' : 'black',
+                      }}>
+                      View All
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <ScrollView
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}
+                  fadingEdgeLength={30}
+                  bounces={true}
+                  contentContainerStyle={{
+                    paddingVertical: 10,
+                    paddingRight: 10,
                   }}>
-                  Popular Movies
-                </Text>
-                <Divider
-                  style={{
-                    height: 2,
-                    backgroundColor: 'red',
-                    width: 150,
-                    marginVertical: 15,
-                  }}
-                />
-                <TouchableOpacity>
-                  <Text
-                    style={{
-                      fontFamily: 'HindVadodara-Light',
-                      fontSize: 15,
-                      paddingHorizontal: 10,
-                      marginVertical: 6,
-                      color: scheme === 'dark' ? 'white' : 'black',
-                    }}>
-                    View All
-                  </Text>
-                </TouchableOpacity>
+                  <HrCardsProps
+                    colors={colors}
+                    Movies={UpcomingMovies}
+                    navigation={navigation}
+                    cardSize="large"
+                    theme={scheme === 'dark' ? 'dark' : 'light'}
+                  />
+                </ScrollView>
               </View>
-              <ScrollView
-                horizontal={true}
-                showsHorizontalScrollIndicator={false}
-                fadingEdgeLength={30}
-                bounces={true}
-                contentContainerStyle={{
-                  paddingVertical: 10,
-                  paddingRight: 15,
-                }}>
-                <HrCardsProps
-                  colors={colors}
-                  Movies={popularMovies}
-                  navigation={navigation}
-                  theme={scheme === 'dark' ? 'dark' : 'light'}
-                />
-              </ScrollView>
+              <View style={{flex: 1}}>
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: 'row',
+                    justifyContent: 'space-between',
+                    paddingHorizontal: 3,
+                  }}>
+                  {PopularText.split('').map((i: string, index: number) => (
+                    <Animatable.Text
+                      key={index}
+                      useNativeDriver
+                      animation="fadeInRight"
+                      duration={500}
+                      delay={300 + index * 50}
+                      style={{
+                        fontFamily: 'HindVadodara-Bold',
+                        fontSize: 25,
+                        color: scheme === 'dark' ? 'white' : 'black',
+                      }}>
+                      {i}
+                    </Animatable.Text>
+                  ))}
+                  <Divider
+                    style={{
+                      height: 2,
+                      backgroundColor: 'red',
+                      width: 150,
+                      marginVertical: 15,
+                    }}
+                  />
+                  <TouchableOpacity>
+                    <Text
+                      style={{
+                        fontFamily: 'HindVadodara-Light',
+                        fontSize: 15,
+                        paddingHorizontal: 10,
+                        marginVertical: 6,
+                        color: scheme === 'dark' ? 'white' : 'black',
+                      }}>
+                      View All
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                {popularMovies.length > 0 ? (
+                <ScrollView
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}
+                  fadingEdgeLength={30}
+                  bounces={true}
+                  contentContainerStyle={{
+                    paddingVertical: 10,
+                    paddingRight: 15,
+                  }}>
+                  <HrCardsProps
+                    colors={colors}
+                    Movies={popularMovies}
+                    navigation={navigation}
+                    theme={scheme === 'dark' ? 'dark' : 'light'}
+                  />
+                </ScrollView>
+              ) : (
+                <></>
+              )}
+              </View>
             </ScrollView>
           )}
         </View>

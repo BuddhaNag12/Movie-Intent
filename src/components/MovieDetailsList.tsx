@@ -8,26 +8,21 @@ import {
 } from 'react-native';
 import {Card, Badge, Divider, Image} from 'react-native-elements';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import {SharedElement} from 'react-navigation-shared-element';
 import API_TOKEN from '../../envExport';
+import {getBackdropPath, getImagePath} from '../api';
 import {mode, datatype, colorsType} from '../types/types';
 import HeroCarouselDetails from './DetailCarousel';
-const {width, height} = Dimensions.get('screen');
+const {width, height} = Dimensions.get('window');
 
 interface MovieDetailsProps {
   theme?: mode;
   data: datatype;
   navigation: any;
   colors: colorsType;
-  transitionId: number;
 }
 //theme,popularity,status,overView,title
-const MovieDetails = ({
-  colors,
-  theme,
-  data,
-  navigation,
-  transitionId,
-}: MovieDetailsProps) => {
+const MovieDetails = ({colors, theme, data, navigation}: MovieDetailsProps) => {
   const api = `https://api.themoviedb.org/3/movie/${data.id}/images?api_key=${API_TOKEN}`;
   const [movieImages, setMovieImages] = React.useState([]);
   const imageHeight = height / 2 + 40;
@@ -36,7 +31,10 @@ const MovieDetails = ({
     fetch(api)
       .then((res) => res.json())
       .then((data) => {
-        setMovieImages(data.backdrops);
+        let newData = data.backdrops.filter((i: string, index: number) => {
+          return index <= 8;
+        });
+        setMovieImages(newData);
       })
       .catch((e) => {
         console.log(e);
@@ -53,11 +51,7 @@ const MovieDetails = ({
           height: imageHeight,
         }}>
         {movieImages.length > 0 ? (
-          <HeroCarouselDetails
-            CarouselData={movieImages}
-            height={imageHeight}
-            colors={colors}
-          />
+          <HeroCarouselDetails CarouselData={movieImages} colors={colors} />
         ) : (
           <Image
             style={{...styles.image}}
@@ -76,12 +70,13 @@ const MovieDetails = ({
             resizeMode="cover"
             source={{
               uri: data.poster_path
-                ? `https://image.tmdb.org/t/p/original/${data.poster_path}`
-                : `https://image.tmdb.org/t/p/original/${data.backdrop_path}`,
+                ? getImagePath(data.poster_path)
+                : getBackdropPath(data.backdrop_path),
             }}
           />
         )}
       </View>
+
       <Card
         containerStyle={{
           backgroundColor: theme == 'dark' ? '#303030' : '#FCF8FF',
@@ -100,6 +95,7 @@ const MovieDetails = ({
               flexDirection: 'row',
               flexWrap: 'wrap',
             }}>
+            {/* <SharedElement id={`item.${data.id}.photo`}> */}
               <Text
                 style={{
                   ...styles.MovieTitle,
@@ -107,6 +103,7 @@ const MovieDetails = ({
                 }}>
                 {data.title}
               </Text>
+            {/* </SharedElement> */}
             <Badge
               status="warning"
               badgeStyle={{
@@ -249,6 +246,10 @@ const MovieDetails = ({
   );
 };
 
+MovieDetails.sharedElements = ({data}: any) => {
+  const {id} = data;
+  return [`item.${id}.photo`];
+};
 export default MovieDetails;
 
 const styles = StyleSheet.create({

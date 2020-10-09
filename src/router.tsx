@@ -9,6 +9,7 @@ import {
   DarkTheme,
   useTheme,
 } from '@react-navigation/native';
+import {createSharedElementStackNavigator} from 'react-navigation-shared-element';
 import {AppearanceProvider, useColorScheme} from 'react-native-appearance';
 
 // components
@@ -18,7 +19,7 @@ import SearchScreen from './screens/searchScreen';
 import MyHeader from './components/header';
 import {RootStackParamList} from './types/types';
 
-const Stack = createStackNavigator<RootStackParamList>();
+const Stack = createSharedElementStackNavigator<RootStackParamList>();
 export default function App() {
   const scheme = useColorScheme();
   const {colors} = useTheme();
@@ -29,9 +30,9 @@ export default function App() {
           initialRouteName="Home"
           headerMode="screen"
           screenOptions={{
-            gestureEnabled: true,
-            gestureDirection: 'horizontal',
-            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+            // gestureEnabled: true,
+            // gestureDirection: 'horizontal',
+            // cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
             headerStyle: {
               elevation: 0,
               backgroundColor: 'transparent',

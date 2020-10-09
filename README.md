@@ -21,7 +21,8 @@ This apps is under development. Expected alpha version soon.
 
 - [x] Updated fetching popular movies and upcoming movies
 - [x] Add filteration
-- [ ] Improve design and animation
+- [x] Improve design 
+- [ ] Add shared element animation
 
 ### Logo Credits
 > @JoyBoi

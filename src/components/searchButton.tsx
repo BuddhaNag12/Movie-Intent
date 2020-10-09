@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {Pressable} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {useNavigation} from '@react-navigation/native';
 import {mode} from '../types/types';
+import {TouchableOpacity} from 'react-native';
 
 interface SearchButtonProps {
   theme: mode;
@@ -11,7 +11,7 @@ interface SearchButtonProps {
 const SearchButton = ({theme}: SearchButtonProps) => {
   const navigation = useNavigation();
   return (
-    <Pressable onPress={() => navigation.navigate('Search')}>
+    <TouchableOpacity onPress={() => navigation.navigate('Search')}>
       <Icon
         name="search"
         type="Material"
@@ -22,7 +22,7 @@ const SearchButton = ({theme}: SearchButtonProps) => {
           elevation: 2,
         }}
       />
-    </Pressable>
+    </TouchableOpacity>
   );
 };
 
