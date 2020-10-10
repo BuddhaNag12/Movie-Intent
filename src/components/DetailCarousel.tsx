@@ -1,6 +1,7 @@
 import * as React from 'react';
-import {View, StyleSheet, Dimensions} from 'react-native';
+import {View, StyleSheet, Dimensions, TouchableOpacity} from 'react-native';
 import Carousel, {Pagination, ParallaxImage} from 'react-native-snap-carousel';
+import {SharedElement} from 'react-navigation-shared-element';
 import {colorsType} from '../types/types';
 
 const {width, height} = Dimensions.get('window');
@@ -8,16 +9,16 @@ const {width, height} = Dimensions.get('window');
 interface HeroCarouselProp<T> {
   CarouselData: Array<T>;
   colors: colorsType;
+  navigation: any;
 }
 const styles = StyleSheet.create({
-  image: {
-    ...StyleSheet.absoluteFillObject,
-    resizeMode: 'contain',
-  },
+  // image: {
+  //   resizeMode: 'contain',
+  // },
   imageContainer: {
     flex: 1,
     borderRadius: 8,
-    elevation: 5,
+    elevation: 3,
     paddingVertical: 5,
     marginVertical: 5,
   },
@@ -62,15 +63,26 @@ class HeroCarouselDetails extends React.PureComponent<
   }
   _renderItem = ({item}: any, parallaxProps?: any) => {
     return (
-      <ParallaxImage
-        containerStyle={styles.imageContainer}
-        parallaxFactor={0.4}
-        {...parallaxProps}
-        source={{
-          uri: 'https://image.tmdb.org/t/p/w780/' + item.file_path,
-        }}
-        style={styles.image}
-      />
+      <TouchableOpacity
+        style={{flex: 1}}
+        onPress={() =>
+          this.props.navigation.push('ImageView', {
+            imagePath: item.file_path,
+          })
+        }>
+        <SharedElement id={`item.${item.file_path}.photo`} style={{flex: 1}}>
+          <ParallaxImage
+            containerStyle={styles.imageContainer}
+            parallaxFactor={0.4}
+            {...parallaxProps}
+            source={{
+              uri: 'https://image.tmdb.org/t/p/w780/' + item.file_path,
+            }}
+            resizeMode="contain"
+            // style={styles.image}
+          />
+        </SharedElement>
+      </TouchableOpacity>
     );
   };
   render() {

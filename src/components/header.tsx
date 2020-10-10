@@ -14,7 +14,7 @@ interface HeaderProps {
 
 const MyHeader = ({color, theme, isDetailsScreen}: HeaderProps) => {
   const logoHeight = StatusBar.currentHeight ? StatusBar.currentHeight : 15;
-
+  
   return (
     <View style={{backgroundColor: color.background}}>
       <StatusBar

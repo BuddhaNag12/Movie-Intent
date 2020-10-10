@@ -78,10 +78,12 @@ const DetailsScreen = ({navigation, route: {params}}: DetailsScreenProps) => {
       </LinearGradient>
     </ScrollView>
   );
-
-
 };
 
+DetailsScreen.sharedElements = (route: any) => {
+  const {id} = route.params;
+  return [`item.${id}.title`];
+};
 export default DetailsScreen;
 
 const styles = StyleSheet.create({

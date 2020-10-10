@@ -30,4 +30,11 @@ export type colorsType = {
     Home: undefined;
     DetailScreen: { id: number };
     Search:undefined;
+    ImageView: {
+      imagePath:string
+    };
+    GridView:{
+      type:string;
+    }
   };
+  export type ViewType = 'Popular' | 'upcoming';

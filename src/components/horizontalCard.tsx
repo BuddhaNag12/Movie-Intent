@@ -42,7 +42,6 @@ const HrCards = ({
                 id: items.id,
               })
             }>
-            {/* <SharedElement id={`item.${items.id}.photo`}> */}
             <View
               style={{
                 width: cardSize == 'large' ? 130 : 110,
@@ -78,7 +77,6 @@ const HrCards = ({
                 </Text>
               </View>
             </View>
-            {/* </SharedElement> */}
             <View>
               <Text
                 numberOfLines={2}

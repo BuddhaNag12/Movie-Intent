@@ -1,5 +1,4 @@
 import API_TOKEN from '../envExport';
-import {datatype} from './types/types';
 
 export const genres = [
   {
@@ -26,15 +25,23 @@ export const genres = [
   {id: 10770, name: 'TV Movie'},
 ];
 
-const API_URL = `https://api.themoviedb.org/3/discover/movie?api_key=${API_TOKEN}&sort_by=popularity.desc`;
-const UPCOMING_URI = `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_TOKEN}&language=en-US`;
+const API_URL = `https://api.themoviedb.org/3/discover/movie?api_key=${API_TOKEN}&sort_by=popularity.desc&page=`;
+const UPCOMING_URI = `https://api.themoviedb.org/3/movie/upcoming?api_key=${API_TOKEN}&language=en-US&page=`;
 
 // Might use later
+export const getMovies = async (type: string, page: number) => {
+  const MovieFetch = `https://api.themoviedb.org/3/movie/${type}?api_key=${API_TOKEN}&language=en-US&page=${page}`;
+  const res = await fetch(MovieFetch);
+  const results=await res.json();
 
-export const getUpcomingMovies = async () => {
+  return results.results;
+
+};
+
+export const getUpcomingMovies = async (counter: number) => {
   const [upcomingRes, popularRes] = await Promise.all([
-    fetch(API_URL),
-    fetch(UPCOMING_URI),
+    fetch(API_URL + counter),
+    fetch(UPCOMING_URI + counter),
   ]);
 
   const popularMovies = await popularRes.json();

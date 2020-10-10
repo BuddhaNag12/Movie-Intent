@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import {Card, Badge, Divider, Image} from 'react-native-elements';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {SharedElement} from 'react-navigation-shared-element';
+
 import API_TOKEN from '../../envExport';
 import {getBackdropPath, getImagePath} from '../api';
 import {mode, datatype, colorsType} from '../types/types';
@@ -51,7 +51,11 @@ const MovieDetails = ({colors, theme, data, navigation}: MovieDetailsProps) => {
           height: imageHeight,
         }}>
         {movieImages.length > 0 ? (
-          <HeroCarouselDetails CarouselData={movieImages} colors={colors} />
+          <HeroCarouselDetails
+            CarouselData={movieImages}
+            colors={colors}
+            navigation={navigation}
+          />
         ) : (
           <Image
             style={{...styles.image}}
@@ -76,7 +80,6 @@ const MovieDetails = ({colors, theme, data, navigation}: MovieDetailsProps) => {
           />
         )}
       </View>
-
       <Card
         containerStyle={{
           backgroundColor: theme == 'dark' ? '#303030' : '#FCF8FF',
@@ -95,15 +98,14 @@ const MovieDetails = ({colors, theme, data, navigation}: MovieDetailsProps) => {
               flexDirection: 'row',
               flexWrap: 'wrap',
             }}>
-            {/* <SharedElement id={`item.${data.id}.photo`}> */}
-              <Text
-                style={{
-                  ...styles.MovieTitle,
-                  color: theme == 'dark' ? 'white' : 'black',
-                }}>
-                {data.title}
-              </Text>
-            {/* </SharedElement> */}
+            <Text
+              style={{
+                ...styles.MovieTitle,
+                color: theme == 'dark' ? 'white' : 'black',
+              }}>
+              {data.title}
+            </Text>
+
             <Badge
               status="warning"
               badgeStyle={{
@@ -246,10 +248,6 @@ const MovieDetails = ({colors, theme, data, navigation}: MovieDetailsProps) => {
   );
 };
 
-MovieDetails.sharedElements = ({data}: any) => {
-  const {id} = data;
-  return [`item.${id}.photo`];
-};
 export default MovieDetails;
 
 const styles = StyleSheet.create({

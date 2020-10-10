@@ -87,9 +87,7 @@ class HeroCarousel extends React.PureComponent<HeroCarouselProp<string>> {
           marginVertical: 10,
         }}>
         <Carousel
-          decelerationRate="fast"
           autoplay={true}
-          activeAnimationType="decay"
           autoplayInterval={3000}
           enableSnap={true}
           loop={true}
@@ -97,7 +95,7 @@ class HeroCarousel extends React.PureComponent<HeroCarouselProp<string>> {
           layoutCardOffset={10}
           data={this.props.CarouselData}
           renderItem={this._renderItem}
-          sliderWidth={width - 50}
+          sliderWidth={width}
           itemWidth={width - 140}
           hasParallaxImages={true}
         />

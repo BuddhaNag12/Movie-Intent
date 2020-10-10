@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {
-  createStackNavigator,
-  CardStyleInterpolators,
-} from '@react-navigation/stack';
+// import {
+//   createStackNavigator,
+//   CardStyleInterpolators,
+// } from '@react-navigation/stack';
 import {
   NavigationContainer,
   DefaultTheme,
@@ -12,12 +12,16 @@ import {
 import {createSharedElementStackNavigator} from 'react-navigation-shared-element';
 import {AppearanceProvider, useColorScheme} from 'react-native-appearance';
 
-// components
+import {RootStackParamList} from './types/types';
+
+// screens & components
 import Home from '../src/screens/homeScreen';
 import DetailsScreen from './screens/detailsScreen';
 import SearchScreen from './screens/searchScreen';
 import MyHeader from './components/header';
-import {RootStackParamList} from './types/types';
+import PreviewImg from './screens/previewImage';
+import GridView from './screens/gridView';
+import {StatusBar} from 'react-native';
 
 const Stack = createSharedElementStackNavigator<RootStackParamList>();
 export default function App() {
@@ -34,8 +38,8 @@ export default function App() {
             // gestureDirection: 'horizontal',
             // cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
             headerStyle: {
-              elevation: 0,
               backgroundColor: 'transparent',
+              elevation: 0,
             },
             headerTitleStyle: {
               justifyContent: 'center',
@@ -68,6 +72,25 @@ export default function App() {
             }}
           />
           <Stack.Screen name="Search" component={SearchScreen} />
+          <Stack.Screen
+            name="GridView"
+            component={GridView}
+            options={{
+              headerStyle: {
+                backgroundColor: 'white',
+                elevation:0,
+              },
+            }}
+          />
+          <Stack.Screen
+            name="ImageView"
+            component={PreviewImg}
+            options={{
+              headerTransparent: true,
+              headerTintColor: 'white',
+              headerTitle: '',
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </AppearanceProvider>
