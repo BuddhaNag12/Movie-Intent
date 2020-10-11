@@ -7,7 +7,7 @@ import {Appearance} from 'react-native-appearance';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 import {getMovies} from '../api';
 import FlatListItems from '../components/flatListItems';
-import {datatype} from '../types/types';
+import {colorsMode, datatype} from '../types/types';
 
 interface GridViewProps {
   route: any;
@@ -22,11 +22,17 @@ const GridView = ({route, navigation}: GridViewProps) => {
   const [counter, setCounter] = React.useState(1);
   const [refreshing, setRefreshing] = React.useState(false);
 
+  let NavigationConfig = {
+    title: type.toUpperCase(),
+    headerStyle: {
+      backgroundColor: scheme == 'dark' ? colorsMode.dark : colorsMode.light,
+      elevation: 0,
+    },
+  };
+
   React.useEffect(() => {
     let isMounted = true;
-    navigation.setOptions({
-      title: type.toUpperCase(),
-    });
+    navigation.setOptions(NavigationConfig);
     if (isMounted) {
       setRefreshing(true);
       getMovies(type, counter)
@@ -63,7 +69,7 @@ const GridView = ({route, navigation}: GridViewProps) => {
     <View
       style={{
         ...styles.container,
-        backgroundColor: scheme == 'dark' ? colors.background : 'white',
+        backgroundColor: scheme == 'dark' ? colorsMode.dark : colorsMode.light,
       }}>
       <FlatList<datatype>
         data={fetchedData}

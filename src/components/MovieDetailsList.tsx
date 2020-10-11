@@ -6,13 +6,14 @@ import {
   Dimensions,
   ActivityIndicator,
 } from 'react-native';
-import {Card, Badge, Divider, Image} from 'react-native-elements';
+import {Card, Badge, Image} from 'react-native-elements';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 import API_TOKEN from '../../envExport';
 import {getBackdropPath, getImagePath} from '../api';
-import {mode, datatype, colorsType} from '../types/types';
+import {mode, datatype, colorsType, colorsMode} from '../types/types';
 import HeroCarouselDetails from './DetailCarousel';
+import {HeroText} from './HeroText';
 const {width, height} = Dimensions.get('window');
 
 interface MovieDetailsProps {
@@ -40,6 +41,44 @@ const MovieDetails = ({colors, theme, data, navigation}: MovieDetailsProps) => {
         console.log(e);
       });
   }, []);
+
+  function GetGenres() {
+    return (
+      <View
+        style={{
+          justifyContent: 'flex-start',
+          flexDirection: 'row',
+          flexWrap: 'wrap',
+          paddingRight: 20,
+        }}>
+        {data.genres
+          ? data.genres.map(({id, name}: any) => {
+              return (
+                <TouchableOpacity
+                  key={id}
+                  style={{
+                    backgroundColor: id % 2 == 0 ? '#009D77' : '#FF5159',
+                    marginRight: 10,
+                    marginVertical: 10,
+                    borderRadius: 30,
+                    elevation: 2,
+                  }}>
+                  <Text
+                    style={{
+                      color: theme === 'dark' ? 'white' : '#FFF4ED',
+                      fontSize: 20,
+                      fontFamily: 'HindVadodara-Light',
+                      paddingHorizontal: 10,
+                    }}>
+                    {name}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })
+          : undefined}
+      </View>
+    );
+  }
 
   return (
     <View
@@ -82,7 +121,7 @@ const MovieDetails = ({colors, theme, data, navigation}: MovieDetailsProps) => {
       </View>
       <Card
         containerStyle={{
-          backgroundColor: theme == 'dark' ? '#303030' : '#FCF8FF',
+          backgroundColor: theme == 'dark' ? colorsMode.dark : colorsMode.light,
           width: width,
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
@@ -95,8 +134,10 @@ const MovieDetails = ({colors, theme, data, navigation}: MovieDetailsProps) => {
           }}>
           <View
             style={{
-              flexDirection: 'row',
-              flexWrap: 'wrap',
+              flex: 1,
+              // flexDirection: 'row',
+              // flexWrap: 'wrap',
+              justifyContent: 'space-around',
             }}>
             <Text
               style={{
@@ -105,59 +146,20 @@ const MovieDetails = ({colors, theme, data, navigation}: MovieDetailsProps) => {
               }}>
               {data.title}
             </Text>
-
             <Badge
-              status="warning"
               badgeStyle={{
-                width: 50,
-                marginVertical: 12,
-                marginHorizontal: 10,
+                paddingHorizontal: 10,
+                alignSelf:"flex-start",
+                backgroundColor: colors.primary,
               }}
               value={
                 <Text style={{color: theme == 'dark' ? 'white' : '#fefefe'}}>
-                  Top 10
+                  Vote Count {data.vote_count}
                 </Text>
               }
             />
           </View>
-          <View
-            style={{
-              justifyContent: 'flex-start',
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-              paddingRight: 20,
-            }}>
-            {data.genres
-              ? data.genres.map(({id, name}: any) => {
-                  return (
-                    <TouchableOpacity
-                      onPress={() =>
-                        navigation.navigate('Search', {
-                          genre: name,
-                        })
-                      }
-                      key={id}
-                      style={{
-                        backgroundColor: id % 2 == 0 ? '#009D77' : '#FF5159',
-                        marginRight: 10,
-                        marginVertical: 10,
-                        borderRadius: 30,
-                        elevation: 2,
-                      }}>
-                      <Text
-                        style={{
-                          color: theme === 'dark' ? 'white' : '#FFF4ED',
-                          fontSize: 20,
-                          fontFamily: 'HindVadodara-Light',
-                          paddingHorizontal: 10,
-                        }}>
-                        {name}
-                      </Text>
-                    </TouchableOpacity>
-                  );
-                })
-              : undefined}
-          </View>
+          <GetGenres />
           <View
             style={{
               flexDirection: 'row',
@@ -194,21 +196,7 @@ const MovieDetails = ({colors, theme, data, navigation}: MovieDetailsProps) => {
             }}>
             Release Date: {data.release_date}
           </Text>
-          <Text
-            style={{
-              fontFamily: 'HindVadodara-SemiBold',
-              fontSize: 20,
-              color: theme == 'dark' ? 'white' : 'black',
-            }}>
-            TagLine
-          </Text>
-          <Divider
-            style={{
-              backgroundColor: theme == 'dark' ? 'white' : 'black',
-              borderWidth: 0.5,
-              width: 65,
-            }}
-          />
+          <HeroText TextProp="TagLine" color={theme=='dark'?'white' : 'black'} fontSize={18} />
           <Text
             style={{
               fontFamily: 'HindVadodara-Light',
@@ -217,22 +205,7 @@ const MovieDetails = ({colors, theme, data, navigation}: MovieDetailsProps) => {
             }}>
             {data.tagline || 'No tagline found '}
           </Text>
-
-          <Text
-            style={{
-              fontFamily: 'HindVadodara-SemiBold',
-              fontSize: 20,
-              color: theme == 'dark' ? 'white' : 'black',
-            }}>
-            Movie Plot
-          </Text>
-          <Divider
-            style={{
-              backgroundColor: theme == 'dark' ? 'white' : 'black',
-              borderWidth: 0.5,
-              width: 100,
-            }}
-          />
+          <HeroText TextProp="Movie Plot" color={theme=='dark'?'white' : 'black'} />
           <TouchableOpacity>
             <Text
               style={{
@@ -261,10 +234,12 @@ const styles = StyleSheet.create({
     fontSize: 25,
     paddingVertical: 5,
     textTransform: 'capitalize',
+    marginHorizontal: 5,
   },
   Subtitle: {
     fontFamily: 'Nunito-Light',
     fontSize: 18,
+    textTransform: 'capitalize',
   },
   image: {
     height: height,

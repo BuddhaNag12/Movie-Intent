@@ -1,6 +1,12 @@
 export type mode = 'dark' | 'light';
 export type size = 'large' | 'medium' ;
 
+
+export enum colorsMode{
+  dark='#00001B',
+  light='white'
+}
+
 export type colorsType = {
   primary: string;
   background: string;
@@ -24,6 +30,8 @@ export type colorsType = {
     popularity:number;
     original_title:string;
     genre_ids:[]
+    budget:number;
+    vote_count:number;
   }
 
   export type RootStackParamList = {

@@ -6,10 +6,11 @@ import * as Animatable from 'react-native-animatable';
 
 interface heroTextProps {
   TextProp: string;
-  ViewAll: string;
+  ViewAll?: string;
   color: string;
-  delay: number;
-  navigation: any;
+  delay?: number;
+  navigation?: any;
+  fontSize?: number;
 }
 
 export const HeroText = ({
@@ -18,55 +19,66 @@ export const HeroText = ({
   color,
   delay,
   navigation,
+  fontSize,
 }: heroTextProps) => {
   return (
     <View
       style={{
         flex: 1,
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
         paddingHorizontal: 3,
       }}>
       {TextProp.split('').map((i: string, index: number) => (
         <Animatable.Text
           key={index}
           useNativeDriver
-          animation="fadeInRight"
+          animation={delay?"fadeInRight":''}
           duration={500}
-          delay={delay + index * 50}
+          delay={delay ? delay + index * 50 : 0}
           style={{
             fontFamily: 'HindVadodara-Bold',
-            fontSize: 25,
+            fontSize: fontSize ? fontSize : 25,
+
             color: color,
+            marginBottom: 10,
+            letterSpacing: 0.6,
           }}>
           {i}
         </Animatable.Text>
       ))}
+
       <Divider
         style={{
-          height: 2,
+          height: 1,
           backgroundColor: 'red',
           width: 150,
           marginVertical: 15,
+          marginHorizontal: 10,
         }}
       />
-      <TouchableOpacity
-        onPress={() =>
-          navigation.navigate('GridView', {
-            type: ViewAll,
-          })
-        }>
-        <Text
-          style={{
-            fontFamily: 'HindVadodara-Light',
-            fontSize: 15,
-            paddingHorizontal: 10,
-            marginVertical: 6,
-            color: color,
-          }}>
-          View All
-        </Text>
-      </TouchableOpacity>
+      {navigation ? (
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate('GridView', {
+              type: ViewAll,
+            })
+          }>
+          <Text
+            style={{
+              fontFamily: 'HindVadodara-Light',
+              fontSize: 15,
+              paddingHorizontal: 10,
+              marginVertical: 6,
+              color: color,
+            }}>
+            View All
+          </Text>
+        </TouchableOpacity>
+      ) : (
+        <></>
+      )}
     </View>
   );
 };

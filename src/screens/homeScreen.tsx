@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {View, StyleSheet, Text, ScrollView, RefreshControl} from 'react-native';
+import {View, StyleSheet, Text, ScrollView} from 'react-native';
 import {Appearance} from 'react-native-appearance';
 import HrCardsProps from '../components/horizontalCard';
 import LottieView from 'lottie-react-native';
@@ -7,9 +7,9 @@ import {useTheme} from '@react-navigation/native';
 import HeroCarousel from '../components/carousel';
 import {getUpcomingMovies} from '../api';
 import NetInfo from '@react-native-community/netinfo';
+import {colorsMode} from '../types/types';
 
 import {HeroText} from '../components/HeroText';
-
 
 const styles = StyleSheet.create({
   container: {
@@ -25,11 +25,9 @@ const Home = ({navigation}: any) => {
   const [popularMovies, setPopularMovies] = React.useState([]);
   const [HotNow, setHotNow] = React.useState([]);
   const [Internet, setInternet] = React.useState(false);
-  const [refreshing, setRefreshing] = React.useState(false);
-  const [counter, setCounter] = React.useState(1);
+
   const scheme = Appearance.getColorScheme();
 
-  
   React.useEffect(() => {
     setLoading(true);
     let isMounted: boolean = true;
@@ -38,7 +36,7 @@ const Home = ({navigation}: any) => {
         .then((state) => {
           setInternet(state.isConnected);
           if (state.isConnected) {
-            getUpcomingMovies(counter)
+            getUpcomingMovies()
               .then(({popularMovies, upcomingMovies}) => {
                 setUpcomingMovies(upcomingMovies.results);
                 setPopularMovies(popularMovies.results);
@@ -47,7 +45,6 @@ const Home = ({navigation}: any) => {
                 );
                 setHotNow(TopAverage);
                 setLoading(false);
-                setRefreshing(false);
               })
               .catch((e) => {
                 setLoading(false);
@@ -65,12 +62,7 @@ const Home = ({navigation}: any) => {
       setLoading(false);
       isMounted = false;
     };
-  }, [refreshing]);
-
-  const onRefresh = () => {
-    setRefreshing(true);
-    setCounter(counter + 1);
-  };
+  }, []);
 
   if (!Internet) {
     return (
@@ -94,12 +86,9 @@ const Home = ({navigation}: any) => {
     <View
       style={{
         ...styles.container,
-        backgroundColor: scheme == 'dark' ? colors.background : 'white',
+        backgroundColor: scheme == 'dark' ? colorsMode.dark : 'white',
       }}>
-      <ScrollView
-        refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-        }>
+      <ScrollView>
         <HeroCarousel CarouselData={HotNow} navigation={navigation} />
         <HeroText
           TextProp="Upcoming Movies"

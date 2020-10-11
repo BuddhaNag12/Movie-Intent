@@ -21,7 +21,6 @@ import SearchScreen from './screens/searchScreen';
 import MyHeader from './components/header';
 import PreviewImg from './screens/previewImage';
 import GridView from './screens/gridView';
-import {StatusBar} from 'react-native';
 
 const Stack = createSharedElementStackNavigator<RootStackParamList>();
 export default function App() {
@@ -34,6 +33,7 @@ export default function App() {
           initialRouteName="Home"
           headerMode="screen"
           screenOptions={{
+            animationEnabled: true,
             // gestureEnabled: true,
             // gestureDirection: 'horizontal',
             // cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
@@ -72,16 +72,7 @@ export default function App() {
             }}
           />
           <Stack.Screen name="Search" component={SearchScreen} />
-          <Stack.Screen
-            name="GridView"
-            component={GridView}
-            options={{
-              headerStyle: {
-                backgroundColor: 'white',
-                elevation:0,
-              },
-            }}
-          />
+          <Stack.Screen name="GridView" component={GridView} />
           <Stack.Screen
             name="ImageView"
             component={PreviewImg}

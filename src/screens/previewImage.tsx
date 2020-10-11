@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, Dimensions, Animated, StyleSheet} from 'react-native';
+import {View, Dimensions, Animated, StatusBar} from 'react-native';
 import { colors } from 'react-native-elements';
 import {PinchGestureHandler, State} from 'react-native-gesture-handler';
 import {SharedElement} from 'react-navigation-shared-element';
@@ -29,6 +29,7 @@ const PreviewImg = ({route}: any) => {
   };
   return (
     <View style={{flex: 1,backgroundColor:colors.grey5}}>
+      <StatusBar hidden showHideTransition='fade' />
       <SharedElement id={`item.${imagePath}.photo`} style={{flex: 1,backgroundColor:colors.grey5}}>
         <PinchGestureHandler
           onGestureEvent={onZoomEvent}

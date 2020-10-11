@@ -3,7 +3,7 @@ import {Text, View, StyleSheet, StatusBar, Image} from 'react-native';
 import {Header, Icon} from 'react-native-elements';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
-import {colorsType, mode} from '../types/types';
+import {colorsMode, colorsType, mode} from '../types/types';
 import SearchButton from './searchButton';
 
 interface HeaderProps {
@@ -27,8 +27,8 @@ const MyHeader = ({color, theme, isDetailsScreen}: HeaderProps) => {
         <Header
           barStyle={theme == 'dark' ? 'light-content' : 'dark-content'}
           containerStyle={{
-            backgroundColor: theme == 'dark' ? 'black' : 'white',
-            borderBottomColor: theme == 'dark' ? 'black' : 'white',
+            backgroundColor: theme == 'dark' ? colorsMode.dark : colorsMode.light,
+            borderBottomColor: theme == 'dark' ? colorsMode.dark : colorsMode.light,
           }}
           leftComponent={
             <TouchableOpacity
@@ -54,6 +54,7 @@ const MyHeader = ({color, theme, isDetailsScreen}: HeaderProps) => {
                 flex: 1,
                 flexDirection: 'row',
                 justifyContent: 'center',
+                alignItems:'center',
                 marginTop: logoHeight / 2,
                 marginBottom: logoHeight / 2,
                 borderRadius: 5,
