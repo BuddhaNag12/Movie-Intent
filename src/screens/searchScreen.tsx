@@ -5,48 +5,23 @@ import API_TOKEN from '../../envExport';
 import MovieList from '../components/movieList';
 import {useColorScheme} from 'react-native-appearance';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-type genres = 'action' | 'scifi' | 'adventure' | 'romantic';
+import {genres} from '../api';
+import MyBottomSheet from '../components/BottomSheet';
+import {RootStackParamList} from '../types/types';
 
 interface SearchScreenProps {
-  navigation: any;
-  genres?: genres;
-  route: any;
+  navigation: RootStackParamList;
+  route: RootStackParamList;
 }
 
-const SearchScreen = (props: SearchScreenProps) => {
+const SearchScreen = ({navigation, route}: SearchScreenProps) => {
   const [searchResults, setSearchResults] = React.useState<Array<object>>([]);
-  const [genres, setGenres] = React.useState<Array<object>>([]);
   const [error, setError] = React.useState<string>('');
   const [searchText, setText] = React.useState<string>('');
   const [loading, setLoading] = React.useState<boolean>(false);
   const [pageNumber, setPageNumber] = React.useState<Number>(1);
   const scheme = useColorScheme();
-  // const {genre} = props.route.params;
 
-  React.useEffect(() => {
-    fetchGenre()
-      .then((res) => {
-        setGenres(res.genres);
-      })
-      .catch((e) => {
-        setError(e);
-      });
-  }, []);
-
-  // sort by popularity and paging and filter through react useEffect
-
-  // React.useEffect(() => {
-  //   fetchByGenres();
-  // }, [pageNumber]);
-
-  async function fetchGenre() {
-    const res = await fetch(
-      `https://api.themoviedb.org/3/genre/movie/list?api_key=${API_TOKEN}&language=en-US`,
-    );
-
-    const data = res.json();
-    return data;
-  }
   const searchMovies = () => {
     setError('');
     setLoading(true);
@@ -65,6 +40,7 @@ const SearchScreen = (props: SearchScreenProps) => {
       })
       .catch((err) => {
         setError(err);
+        setLoading(false);
       });
   };
   const fetchByGenres = (id: number) => {
@@ -81,6 +57,25 @@ const SearchScreen = (props: SearchScreenProps) => {
         setError(err);
       });
   };
+
+  // const filterSearch = (id: number) => {
+  //   setScifi(true);
+  //   fetch(
+  //     `https://api.themoviedb.org/3/discover/movie?api_key=${API_TOKEN}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&with_genres=${id}&page=1`,
+  //   )
+  //     .then((response) => response.json())
+  //     .then((results) => {
+  //       const TopAverage = results.results.filter(
+  //         (item: datatype) => item.popularity >= 0.6,
+  //       );
+  //       setHotNow(TopAverage);
+  //       setIsVisible(false);
+  //     })
+  //     .catch((e) => setError(e));
+  // };
+  // const toggleBottomSheet = () => {
+  //   setIsVisible(!isVisible);
+  // };
   return (
     <View style={styles.container}>
       <SearchMovies search={searchMovies} setText={setText} autofocus={true} />
@@ -95,7 +90,6 @@ const SearchScreen = (props: SearchScreenProps) => {
           }}>
           Genres
         </Text>
-        {/* <Button onPress={() => setPageNumber(2)} title="2" /> */}
         <ScrollView
           horizontal={true}
           showsHorizontalScrollIndicator={false}
@@ -104,8 +98,6 @@ const SearchScreen = (props: SearchScreenProps) => {
             padding: 10,
           }}>
           {genres.map((i: any, index: number) => {
-            // console.log(genres);
-
             return (
               <TouchableOpacity
                 key={index}
@@ -132,25 +124,22 @@ const SearchScreen = (props: SearchScreenProps) => {
             );
           })}
         </ScrollView>
+        {/* <MyBottomSheet
+          isVisible={isVisible}
+          setIsVisible={setIsVisible}
+          toggleBottomSheet={toggleBottomSheet}
+          filterSearch={filterSearch}
+          setDefault={setDefault}
+          theme={scheme == 'dark' ? 'dark' : 'light'}
+          colors={colors}
+        /> */}
       </View>
-
-      {/* {searchText == '' || error ? (
-        <View style={{justifyContent: 'center', alignItems: 'center'}}>
-          <Text style={{fontFamily: 'HindVadodara-SemiBold', fontSize: 20}}>
-            Opps no result found
-          </Text>
-          <Text style={{fontFamily: 'HindVadodara-Light', fontSize: 16}}>
-            Try Searching with movie name {error}
-          </Text>
-        </View>
-      ) : ( */}
       <MovieList
         searchItems={searchResults}
-        navigation={props.navigation}
+        navigation={navigation}
         loading={loading}
         theme={scheme == 'dark' ? 'dark' : 'light'}
       />
-      {/* )} */}
     </View>
   );
 };

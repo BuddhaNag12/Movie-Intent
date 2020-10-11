@@ -5,6 +5,9 @@ import LottieView from 'lottie-react-native';
 import API_TOKEN from '../../envExport';
 import MovieDetails from '../components/MovieDetailsList';
 import {datatype} from '../types/types';
+import {useTheme} from '@react-navigation/native';
+import LinearGradient from 'react-native-linear-gradient';
+import {SharedElement} from 'react-navigation-shared-element';
 interface DetailsScreenProps {
   route: {
     params: any;
@@ -14,22 +17,29 @@ interface DetailsScreenProps {
 
 const DetailsScreen = ({navigation, route: {params}}: DetailsScreenProps) => {
   const scheme = useColorScheme();
-
+  const {colors} = useTheme();
   const {id} = params;
   const api = `https://api.themoviedb.org/3/movie/${id}?api_key=${API_TOKEN}&language=en-US`;
 
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState<boolean>(false);
   const [MovieData, setMoviesFetched] = React.useState<datatype>();
 
   React.useEffect(() => {
     setLoading(true);
+    let isMounted: boolean = true;
+
     fetch(api)
       .then((data) => data.json())
       .then((res) => {
-        setLoading(false);
-        // data.push(res)
-        setMoviesFetched(res);
+        if (isMounted) {
+          setLoading(false);
+          setMoviesFetched(res);
+        }
       });
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   if (loading) {
@@ -45,24 +55,35 @@ const DetailsScreen = ({navigation, route: {params}}: DetailsScreenProps) => {
   }
 
   return (
-    <>
-      <ScrollView>
-        <View style={styles.container}>
-          {MovieData ? (
-            <MovieDetails
-              navigation={navigation}
-              data={MovieData}
-              theme={scheme == 'dark' ? 'dark' : 'light'}
-            />
-          ) : (
-            <></>
-          )}
-        </View>
-      </ScrollView>
-    </>
+    <ScrollView>
+      <LinearGradient
+        start={{x: 1, y: 1}}
+        end={{x: 1, y: 0}}
+        colors={
+          scheme == 'dark'
+            ? ['#53515E', '#10545E', '#872350']
+            : ['#53515E', '#F85555', '#BAFCDC']
+        }
+        style={styles.container}>
+        {MovieData && !loading ? (
+          <MovieDetails
+            navigation={navigation}
+            colors={colors}
+            data={MovieData}
+            theme={scheme == 'dark' ? 'dark' : 'light'}
+          />
+        ) : (
+          <></>
+        )}
+      </LinearGradient>
+    </ScrollView>
   );
 };
 
+DetailsScreen.sharedElements = (route: any) => {
+  const {id} = route.params;
+  return [`item.${id}.title`];
+};
 export default DetailsScreen;
 
 const styles = StyleSheet.create({

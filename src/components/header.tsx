@@ -1,17 +1,22 @@
 import * as React from 'react';
 import {Text, View, StyleSheet, StatusBar, Image} from 'react-native';
-import {Header} from 'react-native-elements';
-import {mode} from '../types/types';
+import {Header, Icon} from 'react-native-elements';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import LinearGradient from 'react-native-linear-gradient';
+import {colorsMode, colorsType, mode} from '../types/types';
 import SearchButton from './searchButton';
 
 interface HeaderProps {
   theme: mode;
   isDetailsScreen: boolean;
+  color: colorsType;
 }
 
-const MyHeader = ({theme, isDetailsScreen}: HeaderProps) => {
+const MyHeader = ({color, theme, isDetailsScreen}: HeaderProps) => {
+  const logoHeight = StatusBar.currentHeight ? StatusBar.currentHeight : 15;
+  
   return (
-    <View style={{backgroundColor: 'black'}}>
+    <View style={{backgroundColor: color.background}}>
       <StatusBar
         barStyle={theme == 'dark' ? 'light-content' : 'dark-content'}
         translucent={isDetailsScreen == true ? true : false}
@@ -20,33 +25,56 @@ const MyHeader = ({theme, isDetailsScreen}: HeaderProps) => {
       />
       {!isDetailsScreen ? (
         <Header
-          barStyle={theme == 'dark' ? 'dark-content' : 'dark-content'}
+          barStyle={theme == 'dark' ? 'light-content' : 'dark-content'}
           containerStyle={{
-            backgroundColor: theme == 'dark' ? 'black' : 'white',
-            borderBottomColor: 'white',
+            backgroundColor: theme == 'dark' ? colorsMode.dark : colorsMode.light,
+            borderBottomColor: theme == 'dark' ? colorsMode.dark : colorsMode.light,
           }}
           leftComponent={
-            <View
+            <TouchableOpacity
               style={{
                 paddingVertical: 2,
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <Image
-                source={require('../../assets/logo2.png')}
-                style={styles.logo}
+              <Icon
+                name="menu"
+                size={25}
+                type="material"
+                color={theme == 'dark' ? 'whitesmoke' : 'black'}
               />
-            </View>
+            </TouchableOpacity>
           }
           centerComponent={
-            <Text
+            <LinearGradient
+              start={{x: 0, y: 0}}
+              end={{x: 0, y: 1}}
+              colors={['#F2FF67', '#FDD92C', '#FFEC21']}
               style={{
-                fontFamily: 'Nunito-Bold',
-                fontSize: 20,
-                fontStyle: 'normal',
+                flex: 1,
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems:'center',
+                marginTop: logoHeight / 2,
+                marginBottom: logoHeight / 2,
+                borderRadius: 5,
               }}>
-              Movie Intent
-            </Text>
+              <Image
+                source={require('../../assets/logo2.png')}
+                style={{width: 25, height: 27, marginHorizontal: 2}}
+              />
+              <Text
+                style={{
+                  fontFamily: 'HindVadodara-Bold',
+                  fontSize: 20,
+                  fontStyle: 'normal',
+                  paddingHorizontal: 5,
+                  paddingVertical: 3,
+                  color: theme == 'dark' ? 'whitesmoke' : 'black',
+                }}>
+                Movie !ntent
+              </Text>
+            </LinearGradient>
           }
           rightComponent={
             <SearchButton theme={theme == 'dark' ? 'dark' : 'light'} />

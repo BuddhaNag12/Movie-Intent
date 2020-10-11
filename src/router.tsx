@@ -1,25 +1,31 @@
 import * as React from 'react';
-import {
-  createStackNavigator,
-  CardStyleInterpolators,
-} from '@react-navigation/stack';
+// import {
+//   createStackNavigator,
+//   CardStyleInterpolators,
+// } from '@react-navigation/stack';
 import {
   NavigationContainer,
   DefaultTheme,
   DarkTheme,
+  useTheme,
 } from '@react-navigation/native';
-
+import {createSharedElementStackNavigator} from 'react-navigation-shared-element';
 import {AppearanceProvider, useColorScheme} from 'react-native-appearance';
 
-// components
+import {RootStackParamList} from './types/types';
+
+// screens & components
 import Home from '../src/screens/homeScreen';
 import DetailsScreen from './screens/detailsScreen';
 import SearchScreen from './screens/searchScreen';
 import MyHeader from './components/header';
+import PreviewImg from './screens/previewImage';
+import GridView from './screens/gridView';
 
-const Stack = createStackNavigator();
+const Stack = createSharedElementStackNavigator<RootStackParamList>();
 export default function App() {
   const scheme = useColorScheme();
+  const {colors} = useTheme();
   return (
     <AppearanceProvider>
       <NavigationContainer theme={scheme == 'dark' ? DarkTheme : DefaultTheme}>
@@ -27,12 +33,13 @@ export default function App() {
           initialRouteName="Home"
           headerMode="screen"
           screenOptions={{
-            gestureEnabled: true,
-            gestureDirection: 'horizontal',
-            cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+            animationEnabled: true,
+            // gestureEnabled: true,
+            // gestureDirection: 'horizontal',
+            // cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
             headerStyle: {
-              elevation: 0,
               backgroundColor: 'transparent',
+              elevation: 0,
             },
             headerTitleStyle: {
               justifyContent: 'center',
@@ -49,6 +56,7 @@ export default function App() {
                 <MyHeader
                   {...props}
                   isDetailsScreen={false}
+                  color={colors}
                   theme={scheme == 'dark' ? 'dark' : 'light'}
                 />
               ),
@@ -60,10 +68,20 @@ export default function App() {
             options={{
               headerTransparent: true,
               headerTitle: '',
-              headerTintColor: '#FF5159',
+              headerTintColor: 'white',
             }}
           />
           <Stack.Screen name="Search" component={SearchScreen} />
+          <Stack.Screen name="GridView" component={GridView} />
+          <Stack.Screen
+            name="ImageView"
+            component={PreviewImg}
+            options={{
+              headerTransparent: true,
+              headerTintColor: 'white',
+              headerTitle: '',
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </AppearanceProvider>

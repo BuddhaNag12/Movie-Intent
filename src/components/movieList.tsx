@@ -38,8 +38,9 @@ const MovieList = (props: movieTitle) => {
           marginVertical: 2,
           marginHorizontal: 5,
           borderBottomColor: 'transparent',
-          elevation: 1,
-          backgroundColor: props.theme == 'dark' ? '#303030' : 'f2f2f2',
+          elevation: 2,
+          backgroundColor: props.theme == 'dark' ? '#303030' : '#FCF8FF',
+          maxHeight: 100,
         }}>
         <TouchableOpacity
           onPress={() =>
@@ -55,12 +56,14 @@ const MovieList = (props: movieTitle) => {
           <View
             style={{
               justifyContent: 'center',
-              paddingHorizontal: 10,
               flex: 1,
+              width: 80,
+              height: 80,
+             
             }}>
             <Image
-              style={{width: 80, height: 80, borderRadius: 30}}
-              resizeMode="cover"
+              style={{...StyleSheet.absoluteFillObject, borderRadius:10}}
+              resizeMode="contain"
               source={{
                 uri: item.poster_path
                   ? 'https://image.tmdb.org/t/p/w185/' + item.poster_path
@@ -70,10 +73,14 @@ const MovieList = (props: movieTitle) => {
           </View>
           <View style={{flex: 1}}>
             <ListItem.Content>
-              <ListItem.Title style={{...styles.title, color: textColor}}>
+              <ListItem.Title
+                style={{...styles.title, color: textColor}}
+                numberOfLines={1}>
                 {item.title}
               </ListItem.Title>
-              <ListItem.Subtitle style={{...styles.subtitle, color: textColor}}>
+              <ListItem.Subtitle
+                style={{...styles.subtitle, color: textColor}}
+                numberOfLines={2}>
                 {item.title}
               </ListItem.Subtitle>
               <ListItem.Subtitle style={{...styles.subtitle, color: textColor}}>
