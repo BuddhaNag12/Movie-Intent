@@ -1,25 +1,23 @@
 import * as React from 'react';
-import {View, StyleSheet, ScrollView, StatusBar} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import {useColorScheme} from 'react-native-appearance';
 import LottieView from 'lottie-react-native';
-import API_TOKEN from '../../envExport';
 import MovieDetails from '../components/MovieDetailsList';
-import {datatype} from '../types/types';
+import {datatype, DetailScreenType} from '../types/types';
 import {useTheme} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
-import {SharedElement} from 'react-navigation-shared-element';
+import {getMovieDetails} from '../api';
 interface DetailsScreenProps {
   route: {
     params: any;
   };
-  navigation: any;
+  navigation: DetailScreenType;
 }
 
 const DetailsScreen = ({navigation, route: {params}}: DetailsScreenProps) => {
   const scheme = useColorScheme();
   const {colors} = useTheme();
   const {id} = params;
-  const api = `https://api.themoviedb.org/3/movie/${id}?api_key=${API_TOKEN}&language=en-US`;
 
   const [loading, setLoading] = React.useState<boolean>(false);
   const [MovieData, setMoviesFetched] = React.useState<datatype>();
@@ -27,14 +25,17 @@ const DetailsScreen = ({navigation, route: {params}}: DetailsScreenProps) => {
   React.useEffect(() => {
     setLoading(true);
     let isMounted: boolean = true;
-
-    fetch(api)
-      .then((data) => data.json())
+    getMovieDetails(id)
       .then((res) => {
         if (isMounted) {
           setLoading(false);
           setMoviesFetched(res);
         }
+      })
+      .catch((e) => {
+        console.log(e);
+        setLoading(false);
+        isMounted = false;
       });
 
     return () => {

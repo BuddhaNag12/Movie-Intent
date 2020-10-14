@@ -8,12 +8,12 @@ import {
   Image,
 } from 'react-native';
 import {ListItem, AirbnbRating} from 'react-native-elements';
-import {mode} from '../types/types';
+import {mode, SearchType} from '../types/types';
 interface movieTitle {
   id?: string;
   title?: string;
   searchItems: Array<Object>;
-  navigation: any;
+  navigation: SearchType;
   color?: any;
   theme: mode;
   loading: boolean;

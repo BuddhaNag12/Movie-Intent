@@ -3,11 +3,12 @@ import {View, Text, StyleSheet, Platform, Dimensions} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Carousel, {ParallaxImage} from 'react-native-snap-carousel';
 import {getBackdropPath, getImagePath} from '../api';
+import { HomeScreenType } from '../types/types';
 const {width} = Dimensions.get('window');
 
 interface HeroCarouselProp<T> {
   CarouselData: Array<T>;
-  navigation: any;
+  navigation: HomeScreenType;
 }
 const styles = StyleSheet.create({
   image: {

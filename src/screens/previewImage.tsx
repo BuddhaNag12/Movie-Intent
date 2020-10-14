@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Dimensions, Animated, StatusBar} from 'react-native';
-import { colors } from 'react-native-elements';
+import {colors} from 'react-native-elements';
 import {PinchGestureHandler, State} from 'react-native-gesture-handler';
 import {SharedElement} from 'react-navigation-shared-element';
 const {width, height} = Dimensions.get('window');
@@ -19,7 +19,7 @@ const PreviewImg = ({route}: any) => {
     },
   );
 
-  const onZoomStateChange = (event: any): any => {
+  const onZoomStateChange = (event: any) => {
     if (event.nativeEvent.oldState === State.ACTIVE) {
       Animated.spring(scale, {
         toValue: 1,
@@ -28,19 +28,22 @@ const PreviewImg = ({route}: any) => {
     }
   };
   return (
-    <View style={{flex: 1,backgroundColor:colors.grey5}}>
-      <StatusBar hidden showHideTransition='fade' />
-      <SharedElement id={`item.${imagePath}.photo`} style={{flex: 1,backgroundColor:colors.grey5}}>
+    <View style={{flex: 1, backgroundColor: colors.grey5}}>
+      <StatusBar hidden showHideTransition="fade" />
+      <SharedElement
+        id={`item.${imagePath}.photo`}
+        style={{flex: 1, backgroundColor: colors.grey5}}>
         <PinchGestureHandler
           onGestureEvent={onZoomEvent}
           onHandlerStateChange={onZoomStateChange}>
           <Animated.Image
             source={{uri: 'https://image.tmdb.org/t/p/w1280' + imagePath}}
             style={{
-              width:width,height,
+              width: width,
+              height,
               transform: [{scale: scale}],
             }}
-            resizeMode='stretch'
+            resizeMode="stretch"
           />
         </PinchGestureHandler>
       </SharedElement>

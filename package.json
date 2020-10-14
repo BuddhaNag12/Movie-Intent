@@ -1,5 +1,5 @@
 {
-    "name": "Movie_Intent",
+    "name": "Movies_Intent",
     "version": "0.0.1",
     "private": true,
     "scripts": {
@@ -15,7 +15,7 @@
     "dependencies": {
         "@react-native-community/masked-view": "^0.1.10",
         "@react-native-community/netinfo": "^5.9.7",
-        "@react-navigation/native": "5.0.9",
+        "@react-navigation/native": "^5.7.6",
         "@react-navigation/stack": "5.1.1",
         "@types/react-native-snap-carousel": "^3.8.2",
         "lottie-react-native": "^3.5.0",

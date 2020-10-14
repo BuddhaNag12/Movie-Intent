@@ -1,12 +1,12 @@
 import * as React from 'react';
 import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {getBackdropPath, getImagePath} from '../api';
-import {size, mode, colorsType} from '../types/types';
+import {size, mode, colorsType, HomeScreenType} from '../types/types';
 import * as Animatable from 'react-native-animatable';
 import {SharedElement} from 'react-navigation-shared-element';
 interface HrCardsProps<T> {
   Movies: Array<T>;
-  navigation: any;
+  navigation: HomeScreenType;
   cardSize?: size;
   theme?: mode;
   colors: colorsType;

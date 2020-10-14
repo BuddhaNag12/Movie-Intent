@@ -3,18 +3,16 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '10.0'
 
-target 'Movie Intent' do
+target 'Movies_Intent' do
   config = use_native_modules!
 
   use_react_native!(:path => config["reactNativePath"])
 
-  target 'Movie IntentTests' do
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
+  target 'Movies_IntentTests' do
     inherit! :complete
     # Pods for testing
-    pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
-
-    pod 'lottie-react-native', :path => '../node_modules/lottie-react-native'
-
   end
 
   # Enables Flipper.
@@ -27,10 +25,10 @@ target 'Movie Intent' do
   end
 end
 
-target 'Movie Intent-tvOS' do
-  # Pods for Movie Intent-tvOS
+target 'Movies_Intent-tvOS' do
+  # Pods for Movies_Intent-tvOS
 
-  target 'Movie Intent-tvOSTests' do
+  target 'Movies_Intent-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end

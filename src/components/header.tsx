@@ -1,8 +1,7 @@
 import * as React from 'react';
-import {Text, View, StyleSheet, StatusBar, Image} from 'react-native';
+import {View, StyleSheet, StatusBar, Image} from 'react-native';
 import {Header, Icon} from 'react-native-elements';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import LinearGradient from 'react-native-linear-gradient';
 import {colorsMode, colorsType, mode} from '../types/types';
 import SearchButton from './searchButton';
 
@@ -10,11 +9,10 @@ interface HeaderProps {
   theme: mode;
   isDetailsScreen: boolean;
   color: colorsType;
+  setVisible: () => void;
 }
 
-const MyHeader = ({color, theme, isDetailsScreen}: HeaderProps) => {
-  const logoHeight = StatusBar.currentHeight ? StatusBar.currentHeight : 15;
-  
+const MyHeader = ({color, theme, isDetailsScreen, setVisible}: HeaderProps) => {
   return (
     <View style={{backgroundColor: color.background}}>
       <StatusBar
@@ -27,11 +25,14 @@ const MyHeader = ({color, theme, isDetailsScreen}: HeaderProps) => {
         <Header
           barStyle={theme == 'dark' ? 'light-content' : 'dark-content'}
           containerStyle={{
-            backgroundColor: theme == 'dark' ? colorsMode.dark : colorsMode.light,
-            borderBottomColor: theme == 'dark' ? colorsMode.dark : colorsMode.light,
+            backgroundColor:
+              theme == 'dark' ? colorsMode.dark : colorsMode.light,
+            borderBottomColor:
+              theme == 'dark' ? colorsMode.dark : colorsMode.light,
           }}
           leftComponent={
             <TouchableOpacity
+              onPress={() => setVisible()}
               style={{
                 paddingVertical: 2,
                 justifyContent: 'center',
@@ -46,35 +47,10 @@ const MyHeader = ({color, theme, isDetailsScreen}: HeaderProps) => {
             </TouchableOpacity>
           }
           centerComponent={
-            <LinearGradient
-              start={{x: 0, y: 0}}
-              end={{x: 0, y: 1}}
-              colors={['#F2FF67', '#FDD92C', '#FFEC21']}
-              style={{
-                flex: 1,
-                flexDirection: 'row',
-                justifyContent: 'center',
-                alignItems:'center',
-                marginTop: logoHeight / 2,
-                marginBottom: logoHeight / 2,
-                borderRadius: 5,
-              }}>
-              <Image
-                source={require('../../assets/logo2.png')}
-                style={{width: 25, height: 27, marginHorizontal: 2}}
-              />
-              <Text
-                style={{
-                  fontFamily: 'HindVadodara-Bold',
-                  fontSize: 20,
-                  fontStyle: 'normal',
-                  paddingHorizontal: 5,
-                  paddingVertical: 3,
-                  color: theme == 'dark' ? 'whitesmoke' : 'black',
-                }}>
-                Movie !ntent
-              </Text>
-            </LinearGradient>
+            <Image
+              source={require('../../assets/LOGO.png')}
+              style={{width: 150, height: 30}}
+            />
           }
           rightComponent={
             <SearchButton theme={theme == 'dark' ? 'dark' : 'light'} />
@@ -100,10 +76,4 @@ const styles = StyleSheet.create({
     width: 35,
     height: 40,
   },
-  //   logoTitle: {
-  //     justifyContent: 'center',
-  //     alignItems: 'center',
-  //     fontFamily: 'HindVadodara-Bold',
-  //     fontSize: 15,
-  //   },
 });

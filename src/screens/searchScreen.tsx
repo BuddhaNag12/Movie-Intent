@@ -1,17 +1,17 @@
 import * as React from 'react';
-import {Text, View, StyleSheet, ScrollView, Button} from 'react-native';
+import {Text, View, StyleSheet, ScrollView} from 'react-native';
 import SearchMovies from '../components/search';
 import API_TOKEN from '../../envExport';
 import MovieList from '../components/movieList';
 import {useColorScheme} from 'react-native-appearance';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {genres} from '../api';
-import MyBottomSheet from '../components/BottomSheet';
-import {RootStackParamList} from '../types/types';
+
+import {SearchType} from '../types/types';
 
 interface SearchScreenProps {
-  navigation: RootStackParamList;
-  route: RootStackParamList;
+  navigation: SearchType;
+  route: any;
 }
 
 const SearchScreen = ({navigation, route}: SearchScreenProps) => {
@@ -124,15 +124,6 @@ const SearchScreen = ({navigation, route}: SearchScreenProps) => {
             );
           })}
         </ScrollView>
-        {/* <MyBottomSheet
-          isVisible={isVisible}
-          setIsVisible={setIsVisible}
-          toggleBottomSheet={toggleBottomSheet}
-          filterSearch={filterSearch}
-          setDefault={setDefault}
-          theme={scheme == 'dark' ? 'dark' : 'light'}
-          colors={colors}
-        /> */}
       </View>
       <MovieList
         searchItems={searchResults}

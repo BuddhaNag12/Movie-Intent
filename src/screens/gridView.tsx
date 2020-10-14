@@ -7,11 +7,11 @@ import {Appearance} from 'react-native-appearance';
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 import {getMovies} from '../api';
 import FlatListItems from '../components/flatListItems';
-import {colorsMode, datatype} from '../types/types';
+import {colorsMode, datatype, GridViewType} from '../types/types';
 
 interface GridViewProps {
   route: any;
-  navigation: any;
+  navigation: GridViewType;
 }
 
 const GridView = ({route, navigation}: GridViewProps) => {
