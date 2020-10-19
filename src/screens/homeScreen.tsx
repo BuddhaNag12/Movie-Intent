@@ -1,11 +1,5 @@
 import * as React from 'react';
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-  StatusBar,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import {View, StyleSheet, ScrollView, StatusBar, Text} from 'react-native';
 import {Appearance} from 'react-native-appearance';
 import HrCardsProps from '../components/horizontalCard';
 import LottieView from 'lottie-react-native';
@@ -16,7 +10,8 @@ import NetInfo from '@react-native-community/netinfo';
 import {colorsMode, HomeScreenType} from '../types/types';
 import {HeroText} from '../components/HeroText';
 import MyHeader from '../components/header';
-import MyBottomSheet from '../components/ButtomSheet';
+import RBSheet from 'react-native-raw-bottom-sheet';
+import MyBottomSheet from '../components/BottomSheetList';
 
 interface HomeScreenProp {
   navigation: HomeScreenType;
@@ -36,9 +31,9 @@ const Home = ({navigation}: HomeScreenProp) => {
   const [popularMovies, setPopularMovies] = React.useState([]);
   const [HotNow, setHotNow] = React.useState([]);
   const [Internet, setInternet] = React.useState(false);
-  const [isVisible, setVisible] = React.useState(false);
 
   const scheme = Appearance.getColorScheme();
+  const refRBSheet = React.useRef<any>();
 
   React.useEffect(() => {
     setLoading(true);
@@ -76,17 +71,12 @@ const Home = ({navigation}: HomeScreenProp) => {
     };
   }, []);
 
-  // if (!Internet) {
-  //   return (
-  //     <View style={{flex: 1, justifyContent: 'center'}}>
-  //       <Text style={{textAlign: 'center'}}>Internet Not Connected</Text>
-  //     </View>
-  //   );
-  // }
-
   const toggleVisible = () => {
-    setVisible(!isVisible);
+    refRBSheet.current.open();
   };
+  const closeBottomSheet=()=>{
+    refRBSheet.current.close();
+  }
   if (loading) {
     return (
       <View style={{flex: 1}}>
@@ -99,73 +89,107 @@ const Home = ({navigation}: HomeScreenProp) => {
       </View>
     );
   }
-  return (
-    // <TouchableWithoutFeedback style={{flex: 1}} onPress={() => setVisible(false)}>
-      <View
-        style={{
-          ...styles.container,
-          backgroundColor: scheme == 'dark' ? colorsMode.dark : 'white',
-        }}>
-        <MyHeader
-          isDetailsScreen={false}
-          color={colors}
-          theme={scheme == 'dark' ? 'dark' : 'light'}
-          setVisible={toggleVisible}
-        />
-        <MyBottomSheet visible={isVisible} setIsVisible={toggleVisible} navigation={navigation} 
-        theme={scheme == 'dark' ? 'dark' : 'light'}
-        />
-        <ScrollView>
-          <HeroCarousel CarouselData={HotNow} navigation={navigation} />
-          <HeroText
-            TextProp="Upcoming Movies"
-            color={scheme === 'dark' ? 'white' : 'black'}
-            ViewAll="upcoming"
-            delay={300}
-            navigation={navigation}
-          />
-          <ScrollView
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            fadingEdgeLength={30}
-            contentContainerStyle={{
-              paddingVertical: 10,
-              paddingRight: 10,
-            }}>
-            <HrCardsProps
-              colors={colors}
-              Movies={UpcomingMovies}
-              navigation={navigation}
-              cardSize="large"
-              theme={scheme === 'dark' ? 'dark' : 'light'}
-            />
-          </ScrollView>
-          <HeroText
-            delay={400}
-            TextProp="Popular Movies"
-            color={scheme === 'dark' ? 'white' : 'black'}
-            ViewAll="popular"
-            navigation={navigation}
-          />
-          <ScrollView
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            fadingEdgeLength={30}
-            contentContainerStyle={{
-              paddingVertical: 10,
-              paddingRight: 10,
-            }}>
-            <HrCardsProps
-              colors={colors}
-              Movies={popularMovies}
-              navigation={navigation}
-              cardSize="large"
-              theme={scheme === 'dark' ? 'dark' : 'light'}
-            />
-          </ScrollView>
-        </ScrollView>
+
+  if (!Internet) {
+    return (
+      <View style={{flex: 1, justifyContent: 'center'}}>
+        <Text style={{textAlign: 'center'}}>Internet Not Connected</Text>
       </View>
-    // </TouchableWithoutFeedback>
+    );
+  }
+  return (
+    <View
+      style={{
+        ...styles.container,
+        backgroundColor: scheme == 'dark' ? colorsMode.dark : 'white',
+      }}>
+      <MyHeader
+        isDetailsScreen={false}
+        color={colors}
+        theme={scheme == 'dark' ? 'dark' : 'light'}
+        setVisible={toggleVisible}
+      />
+
+      <RBSheet
+        ref={refRBSheet}
+        animationType="fade"
+        closeOnDragDown={true}
+        closeOnPressMask={true}
+        openDuration={400}
+        height={140}
+        customStyles={{
+          wrapper: {
+            backgroundColor: 'transparent',
+            borderRadius: 24,
+            height: 150,
+          },
+          draggableIcon: {
+            borderRadius: 24,
+            backgroundColor: scheme == 'dark' ? colorsMode.light : colorsMode.dark,
+          },
+          container: {
+            backgroundColor:scheme == 'dark' ? colorsMode.dark : colorsMode.light,
+            borderTopRightRadius: 24,
+            borderTopLeftRadius: 24,
+            justifyContent: 'center',
+          },
+        }}>
+        <MyBottomSheet
+          navigation={navigation}
+          theme={scheme === 'dark' ? 'dark' : 'light'}
+          onPressHandler={closeBottomSheet}
+        />
+      </RBSheet>
+      <ScrollView>
+        <HeroCarousel CarouselData={HotNow} navigation={navigation} />
+        <HeroText
+          TextProp="Upcoming Movies"
+          color={scheme === 'dark' ? 'white' : 'black'}
+          ViewAll="upcoming"
+          delay={300}
+          navigation={navigation}
+        />
+        <ScrollView
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          fadingEdgeLength={30}
+          contentContainerStyle={{
+            paddingVertical: 10,
+            paddingRight: 10,
+          }}>
+          <HrCardsProps
+            colors={colors}
+            Movies={UpcomingMovies}
+            navigation={navigation}
+            cardSize="large"
+            theme={scheme === 'dark' ? 'dark' : 'light'}
+          />
+        </ScrollView>
+        <HeroText
+          delay={400}
+          TextProp="Popular Movies"
+          color={scheme === 'dark' ? 'white' : 'black'}
+          ViewAll="popular"
+          navigation={navigation}
+        />
+        <ScrollView
+          horizontal={true}
+          showsHorizontalScrollIndicator={false}
+          fadingEdgeLength={30}
+          contentContainerStyle={{
+            paddingVertical: 10,
+            paddingRight: 10,
+          }}>
+          <HrCardsProps
+            colors={colors}
+            Movies={popularMovies}
+            navigation={navigation}
+            cardSize="large"
+            theme={scheme === 'dark' ? 'dark' : 'light'}
+          />
+        </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 

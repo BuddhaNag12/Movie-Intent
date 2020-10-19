@@ -1,14 +1,13 @@
 import * as React from 'react';
-import {Text, View, StyleSheet, ScrollView} from 'react-native';
+import {Text, View, StyleSheet, ScrollView, StatusBar} from 'react-native';
 import SearchMovies from '../components/search';
 import API_TOKEN from '../../envExport';
 import MovieList from '../components/movieList';
 import {useColorScheme} from 'react-native-appearance';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {genres} from '../api';
-
-import {SearchType} from '../types/types';
-
+import {SearchType,colorsMode} from '../types/types';
+import {DefaultTheme} from '@react-navigation/native';
 interface SearchScreenProps {
   navigation: SearchType;
   route: any;
@@ -58,26 +57,14 @@ const SearchScreen = ({navigation, route}: SearchScreenProps) => {
       });
   };
 
-  // const filterSearch = (id: number) => {
-  //   setScifi(true);
-  //   fetch(
-  //     `https://api.themoviedb.org/3/discover/movie?api_key=${API_TOKEN}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&with_genres=${id}&page=1`,
-  //   )
-  //     .then((response) => response.json())
-  //     .then((results) => {
-  //       const TopAverage = results.results.filter(
-  //         (item: datatype) => item.popularity >= 0.6,
-  //       );
-  //       setHotNow(TopAverage);
-  //       setIsVisible(false);
-  //     })
-  //     .catch((e) => setError(e));
-  // };
-  // const toggleBottomSheet = () => {
-  //   setIsVisible(!isVisible);
-  // };
   return (
-    <View style={styles.container}>
+    <View
+      style={{
+        ...styles.container,
+        backgroundColor:
+          scheme == 'dark' ? colorsMode.dark : DefaultTheme.colors.background,
+      }}>
+      <StatusBar hidden />
       <SearchMovies search={searchMovies} setText={setText} autofocus={true} />
       <View style={{paddingVertical: 10, borderRadius: 30}}>
         <Text

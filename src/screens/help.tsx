@@ -1,13 +1,15 @@
 import * as React from 'react';
-import {Text, View, StyleSheet,SafeAreaView } from 'react-native';
-
+import {Text, View, StyleSheet, SafeAreaView} from 'react-native';
+import {
+  DefaultTheme,
+} from '@react-navigation/native';
 interface HelpScreenProps {}
 
 const HelpScreen = (props: HelpScreenProps) => {
   return (
-    <SafeAreaView>
+<SafeAreaView style={{...styles.container,backgroundColor:DefaultTheme.colors.background}}>
       <View style={styles.container}>
-        <Text>Help</Text>
+        <Text style={{textAlign: 'center'}}>Help Screen under Development</Text>
       </View>
     </SafeAreaView>
   );
