@@ -1,4 +1,4 @@
-package com.movie_intent;
+package com.movies_intent;
 
 import com.facebook.react.ReactActivity;
 
@@ -10,6 +10,6 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "Movie Intent";
+    return "Movies_Intent";
   }
 }

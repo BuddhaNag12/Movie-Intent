@@ -2,14 +2,14 @@ import * as React from 'react';
 import {View, StyleSheet, Dimensions, TouchableOpacity} from 'react-native';
 import Carousel, {Pagination, ParallaxImage} from 'react-native-snap-carousel';
 import {SharedElement} from 'react-navigation-shared-element';
-import {colorsType} from '../types/types';
+import {colorsType, DetailScreenType} from '../types/types';
 
 const {width, height} = Dimensions.get('window');
 
 interface HeroCarouselProp<T> {
   CarouselData: Array<T>;
   colors: colorsType;
-  navigation: any;
+  navigation: DetailScreenType;
 }
 const styles = StyleSheet.create({
   // image: {

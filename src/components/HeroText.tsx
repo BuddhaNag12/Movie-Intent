@@ -3,13 +3,14 @@ import {View, Text} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {Divider} from 'react-native-elements';
 import * as Animatable from 'react-native-animatable';
+import { HomeScreenType } from '../types/types';
 
 interface heroTextProps {
   TextProp: string;
   ViewAll?: string;
   color: string;
   delay?: number;
-  navigation?: any;
+  navigation?: HomeScreenType;
   fontSize?: number;
 }
 

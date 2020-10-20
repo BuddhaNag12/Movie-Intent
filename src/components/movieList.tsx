@@ -8,12 +8,12 @@ import {
   Image,
 } from 'react-native';
 import {ListItem, AirbnbRating} from 'react-native-elements';
-import {mode} from '../types/types';
+import {mode, SearchType} from '../types/types';
 interface movieTitle {
   id?: string;
   title?: string;
   searchItems: Array<Object>;
-  navigation: any;
+  navigation: SearchType;
   color?: any;
   theme: mode;
   loading: boolean;
@@ -51,19 +51,12 @@ const MovieList = (props: movieTitle) => {
           style={{
             flex: 1,
             flexDirection: 'row',
-            paddingHorizontal: 10,
+            justifyContent: 'space-between',
           }}>
-          <View
-            style={{
-              justifyContent: 'center',
-              flex: 1,
-              width: 80,
-              height: 80,
-             
-            }}>
+          <View style={{width: 70, height: 70}}>
             <Image
-              style={{...StyleSheet.absoluteFillObject, borderRadius:10}}
-              resizeMode="contain"
+              style={{borderRadius: 30, ...StyleSheet.absoluteFillObject}}
+              resizeMode="cover"
               source={{
                 uri: item.poster_path
                   ? 'https://image.tmdb.org/t/p/w185/' + item.poster_path
@@ -71,16 +64,16 @@ const MovieList = (props: movieTitle) => {
               }}
             />
           </View>
-          <View style={{flex: 1}}>
+          <View style={{flex: 1, paddingHorizontal: 10}}>
             <ListItem.Content>
               <ListItem.Title
                 style={{...styles.title, color: textColor}}
-                numberOfLines={1}>
+                numberOfLines={2}>
                 {item.title}
               </ListItem.Title>
               <ListItem.Subtitle
                 style={{...styles.subtitle, color: textColor}}
-                numberOfLines={2}>
+                numberOfLines={1}>
                 {item.title}
               </ListItem.Subtitle>
               <ListItem.Subtitle style={{...styles.subtitle, color: textColor}}>
@@ -94,7 +87,6 @@ const MovieList = (props: movieTitle) => {
               isDisabled
               showRating={true}
               count={5}
-              reviews={['Bad', 'Average', 'Good', 'very Good', 'Excellent']}
               defaultRating={item.vote_count}
               size={15}
             />
@@ -108,6 +100,9 @@ const MovieList = (props: movieTitle) => {
     <View style={styles.container}>
       <FlatList
         data={props.searchItems}
+        contentContainerStyle={{
+          paddingHorizontal: 5,
+        }}
         renderItem={renderItem}
         keyExtractor={(_, index) => index.toString()}
       />

@@ -11,15 +11,14 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 
 import API_TOKEN from '../../envExport';
 import {getBackdropPath, getImagePath} from '../api';
-import {mode, datatype, colorsType, colorsMode} from '../types/types';
+import {mode, datatype, colorsType, colorsMode, DetailScreenType} from '../types/types';
 import HeroCarouselDetails from './DetailCarousel';
-import {HeroText} from './HeroText';
 const {width, height} = Dimensions.get('window');
 
 interface MovieDetailsProps {
   theme?: mode;
   data: datatype;
-  navigation: any;
+  navigation: DetailScreenType;
   colors: colorsType;
 }
 //theme,popularity,status,overView,title
@@ -121,7 +120,8 @@ const MovieDetails = ({colors, theme, data, navigation}: MovieDetailsProps) => {
       </View>
       <Card
         containerStyle={{
-          backgroundColor: theme == 'dark' ? colorsMode.dark : colorsMode.light,
+          backgroundColor:
+            theme == 'dark' ? colorsMode.dark : colorsMode.detailColor,
           width: width,
           borderTopLeftRadius: 30,
           borderTopRightRadius: 30,
@@ -135,8 +135,6 @@ const MovieDetails = ({colors, theme, data, navigation}: MovieDetailsProps) => {
           <View
             style={{
               flex: 1,
-              // flexDirection: 'row',
-              // flexWrap: 'wrap',
               justifyContent: 'space-around',
             }}>
             <Text
@@ -146,18 +144,6 @@ const MovieDetails = ({colors, theme, data, navigation}: MovieDetailsProps) => {
               }}>
               {data.title}
             </Text>
-            <Badge
-              badgeStyle={{
-                paddingHorizontal: 10,
-                alignSelf:"flex-start",
-                backgroundColor: colors.primary,
-              }}
-              value={
-                <Text style={{color: theme == 'dark' ? 'white' : '#fefefe'}}>
-                  Vote Count {data.vote_count}
-                </Text>
-              }
-            />
           </View>
           <GetGenres />
           <View
@@ -190,13 +176,28 @@ const MovieDetails = ({colors, theme, data, navigation}: MovieDetailsProps) => {
           </View>
           <Text
             style={{
+              fontFamily: 'Nunito-Bold',
+              color: theme == 'dark' ? 'white' : 'grey',
+            }}>
+            Vote Count : {data.vote_count}
+          </Text>
+          <Text
+            style={{
               fontFamily: 'HindVadodara-Light',
               fontSize: 20,
               color: theme == 'dark' ? 'white' : 'black',
             }}>
             Release Date: {data.release_date}
           </Text>
-          <HeroText TextProp="TagLine" color={theme=='dark'?'white' : 'black'} fontSize={18} />
+
+          <Text
+            style={{
+              fontFamily: 'HindVadodara-Bold',
+              fontSize: 25,
+              color: theme == 'dark' ? 'white' : 'black',
+            }}>
+            Tagline
+          </Text>
           <Text
             style={{
               fontFamily: 'HindVadodara-Light',
@@ -205,7 +206,15 @@ const MovieDetails = ({colors, theme, data, navigation}: MovieDetailsProps) => {
             }}>
             {data.tagline || 'No tagline found '}
           </Text>
-          <HeroText TextProp="Movie Plot" color={theme=='dark'?'white' : 'black'} />
+
+          <Text
+            style={{
+              fontFamily: 'HindVadodara-Bold',
+              fontSize: 25,
+              color: theme == 'dark' ? 'white' : 'black',
+            }}>
+            Movie Plot
+          </Text>
           <TouchableOpacity>
             <Text
               style={{
@@ -230,7 +239,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   MovieTitle: {
-    fontFamily: 'HindVadodara-Bold',
+    fontFamily: 'Nunito-Bold',
     fontSize: 25,
     paddingVertical: 5,
     textTransform: 'capitalize',

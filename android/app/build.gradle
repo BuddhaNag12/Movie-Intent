@@ -121,10 +121,6 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 def enableHermes = project.ext.react.get("enableHermes", false);
 
 android {
-    dexOptions {
-            javaMaxHeapSize "4g"
-        } 
-
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     compileOptions {
@@ -133,7 +129,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.movie_intent"
+        applicationId "com.movies_intent"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
