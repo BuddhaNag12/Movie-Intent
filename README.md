@@ -8,7 +8,7 @@
 3. View movie details
 
 ## DEMO
-![ezgif com-video-to-gif](https://user-images.githubusercontent.com/31861172/94602964-3a924c80-02b3-11eb-9ca4-5f04d84294a7.gif)
+![moviesintent](https://user-images.githubusercontent.com/31861172/96581928-324c9080-12f8-11eb-9ae5-3a72339982d1.gif)
 
 
 ## App screenshots
