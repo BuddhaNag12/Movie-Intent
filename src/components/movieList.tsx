@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Image,
+  RefreshControl,
 } from 'react-native';
 import {ListItem, AirbnbRating} from 'react-native-elements';
 import {mode, SearchType} from '../types/types';
@@ -17,6 +18,8 @@ interface movieTitle {
   color?: any;
   theme: mode;
   loading: boolean;
+  refreshing: boolean;
+  onRefreshing: () => void;
 }
 
 const MovieList = (props: movieTitle) => {
@@ -32,7 +35,7 @@ const MovieList = (props: movieTitle) => {
     return (
       <ListItem
         bottomDivider
-        key={item.id.toString()}
+        key={item.id}
         containerStyle={{
           borderRadius: 30,
           marginVertical: 2,
@@ -99,6 +102,8 @@ const MovieList = (props: movieTitle) => {
   return (
     <View style={styles.container}>
       <FlatList
+        refreshControl={<RefreshControl refreshing={props.refreshing} onRefresh={props.onRefreshing} />}
+        onEndReached={props.onRefreshing}
         data={props.searchItems}
         contentContainerStyle={{
           paddingHorizontal: 5,

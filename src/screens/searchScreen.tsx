@@ -5,20 +5,21 @@ import API_TOKEN from '../../envExport';
 import MovieList from '../components/movieList';
 import {useColorScheme} from 'react-native-appearance';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {genres} from '../api';
-import {SearchType,colorsMode} from '../types/types';
+import {genres, GetMoreSearchResults} from '../api';
+import {SearchType, colorsMode, datatype} from '../types/types';
 import {DefaultTheme} from '@react-navigation/native';
 interface SearchScreenProps {
   navigation: SearchType;
-  route: any;
 }
 
-const SearchScreen = ({navigation, route}: SearchScreenProps) => {
-  const [searchResults, setSearchResults] = React.useState<Array<object>>([]);
+const SearchScreen = ({navigation}: SearchScreenProps) => {
+  const [searchResults, setSearchResults] = React.useState([]);
   const [error, setError] = React.useState<string>('');
   const [searchText, setText] = React.useState<string>('');
   const [loading, setLoading] = React.useState<boolean>(false);
-  const [pageNumber, setPageNumber] = React.useState<Number>(1);
+  const [counter, setCounter] = React.useState(1);
+  const [MovieId, setId] = React.useState<number>();
+  const [refreshing, setRefreshing] = React.useState(false);
   const scheme = useColorScheme();
 
   const searchMovies = () => {
@@ -42,10 +43,25 @@ const SearchScreen = ({navigation, route}: SearchScreenProps) => {
         setLoading(false);
       });
   };
+
+  const onRefresh = () => {
+    console.log('refreshing');
+    setRefreshing(true);
+    setCounter(counter + 1);
+    GetMoreSearchResults(MovieId, counter)
+      .then((res: []) => {
+        setSearchResults((prev) => [...prev, ...res]);
+        setRefreshing(false);
+      })
+      .catch((err) => {
+        setError(err);
+      });
+  };
   const fetchByGenres = (id: number) => {
     setLoading(true);
+    setId(id);
     fetch(
-      `https://api.themoviedb.org/3/discover/movie?api_key=${API_TOKEN}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&with_genres=${id}&page=${pageNumber}`,
+      `https://api.themoviedb.org/3/discover/movie?api_key=${API_TOKEN}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&with_genres=${id}&page=${counter}`,
     )
       .then((data) => data.json())
       .then((res) => {
@@ -113,6 +129,8 @@ const SearchScreen = ({navigation, route}: SearchScreenProps) => {
         </ScrollView>
       </View>
       <MovieList
+        onRefreshing={onRefresh}
+        refreshing={refreshing}
         searchItems={searchResults}
         navigation={navigation}
         loading={loading}
