@@ -51,7 +51,7 @@ export type RootStackParamList = {
     imagePath: string
   };
   GridView: {
-    type: string;
+    type: string | undefined;
   },
   About:undefined;
   Help:undefined

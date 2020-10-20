@@ -22,6 +22,7 @@ export const HeroText = ({
   navigation,
   fontSize,
 }: heroTextProps) => {
+
   return (
     <View
       style={{
