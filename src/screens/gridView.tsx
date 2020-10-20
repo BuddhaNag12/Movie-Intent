@@ -60,7 +60,7 @@ const GridView = ({route, navigation}: GridViewProps) => {
     setRefreshing(true);
     setCounter(counter + 1);
     getMovies(type, counter)
-      .then((res: []) => {
+      .then((res: []) => {        
         setFetchedData((prev) => [...prev, ...res]);
         setRefreshing(false);
       })

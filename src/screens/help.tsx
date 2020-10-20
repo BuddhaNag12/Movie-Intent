@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginVertical: 4,
     elevation: 1,
-    borderRadius: 20,
     padding: 2,
   },
 
@@ -84,7 +83,7 @@ const HeadingImg = () => {
 const ContextView = ({colors}: HelpScreenProps) => {
   return (
     <View>
-      <View style={{...styles.headingText}}>
+      <View style={{...styles.headingText,backgroundColor:colors.background}}>
         <Text style={{...styles.h3, color: colors.text}}>Steps:</Text>
       </View>
       <Divider />

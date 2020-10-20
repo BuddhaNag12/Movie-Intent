@@ -43,6 +43,12 @@ export const getMovies = async (type: string, page: number) => {
   return results.results;
 };
 
+export const GetMoreSearchResults = async (id?: number, page?: number) => {
+  const MovieFetch = `https://api.themoviedb.org/3/discover/movie?api_key=${API_TOKEN}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&with_genres=${id}&page=${page}`;
+  const res = await fetch(MovieFetch);
+  const results = await res.json();
+  return results.results;
+};
 export const getUpcomingMovies = async () => {
   const [upcomingRes, popularRes] = await Promise.all([
     fetch(API_URL),

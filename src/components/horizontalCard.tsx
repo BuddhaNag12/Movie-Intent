@@ -3,7 +3,6 @@ import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {getBackdropPath, getImagePath} from '../api';
 import {size, mode, colorsType, HomeScreenType} from '../types/types';
 import * as Animatable from 'react-native-animatable';
-import {SharedElement} from 'react-navigation-shared-element';
 interface HrCardsProps<T> {
   Movies: Array<T>;
   navigation: HomeScreenType;
@@ -27,7 +26,7 @@ const HrCards = ({
           animation="fadeInRight"
           duration={400}
           delay={600 + index * 60}
-          key={index}
+          key={items.id}
           style={{
             marginHorizontal: 5,
             width: cardSize == 'large' ? 130 : 110,

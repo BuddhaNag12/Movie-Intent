@@ -9,9 +9,9 @@ export enum colorsMode {
   dark = '#00001B',
   light = 'white',
   detailColor = '#FCF8FF',
-  cancelButtomLight='#FF6F91',
-  cancelButtomDark="#C34A36",
-  grey='#E3E0F3'
+  cancelButtomLight = '#FF6F91',
+  cancelButtomDark = "#C34A36",
+  grey = '#E3E0F3'
 }
 
 export type colorsType = {
@@ -53,8 +53,8 @@ export type RootStackParamList = {
   GridView: {
     type: string;
   },
-  About:undefined;
-  Help:undefined
+  About: undefined;
+  Help: undefined
 };
 export type HomeScreenType = StackNavigationProp<
   RootStackParamList,

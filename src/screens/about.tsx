@@ -1,4 +1,4 @@
-import { useTheme } from '@react-navigation/native';
+import {useTheme} from '@react-navigation/native';
 import * as React from 'react';
 import {
   Text,
@@ -9,11 +9,10 @@ import {
   Image,
   Linking,
 } from 'react-native';
-import {Appearance} from 'react-native-appearance';
 
-import {Avatar, colors, Icon} from 'react-native-elements';
+import {Avatar, Icon} from 'react-native-elements';
 import {ScrollView} from 'react-native-gesture-handler';
-import {colorsMode, colorsType} from '../types/types';
+import {colorsType} from '../types/types';
 
 const {width} = Dimensions.get('window');
 
@@ -101,10 +100,9 @@ const styles = StyleSheet.create({
 
 const imgUrl = require('../../assets/about.png');
 
-interface AboutProp{
-  colors:colorsType
+interface AboutProp {
+  colors: colorsType;
 }
-
 
 const AboutScreen = () => {
   const {colors} = useTheme();
@@ -113,16 +111,17 @@ const AboutScreen = () => {
     <SafeAreaView>
       <ScrollView>
         <View>
-          <View style={{...styles.container,backgroundColor:colors.background}}>
-            <ImageHeading colors={colors}/>
-            <AboutMeAvatar colors={colors}/>
+          <View
+            style={{...styles.container, backgroundColor: colors.background}}>
+            <ImageHeading />
+            <AboutMeAvatar colors={colors} />
             <View style={{...styles.content}}>
               <Text style={{...styles.h1, color: colors.text}}>
                 Quick Summary :
               </Text>
-              <SummeryText colors={colors}/>
-              <LicenseDetails colors={colors}/>
-              <ContactDetails colors={colors}/>
+              <SummeryText colors={colors} />
+              <LicenseDetails colors={colors} />
+              <ContactDetails colors={colors} />
             </View>
           </View>
         </View>
@@ -130,7 +129,7 @@ const AboutScreen = () => {
     </SafeAreaView>
   );
 };
-const ImageHeading = ({colors}:AboutProp) => {
+const ImageHeading = () => {
   return (
     <View style={{...styles.headingImg}}>
       <Image
@@ -143,11 +142,13 @@ const ImageHeading = ({colors}:AboutProp) => {
   );
 };
 
-const AboutMeAvatar = ({colors}:AboutProp) => {
+const AboutMeAvatar = ({colors}: AboutProp) => {
   return (
     <View>
       <View style={{...styles.headingWrapper}}>
-        <Text style={{...styles.h3,color:colors.background}}>About The Developer</Text>
+        <Text style={{...styles.h3, color: colors.background}}>
+          About The Developer
+        </Text>
       </View>
       <View style={{...styles.aboutWrapper}}>
         <Avatar
@@ -158,7 +159,7 @@ const AboutMeAvatar = ({colors}:AboutProp) => {
           }}
         />
         <Text
-          style={{...styles.h2,color:colors.text}}
+          style={{...styles.h2, color: colors.text}}
           onPress={() =>
             Linking.openURL('https://www.facebook.com/ItSBuddhaHERE/')
           }>
@@ -169,34 +170,34 @@ const AboutMeAvatar = ({colors}:AboutProp) => {
   );
 };
 
-const SummeryText = ({colors}:AboutProp) => {
+const SummeryText = ({colors}: AboutProp) => {
   return (
     <View>
-      <Text style={{...styles.summeryText,color:colors.text}}>
+      <Text style={{...styles.summeryText, color: colors.text}}>
         Hi...! I'm a full stack web developer and software developer{' '}
       </Text>
-      <Text style={{...styles.summeryText,color:colors.text}}>
+      <Text style={{...styles.summeryText, color: colors.text}}>
         working on simultaneous projects on react native and vuejs
       </Text>
-      <Text style={{...styles.summeryText,color:colors.text}}>
+      <Text style={{...styles.summeryText, color: colors.text}}>
         I'm very passionate and hard working guy love programing and coding all
         day...
       </Text>
-      <Text style={{...styles.summeryText,color:colors.text}}>
+      <Text style={{...styles.summeryText, color: colors.text}}>
         I'm currently working and contributing to a private company i.e Working
         under Krypto developers pvt ltd.
       </Text>
     </View>
   );
 };
-const LicenseDetails = ({colors}:AboutProp) => {
+const LicenseDetails = ({colors}: AboutProp) => {
   return (
     <View style={{justifyContent: 'center'}}>
       <View>
         <Text
           style={{
             ...styles.h1,
-            color:colors.text
+            color: colors.text,
           }}>
           Project License Details:
         </Text>
@@ -204,7 +205,7 @@ const LicenseDetails = ({colors}:AboutProp) => {
           style={{
             fontFamily: 'Nunito-Light',
             fontSize: 15,
-            color:colors.text,
+            color: colors.text,
             paddingHorizontal: 4,
           }}>
           MIT Licence
@@ -226,21 +227,23 @@ const LicenseDetails = ({colors}:AboutProp) => {
   );
 };
 
-const ContactDetails = ({colors}:AboutProp) => {
+const ContactDetails = ({colors}: AboutProp) => {
   return (
     <View>
       <Text
         style={{
           ...styles.h1,
-          color:colors.text
+          color: colors.text,
         }}>
         Contact details:
       </Text>
-      <Text style={{...styles.summeryText,color:colors.text}}>Email me at:</Text>
+      <Text style={{...styles.summeryText, color: colors.text}}>
+        Email me at:
+      </Text>
       <View
         style={{
           ...styles.rowArea,
-          backgroundColor:colors.background
+          backgroundColor: colors.background,
         }}>
         <Icon
           name="paper-plane"
@@ -251,7 +254,7 @@ const ContactDetails = ({colors}:AboutProp) => {
         <Text
           style={{
             ...styles.summeryText,
-            color:colors.text
+            color: colors.text,
           }}
           onPress={() => Linking.openURL(`mailto:rahulnag514@gmail.com`)}>
           Email : rahulnag514@gmail.com
@@ -259,7 +262,7 @@ const ContactDetails = ({colors}:AboutProp) => {
       </View>
 
       <View style={{marginVertical: 4}}>
-        <Text style={{...styles.summeryText, color:colors.text}}>
+        <Text style={{...styles.summeryText, color: colors.text}}>
           Fork me at github :
         </Text>
         <Icon
