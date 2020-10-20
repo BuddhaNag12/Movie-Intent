@@ -3,22 +3,21 @@ import {View, StyleSheet, ScrollView} from 'react-native';
 import {useColorScheme} from 'react-native-appearance';
 import LottieView from 'lottie-react-native';
 import MovieDetails from '../components/MovieDetailsList';
-import {datatype, DetailScreenType} from '../types/types';
+import {datatype, DetailScreenProp, DetailScreenType} from '../types/types';
 import {useTheme} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import {getMovieDetails} from '../api';
 interface DetailsScreenProps {
-  route: {
-    params: any;
-  };
+  route: DetailScreenProp;
   navigation: DetailScreenType;
 }
 
-const DetailsScreen = ({navigation, route: {params}}: DetailsScreenProps) => {
+const DetailsScreen = ({navigation, route}: DetailsScreenProps) => {
   const scheme = useColorScheme();
   const {colors} = useTheme();
-  const {id} = params;
+  const {id} = route.params;
 
+  
   const [loading, setLoading] = React.useState<boolean>(false);
   const [MovieData, setMoviesFetched] = React.useState<datatype>();
 

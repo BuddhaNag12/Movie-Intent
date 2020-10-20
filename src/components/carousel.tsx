@@ -3,12 +3,13 @@ import {View, Text, StyleSheet, Platform, Dimensions} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import Carousel, {ParallaxImage} from 'react-native-snap-carousel';
 import {getBackdropPath, getImagePath} from '../api';
-import { HomeScreenType } from '../types/types';
+import { colorsType, HomeScreenType } from '../types/types';
 const {width} = Dimensions.get('window');
 
 interface HeroCarouselProp<T> {
   CarouselData: Array<T>;
   navigation: HomeScreenType;
+  colors:colorsType
 }
 const styles = StyleSheet.create({
   image: {
@@ -18,7 +19,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     flex: 1,
     marginBottom: Platform.select({ios: 0, android: 1}),
-    backgroundColor: 'white',
+
     borderRadius: 16,
   },
   itemTitle: {
@@ -47,7 +48,7 @@ class HeroCarousel extends React.PureComponent<HeroCarouselProp<string>> {
             width: 260,
           }}>
           <ParallaxImage
-            containerStyle={styles.imageContainer}
+            containerStyle={{...styles.imageContainer,backgroundColor:this.props.colors.background}}
             parallaxFactor={0.6}
             {...parallaxProps}
             source={{

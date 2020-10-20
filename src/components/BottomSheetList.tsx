@@ -50,7 +50,7 @@ export default function MyBottomSheet({
     },
   ];
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, justifyContent: 'flex-end'}}>
       {list.map((l, i) => (
         <ListItem
           bottomDivider

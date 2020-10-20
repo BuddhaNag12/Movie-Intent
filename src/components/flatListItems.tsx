@@ -4,7 +4,7 @@ import {getBackdropPath, getImagePath} from '../api';
 import {size, mode, colorsType, datatype} from '../types/types';
 import * as Animatable from 'react-native-animatable';
 
-interface FlatListItemsProps<T> {
+interface FlatListItemsProps{
   cardSize?: size;
   theme?: mode;
   colors: colorsType;
@@ -18,7 +18,7 @@ const FlatListItems = ({
   cardSize,
   theme,
   colors,
-}: FlatListItemsProps<string>) => {
+}: FlatListItemsProps) => {
   return (
     <View style={styles.container}>
       <Animatable.View

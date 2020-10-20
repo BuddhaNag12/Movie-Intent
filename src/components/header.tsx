@@ -26,9 +26,9 @@ const MyHeader = ({color, theme, isDetailsScreen, setVisible}: HeaderProps) => {
           barStyle={theme == 'dark' ? 'light-content' : 'dark-content'}
           containerStyle={{
             backgroundColor:
-              theme == 'dark' ? colorsMode.dark : colorsMode.light,
+              theme == 'dark' ? colorsMode.dark : color.background,
             borderBottomColor:
-              theme == 'dark' ? colorsMode.dark : colorsMode.light,
+              theme == 'dark' ? colorsMode.dark : color.background,
           }}
           leftComponent={
             <TouchableOpacity

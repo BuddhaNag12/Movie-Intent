@@ -1,5 +1,4 @@
 import * as React from 'react';
-
 import {
   NavigationContainer,
   DefaultTheme,
@@ -18,15 +17,12 @@ import PreviewImg from './screens/previewImage';
 import GridView from './screens/gridView';
 import HelpScreen from './screens/help';
 import AboutScreen from './screens/about';
-import {
-  CardStyleInterpolators,
-  HeaderStyleInterpolators,
-} from '@react-navigation/stack';
-
+import {CardStyleInterpolators} from '@react-navigation/stack';
 const Stack = createSharedElementStackNavigator<RootStackParamList>();
 
 export default function App() {
   const scheme = useColorScheme();
+ 
   return (
     <SafeAreaProvider>
       <AppearanceProvider>
@@ -78,6 +74,7 @@ export default function App() {
               name="ImageView"
               component={PreviewImg}
               options={{
+                
                 headerTransparent: true,
                 headerTintColor: 'white',
                 headerTitle: '',

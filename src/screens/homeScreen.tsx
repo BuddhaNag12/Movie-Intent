@@ -74,9 +74,9 @@ const Home = ({navigation}: HomeScreenProp) => {
   const toggleVisible = () => {
     refRBSheet.current.open();
   };
-  const closeBottomSheet=()=>{
+  const closeBottomSheet = () => {
     refRBSheet.current.close();
-  }
+  };
   if (loading) {
     return (
       <View style={{flex: 1}}>
@@ -90,7 +90,7 @@ const Home = ({navigation}: HomeScreenProp) => {
     );
   }
 
-  if (!Internet) {
+   if (!Internet) {
     return (
       <View style={{flex: 1, justifyContent: 'center'}}>
         <Text style={{textAlign: 'center'}}>Internet Not Connected</Text>
@@ -101,7 +101,7 @@ const Home = ({navigation}: HomeScreenProp) => {
     <View
       style={{
         ...styles.container,
-        backgroundColor: scheme == 'dark' ? colorsMode.dark : 'white',
+        backgroundColor: scheme == 'dark' ? colorsMode.dark : colors.background,
       }}>
       <MyHeader
         isDetailsScreen={false}
@@ -116,7 +116,7 @@ const Home = ({navigation}: HomeScreenProp) => {
         closeOnDragDown={true}
         closeOnPressMask={true}
         openDuration={400}
-        height={140}
+        height={150}
         customStyles={{
           wrapper: {
             backgroundColor: 'transparent',
@@ -125,13 +125,14 @@ const Home = ({navigation}: HomeScreenProp) => {
           },
           draggableIcon: {
             borderRadius: 24,
-            backgroundColor: scheme == 'dark' ? colorsMode.light : colorsMode.dark,
+            backgroundColor:
+              scheme == 'dark' ? colorsMode.light : colorsMode.dark,
           },
           container: {
-            backgroundColor:scheme == 'dark' ? colorsMode.dark : colorsMode.light,
+            backgroundColor:
+              scheme == 'dark' ? colorsMode.dark : colorsMode.light,
             borderTopRightRadius: 24,
             borderTopLeftRadius: 24,
-            justifyContent: 'center',
           },
         }}>
         <MyBottomSheet
@@ -141,7 +142,7 @@ const Home = ({navigation}: HomeScreenProp) => {
         />
       </RBSheet>
       <ScrollView>
-        <HeroCarousel CarouselData={HotNow} navigation={navigation} />
+        <HeroCarousel CarouselData={HotNow} navigation={navigation} colors={colors} />
         <HeroText
           TextProp="Upcoming Movies"
           color={scheme === 'dark' ? 'white' : 'black'}

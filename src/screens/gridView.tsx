@@ -1,16 +1,19 @@
 import {useTheme} from '@react-navigation/native';
 import * as React from 'react';
 import {View, StyleSheet, RefreshControl} from 'react-native';
-
 import {Appearance} from 'react-native-appearance';
-
 import {FlatList, TouchableOpacity} from 'react-native-gesture-handler';
 import {getMovies} from '../api';
 import FlatListItems from '../components/flatListItems';
-import {colorsMode, datatype, GridViewType} from '../types/types';
+import {
+  colorsMode,
+  datatype,
+  GridViewScreenProp,
+  GridViewType,
+} from '../types/types';
 
 interface GridViewProps {
-  route: any;
+  route: GridViewScreenProp;
   navigation: GridViewType;
 }
 
@@ -24,6 +27,7 @@ const GridView = ({route, navigation}: GridViewProps) => {
 
   let NavigationConfig = {
     title: type.toUpperCase(),
+    animationEnabled: true,
     headerStyle: {
       backgroundColor: scheme == 'dark' ? colorsMode.dark : colorsMode.light,
       elevation: 0,
@@ -65,6 +69,25 @@ const GridView = ({route, navigation}: GridViewProps) => {
         console.log(e);
       });
   };
+
+  const animateHeader = (e: number) => {
+    const offsetY = e;
+    const animatePosition = 200;
+    if (offsetY > animatePosition) {
+      navigation.setOptions({
+        headerStyle: {
+          elevation: 5,
+        },
+      });
+    } else {
+      navigation.setOptions({
+        headerStyle: {
+          elevation: 0,
+        },
+      });
+    }
+  };
+
   return (
     <View
       style={{
@@ -73,6 +96,7 @@ const GridView = ({route, navigation}: GridViewProps) => {
       }}>
       <FlatList<datatype>
         data={fetchedData}
+        onScroll={(e) => animateHeader(e.nativeEvent.contentOffset.y)}
         showsVerticalScrollIndicator={false}
         numColumns={3}
         keyExtractor={(_, index) => index.toString()}
@@ -80,14 +104,6 @@ const GridView = ({route, navigation}: GridViewProps) => {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
         onEndReached={onRefresh}
-        // ListFooterComponent={() =>
-        //   refreshing ? (
-        //    <View style={{justifyContent:'flex-end'}}> <ActivityIndicator size="large" color="red" /></View>
-        //   ) : (
-        //     <Text>Footer</Text>
-        //   )
-        // }
-
         renderItem={({item, index}) => {
           return (
             <View

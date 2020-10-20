@@ -1,5 +1,5 @@
 import { StackNavigationProp } from '@react-navigation/stack';
-
+import { RouteProp } from '@react-navigation/native';
 
 export type mode = 'dark' | 'light';
 export type size = 'large' | 'medium';
@@ -10,7 +10,8 @@ export enum colorsMode {
   light = 'white',
   detailColor = '#FCF8FF',
   cancelButtomLight='#FF6F91',
-  cancelButtomDark="#C34A36"
+  cancelButtomDark="#C34A36",
+  grey='#E3E0F3'
 }
 
 export type colorsType = {
@@ -76,3 +77,10 @@ export type GridViewType = StackNavigationProp<
   'GridView'
 >;
 export type ViewType = 'Popular' | 'upcoming';
+
+
+export type DetailScreenProp = RouteProp<RootStackParamList, 'DetailScreen'>;
+export type ImageViewScreenProp = RouteProp<RootStackParamList, 'ImageView'>;
+export type GridViewScreenProp = RouteProp<RootStackParamList, 'GridView'>;
+
+

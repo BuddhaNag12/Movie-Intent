@@ -1,3 +1,4 @@
+import { useTheme } from '@react-navigation/native';
 import * as React from 'react';
 import {
   Text,
@@ -8,10 +9,11 @@ import {
   Image,
   Linking,
 } from 'react-native';
+import {Appearance} from 'react-native-appearance';
 
-interface AboutScreenProps {}
-import {Avatar, Icon} from 'react-native-elements';
+import {Avatar, colors, Icon} from 'react-native-elements';
 import {ScrollView} from 'react-native-gesture-handler';
+import {colorsMode, colorsType} from '../types/types';
 
 const {width} = Dimensions.get('window');
 
@@ -49,7 +51,6 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontFamily: 'Nunito-Bold',
     fontSize: 20,
-    color: 'black',
     paddingVertical: 4,
     paddingHorizontal: 4,
   },
@@ -60,7 +61,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Light',
     fontWeight: '100',
     fontSize: 20,
-    color: 'black',
     paddingVertical: 4,
     paddingHorizontal: 4,
   },
@@ -69,7 +69,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Nunito-Bold',
     fontWeight: '100',
     fontSize: 20,
-    color: 'white',
     paddingVertical: 4,
     paddingHorizontal: 4,
   },
@@ -86,7 +85,6 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontFamily: 'Nunito-Light',
     fontSize: 18,
-    color: 'grey',
     paddingVertical: 4,
     paddingHorizontal: 4,
   },
@@ -95,7 +93,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    backgroundColor: '#ffee',
     width: width - 20,
     elevation: 3,
     borderRadius: 30,
@@ -103,19 +100,29 @@ const styles = StyleSheet.create({
 });
 
 const imgUrl = require('../../assets/about.png');
-const AboutScreen = (props: AboutScreenProps) => {
+
+interface AboutProp{
+  colors:colorsType
+}
+
+
+const AboutScreen = () => {
+  const {colors} = useTheme();
+
   return (
     <SafeAreaView>
       <ScrollView>
         <View>
-          <View style={{...styles.container}}>
-            <ImageHeading />
-            <AboutMeAvatar />
+          <View style={{...styles.container,backgroundColor:colors.background}}>
+            <ImageHeading colors={colors}/>
+            <AboutMeAvatar colors={colors}/>
             <View style={{...styles.content}}>
-              <Text style={{...styles.h1}}>Quick Summary :</Text>
-              <SummeryText />
-              <LicenseDetails />
-              <ContactDetails />
+              <Text style={{...styles.h1, color: colors.text}}>
+                Quick Summary :
+              </Text>
+              <SummeryText colors={colors}/>
+              <LicenseDetails colors={colors}/>
+              <ContactDetails colors={colors}/>
             </View>
           </View>
         </View>
@@ -123,7 +130,7 @@ const AboutScreen = (props: AboutScreenProps) => {
     </SafeAreaView>
   );
 };
-const ImageHeading = () => {
+const ImageHeading = ({colors}:AboutProp) => {
   return (
     <View style={{...styles.headingImg}}>
       <Image
@@ -136,11 +143,11 @@ const ImageHeading = () => {
   );
 };
 
-const AboutMeAvatar = () => {
+const AboutMeAvatar = ({colors}:AboutProp) => {
   return (
     <View>
       <View style={{...styles.headingWrapper}}>
-        <Text style={{...styles.h3}}>About The Developer</Text>
+        <Text style={{...styles.h3,color:colors.background}}>About The Developer</Text>
       </View>
       <View style={{...styles.aboutWrapper}}>
         <Avatar
@@ -151,7 +158,7 @@ const AboutMeAvatar = () => {
           }}
         />
         <Text
-          style={{...styles.h2}}
+          style={{...styles.h2,color:colors.text}}
           onPress={() =>
             Linking.openURL('https://www.facebook.com/ItSBuddhaHERE/')
           }>
@@ -162,33 +169,34 @@ const AboutMeAvatar = () => {
   );
 };
 
-const SummeryText = () => {
+const SummeryText = ({colors}:AboutProp) => {
   return (
     <View>
-      <Text style={{...styles.summeryText}}>
+      <Text style={{...styles.summeryText,color:colors.text}}>
         Hi...! I'm a full stack web developer and software developer{' '}
       </Text>
-      <Text style={{...styles.summeryText}}>
+      <Text style={{...styles.summeryText,color:colors.text}}>
         working on simultaneous projects on react native and vuejs
       </Text>
-      <Text style={{...styles.summeryText}}>
+      <Text style={{...styles.summeryText,color:colors.text}}>
         I'm very passionate and hard working guy love programing and coding all
         day...
       </Text>
-      <Text style={{...styles.summeryText}}>
+      <Text style={{...styles.summeryText,color:colors.text}}>
         I'm currently working and contributing to a private company i.e Working
         under Krypto developers pvt ltd.
       </Text>
     </View>
   );
 };
-const LicenseDetails = () => {
+const LicenseDetails = ({colors}:AboutProp) => {
   return (
     <View style={{justifyContent: 'center'}}>
       <View>
         <Text
           style={{
             ...styles.h1,
+            color:colors.text
           }}>
           Project License Details:
         </Text>
@@ -196,7 +204,7 @@ const LicenseDetails = () => {
           style={{
             fontFamily: 'Nunito-Light',
             fontSize: 15,
-            color: 'grey',
+            color:colors.text,
             paddingHorizontal: 4,
           }}>
           MIT Licence
@@ -218,19 +226,21 @@ const LicenseDetails = () => {
   );
 };
 
-const ContactDetails = () => {
+const ContactDetails = ({colors}:AboutProp) => {
   return (
     <View>
       <Text
         style={{
           ...styles.h1,
+          color:colors.text
         }}>
         Contact details:
       </Text>
-      <Text style={{...styles.summeryText}}>Email me at:</Text>
+      <Text style={{...styles.summeryText,color:colors.text}}>Email me at:</Text>
       <View
         style={{
           ...styles.rowArea,
+          backgroundColor:colors.background
         }}>
         <Icon
           name="paper-plane"
@@ -241,6 +251,7 @@ const ContactDetails = () => {
         <Text
           style={{
             ...styles.summeryText,
+            color:colors.text
           }}
           onPress={() => Linking.openURL(`mailto:rahulnag514@gmail.com`)}>
           Email : rahulnag514@gmail.com
@@ -248,7 +259,7 @@ const ContactDetails = () => {
       </View>
 
       <View style={{marginVertical: 4}}>
-        <Text style={{...styles.summeryText, color: 'black'}}>
+        <Text style={{...styles.summeryText, color:colors.text}}>
           Fork me at github :
         </Text>
         <Icon
